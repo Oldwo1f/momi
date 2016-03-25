@@ -20,10 +20,18 @@ module.exports = function(grunt) {
     assets: {
 
       // Assets to watch:
-      files: ['assets/**/*','!assets/**/*.annotate.js', 'tasks/pipeline.js', '!**/node_modules/**'],
+      files: ['assets/**/*','!assets/styles/**/*','!assets/**/*.annotate.js', 'tasks/pipeline.js', '!**/node_modules/**'],
 
       // When assets are changed:
       tasks: ['ngAnnotate:backoffice','syncAssets' , 'linkAssets' ]
+    },
+    assets_css: {
+
+      // Assets to watch:
+      files: ['assets/styles/**/*',],
+
+      // When assets are changed:
+      tasks: ['syncAssets' , 'linkAssets' ]
     }
   });
 
