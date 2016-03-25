@@ -11,7 +11,7 @@
  * For more information on configuring the session, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.session.html
  */
-console.log('config'.blue);
+ var config = require('./config');
 module.exports.session = {
 
   /***************************************************************************
@@ -21,7 +21,7 @@ module.exports.session = {
   * of your users, forcing them to log in again.                             *
   *                                                                          *
   ***************************************************************************/
-  secret: 'cd7d35bdb480141b0acf03d04dd29146',
+  secret: config.secret,
 
 
   /***************************************************************************

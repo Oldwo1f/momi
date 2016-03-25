@@ -13,7 +13,8 @@ module.exports = {
    * `TestController.toto()`
    */
   toto: function (req, res) {
-  	console.log('totototot');
+
+  	console.log(sails.hooks.front.yoda);
     return res.json({
       todo: '2 is not implemented yet!'
     });

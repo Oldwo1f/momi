@@ -17,23 +17,36 @@
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
-  'styles/**/*.css'
+  'bower_components/bootstrap/dist/css/bootstrap.min.css',
+  'bower_components/metisMenu/dist/metisMenu.css',
+  'bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css',
+  'bower_components/font-awesome/css/font-awesome.css',
+  // 'styles/**/*.css',
+  'styles/importer.css'
 ];
 
 
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
-
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
 
   // Dependencies like jQuery, or Angular are brought in here
+  'bower_components/jquery/dist/jquery.min.js',
+  'bower_components/bootstrap/dist/js/bootstrap.min.js',
   'js/dependencies/**/*.js',
+  'bower_components/metisMenu/dist/metisMenu.js',
+  'bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js',
+  'bower_components/angular/angular.min.js',
+  'bower_components/angular-ui-router/angular-ui-router.min.js',
+  'bower_components/angular-sails/angular-sails.js',
+
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
-  'js/**/*.js'
+  'js/backoffice/app.annotated.js',
+  'js/backoffice/**/*.annotated.js'
 ];
 
 

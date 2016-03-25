@@ -12,10 +12,18 @@
  */
 module.exports = function(grunt) {
 
-  grunt.config.set('clean', {
-    dev: ['.tmp/public/**'],
-    build: ['www']
-  });
+	grunt.config.set('clean',{
+		dev: {
+		 src: ['.tmp/public/**','!.tmp/public/bower_components/*']
+		 ,
+		 options: {
+		 'no-write': true
+		 }
+		},
+		components: ['.tmp/public/bower_components/**'],
+		build: ['www']
+	}
+	);
 
-  grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-clean');
 };

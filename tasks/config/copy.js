@@ -37,6 +37,14 @@ module.exports = function(grunt) {
         src: ['**/*'],
         dest: 'www'
       }]
+    },
+    components: {
+      files: [{
+        expand: true,
+        cwd: 'bower_components',
+        src: ['**/*'],
+        dest: '.tmp/public/bower_components'
+      }]
     }
   });
 

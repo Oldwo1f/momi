@@ -6,18 +6,18 @@ module.exports = function(grunt) {
 		dev: {
                	script:'app.js',
 				options: {
-					ignore: ['api/**','node_modules/**','.tmp/**','tasks/','.rebooted'],
+					ignore: ['api/controllers/**','!assets/**/*.annotate.js','api/services/**','api/models/**','node_modules/**','.tmp/**','tasks/','.rebooted'],
 					ext: 'js,html',
 					callback: function (nodemon) {
 						// console.log("NODEMON CALLBACK");
 						nodemon.on('restart', function () {
 
-							console.log('RESTART');
+							console.log('RESTART'.red);
 				          // Delay before server listens on port
 							setTimeout(function() {
 							// 	console.log('REBOOTED');
 								require('fs').writeFileSync('.rebooted', 'rebooted');
-							}, 1000);
+							}, 2000);
 				        });
 	            	}
 				}
