@@ -20,7 +20,7 @@ module.exports = function(grunt) {
     assets: {
 
       // Assets to watch:
-      files: ['assets/**/*','!assets/styles/**/*','!assets/**/*.annotate.js', 'tasks/pipeline.js', '!**/node_modules/**'],
+      files: ['assets/**/*','!assets/styles/**/*','!assets/**/*.annotate.js', 'tasks/pipeline.js', '!**/node_modules/**','!dash.js'],
 
       // When assets are changed:
       tasks: ['ngAnnotate:backoffice','syncAssets' , 'linkAssets' ]
@@ -28,10 +28,22 @@ module.exports = function(grunt) {
     assets_css: {
 
       // Assets to watch:
-      files: ['assets/styles/**/*',],
+      files: ['assets/styles/**/*','!dash.js'],
 
       // When assets are changed:
       tasks: ['syncAssets' , 'linkAssets' ]
+    },
+    test: {
+
+      // Assets to watch:
+      files:[ 'api/**/*.js',
+              'test/**/*.js',
+              'assets/**/*.annotated.js',
+              'test_front/**/*.test.js','!dash.js'
+            ],
+
+      // When assets are changed:
+      tasks: ['mochaTest:backoffice','karma:front']
     }
   });
 

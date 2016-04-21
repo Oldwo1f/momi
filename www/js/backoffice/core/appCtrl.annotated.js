@@ -1,9 +1,9 @@
-app.controller('appCtrl',function appCtrl(configService, filterFilter) {
+// app.controller('appCtrl',function appCtrl(configService, filterFilter) {
 	  
-  $scope.h1 = 'tot11111'; 
+//   $scope.h1 = 'tot11111'; 
   
 
-});
+// });
 
 // $(window).resize(function() {
 //   height = $(window).height()-67

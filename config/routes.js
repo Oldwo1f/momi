@@ -32,10 +32,12 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  },
-  '/2':'TestController.toto'
+  // '/': {
+  //   view: 'homepage'
+  // },
+  '/':'adminController.serveApp',
+  'POST /saveDash':'testController.saveDash',
+  '/restoreDash':'testController.restoreDash'
 
   /***************************************************************************
   *                                                                          *

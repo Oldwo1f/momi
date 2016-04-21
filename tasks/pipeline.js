@@ -18,10 +18,11 @@
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
   'bower_components/bootstrap/dist/css/bootstrap.min.css',
-  'bower_components/metisMenu/dist/metisMenu.css',
-  'bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css',
+  
   'bower_components/font-awesome/css/font-awesome.css',
-  // 'styles/**/*.css',
+  'bower_components/angular-gridster/dist/angular-gridster.min.css',
+  'styles/**/*.css',
+  'styles/main.css',
   'styles/importer.css'
 ];
 
@@ -30,22 +31,27 @@ var cssFilesToInject = [
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
   // Load sails.io before everything else
-  'js/dependencies/sails.io.js',
+  'js/dependencies/sails.io.js', 
 
   // Dependencies like jQuery, or Angular are brought in here
   'bower_components/jquery/dist/jquery.min.js',
   'bower_components/bootstrap/dist/js/bootstrap.min.js',
   'js/dependencies/**/*.js',
-  'bower_components/metisMenu/dist/metisMenu.js',
-  'bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js',
   'bower_components/angular/angular.min.js',
-  'bower_components/angular-ui-router/angular-ui-router.min.js',
-  'bower_components/angular-sails/angular-sails.js',
+  'bower_components/angular-ui-router/release/angular-ui-router.min.js',
+  'bower_components/angular-sails/dist/angular-sails.js',
+  'bower_components/flexi-list-master/flexi-list.js',
+  'bower_components/javascript-detect-element-resize/jquery.resize.js',
+  'bower_components/angular-gridster/dist/angular-gridster.min.js',
+  'bower_components/angular-sanitize/angular-sanitize.min.js',
+  'bower_components/angular-animate/angular-animate.min.js',
 
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
-  'js/backoffice/app.annotated.js',
+  'js/backoffice/core/app.annotated.js',
+  'js/backoffice/core/widgetService.annotated.js',
+  'js/backoffice/**/index.annotated.js',
   'js/backoffice/**/*.annotated.js'
 ];
 
@@ -60,7 +66,8 @@ var jsFilesToInject = [
 // templates get spit out to the same file.  Be sure and check out `tasks/README.md`
 // for information on customizing and installing new tasks.
 var templateFilesToInject = [
-  'templates/**/*.html'
+  'templates/**/*.html',
+  'js/**/*.html',
 ];
 
 

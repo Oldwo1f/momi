@@ -1,0 +1,50 @@
+<div class="maincontent">
+	<!-- <div class="toggleEditmode" style="z-index:1000;" ng-click="toogleEditMode()" >
+		<input type="checkbox" ng-model="editionMode" id="switch-editmode" class="sw" checked />
+		<label class="switch2 green" for="switch-editmode" title="Entrer/sortir du mode edition"></label> 
+	</div>
+	<div class="savedash"  ng-click="saveDash()">
+		<a class="btn-circle btn-sm" title="Save Dashboard"><i class="pe-7f-paperclip"></i></a>
+	</div> -->
+	<article class="widget">
+
+		<header class="widget__header">
+				<div class="widget__icon"><i  class="pe-7s-tools"></i></div>
+				<div class="widget__title">Configuration du dashboard</div>
+				<div class="switcherConfigMode keepThisEvent btn-header" ng-click="toogleEditMode()">
+					<input type="checkbox" ng-model="editionMode" id="switch-editmode" class="sw" checked />
+					<label class="switch2 green" for="switch-editmode" title="Entrer/sortir du mode edition"></label> 
+				</div>
+				<div  class="keepThisEvent btn-header" ng-click="saveDash()" title="Save Dashboard"><i class="pe-7s-diskette"></i></div>
+				<div  class="keepThisEvent btn-header" ng-click="restoreDefault()" title="Restaurer le dashboard par default"><i class="pe-7s-refresh"></i></div>
+				<div class="keepThisEvent btn-header" ng-click="expandWidget()"><i ng-show="!expanded" class="pe-7s-bottom-arrow"></i><i ng-show="expanded" class="pe-7s-up-arrow"></i></div>
+		</header>
+ 
+		<div class="widget__content filled">
+
+			<div>
+				<h4>Choix du thème</h4>
+				<div class="choosetheme">
+					<input type="radio" class="custom-radio bigradio " name="theme" ng-model="currentTheme" value="bg1" id="cr1">
+					<label for="cr1" class="blue"></label>
+					<input type="radio" class="custom-radio bigradio " name="theme" ng-model="currentTheme" value="bg2" id="cr2">
+					<label for="cr2" class="orange"></label>
+					<input type="radio" class="custom-radio bigradio " name="theme" ng-model="currentTheme" value="bg3" id="cr3" >
+					<label for="cr3" class="red"></label>
+					<input type="radio" class="custom-radio bigradio " name="theme" ng-model="currentTheme" value="bg4" id="cr4" >
+					<label for="cr4" class="green"></label>
+				</div>
+			</div>
+			<div ng-repeat="(key, item) in widgetList" class="listConfigItem" ng-if="!item.required">
+				<div class="keepThisEvent" >
+					<input type="checkbox" ng-model="item.enabled" id="switch-{{key}}" class="sw" checked />
+					<label class="switch green" for="switch-{{key}}" title="Activer/Désactiver ce widget"></label> 
+				</div>
+				<h4 class="">{{item.widgetName}}</h4>
+			</div>
+			
+			<!-- <p class="graph-number"><span>6,184</span> Visits</p> -->
+
+		</div>
+	</article>
+</div>

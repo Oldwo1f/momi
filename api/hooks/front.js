@@ -1,12 +1,12 @@
 module.exports = function front(sails) {
 
    // This var will be private
-   var foo = 'bar';
+   var foo = 'barcbbbvgggvbbccc';
 
    // This var will be public
-   this.abc = 123;
-   console.log('front');
-   console.log(this.abc);
+   this.abc = 125244253;
+   // console.log('front');
+   // console.log(this.abc);
 
    return {
       yoda : 'yoda',

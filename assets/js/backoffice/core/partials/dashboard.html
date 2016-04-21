@@ -1,0 +1,22 @@
+<div >
+	
+
+	<div gridster="gridsterOpts">
+		<!-- TITLE WIDGET -->
+	        <div gridster-item="widgetList['titleDashWidget']"  ng-class="{'no-resize' : widgetList['titleDashWidget'].noresize}" ng-show="widgetList['titleDashWidget'].enabled">
+	        	<title-dash-widget></title-dash-widget><div class="dragger"></div>
+	        	<!-- <div class="dragger"></div> -->
+
+	        </div>
+	    <!-- MENU WIDGET -->
+	        <div gridster-item="widgetList['menuWidget']" ng-class="{'no-resize': widgetList['menuWidget'].noresize }" ng-show="widgetList['menuWidget'].enabled">
+	        	<menu-widget></menu-widget><div class="dragger"></div>
+	        </div>
+	    <!-- dashboardconfig WIDGET -->
+	        <div gridster-item="widgetList['dashboardconfigWidget']" ng-class="{'no-resize': widgetList['dashboardconfigWidget'].noresize }" ng-show="widgetList['dashboardconfigWidget'].enabled">
+	        	<dashboardconfig-widget></dashboardconfig-widget>
+	        </div>
+	</div>
+
+
+</div>

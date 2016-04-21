@@ -7,7 +7,7 @@ module.exports = function(grunt) {
                     src : ['.tmp/styles/**/*.css','.rebooted','views/**/*.ejs']
                 }, 
                 options: {
-                    proxy: "localhost:"+config.log.port,
+                    proxy: "localhost:"+config.port,
                     
                 }
             }
