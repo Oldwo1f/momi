@@ -34,7 +34,7 @@
 [2K[0G  [32m  ✓[0m[90m should have mainEmailPassword property[0m
 [0m    #sendEmail[0m
 [2K[0G    [32m  ✓[0m[90m should be a function[0m
-[2K[0G    [32m  ✓[0m[90m should call a method send[0m[33m (38ms)[0m
+[2K[0G    [32m  ✓[0m[90m should call a method send[0m
 [2K[0G    [32m  ✓[0m[90m should send the email[0m
 [0m    #fetchTemplate[0m
 [2K[0G    [32m  ✓[0m[90m should be a function[0m
@@ -53,6 +53,6 @@
 [2K[0G    [32m  ✓[0m[90m should return shares[0m
 
 
-[92m [0m[32m 16 passing[0m[90m (1s)[0m
+[92m [0m[32m 16 passing[0m[90m (953ms)[0m
 [36m [0m[36m 3 pending[0m
 

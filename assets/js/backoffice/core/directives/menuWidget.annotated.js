@@ -188,11 +188,11 @@ angular.module('core')
 
 
     return {
-      scope: false,
+      scope: {},
       replace: true,
       templateUrl: 'js/backoffice/core/partials/menuWidget.html',
       link:function(scope,element,attrs){
-      	thisresize(scope.gridsterItem)
+      	thisresize(scope.$parent.gridsterItem)
 
 
           // scope.gridster.draggable.enabled = false;
@@ -200,15 +200,15 @@ angular.module('core')
 
 
 
-      	scope.$on('gridster-item-resized', function(e,item) {
+      	scope.$parent.$on('gridster-item-resized', function(e,item) {
         	thisresize(item);
 		})
 
-      	scope.$on('gridster-item-transition-end', function(e,item) {
+      	scope.$parent.$on('gridster-item-transition-end', function(e,item) {
       		// console.log('Listen fore titleDash ---->initialized');
 
 		})
-		scope.$on('gridster-item-initialized', function(item) {
+		scope.$parent.$on('gridster-item-initialized', function(item) {
           console.log(' INIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIT ');
           // resize();
         })

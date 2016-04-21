@@ -1,8 +1,9 @@
 
 angular.module('core')
-  .directive('dashboardconfigWidget',function (widgetService,$compile,$timeout){
+  .directive('dashboardconfigWidget',function (widgetService,$compile,$timeout,$rootScope){
     'use strict';
 	var thisresize = function(item,expanded){
+    console.log('THIS RESIZE ');
 
     	var classToSet= 'style0' ,classFont='smallFont';
     	var x = item.sizeX, y = item.sizeY;
@@ -33,7 +34,7 @@ angular.module('core')
     	.addClass('dashboardconfigWidget')
 	}
     return {
-      scope: false,
+      scope: {},
       replace: true,
       templateUrl: 'js/backoffice/core/partials/dashboardconfigWidget.html',
       link:function(scope,element,attrs){
@@ -41,9 +42,9 @@ angular.module('core')
       	// scope.currentTheme = 'bg3';
       	scope.editionMode = false;
       	scope.expanded = false;
-        // scope.$parent.currentTheme = 'bg3';
-
-      	// thisresize(scope.gridsterItem,scope.expanded)
+        scope.widgetList = widgetService.list;
+        console.log(scope.list);
+      	thisresize(scope.$parent.gridsterItem,scope.expanded)
 
 
 
@@ -52,10 +53,10 @@ angular.module('core')
         	scope.$emit('changeTheme',scope.currentTheme);
         })
 
-      	scope.$on('gridster-item-resized', function(e,item) {
+      	scope.$parent.$on('gridster-item-resized', function(e,item) {
       		thisresize(item,scope.expanded);
 		    
-		})
+		    })
 
         scope.saveDash = function(){
         	if(scope.expanded){
@@ -72,16 +73,18 @@ angular.module('core')
 
       	scope.toogleEditMode = function(){
           
+
+          console.log(scope.$parent);
           scope.editionMode = !scope.editionMode;
           console.log('$scope.editionMode = '+ scope.editionMode);
           if(scope.editionMode)
           {
-          	scope.gridster.draggable.enabled = true;
-        	scope.gridster.resizable.enabled = true;
+          	scope.$parent.gridster.draggable.enabled = true;
+        	  scope.$parent.gridster.resizable.enabled = true;
         	$('.dragger').show()
           }else{
-          	scope.gridster.draggable.enabled = false;
-        	scope.gridster.resizable.enabled = false;
+          	scope.$parent.gridster.draggable.enabled = false;
+        	  scope.$parent.gridster.resizable.enabled = false;
         	$('.dragger').hide()
           }
 
@@ -108,10 +111,10 @@ angular.module('core')
           	if($parent.hasClass('largeFont')){
           		$parent.addClass('saveLargeFont');
           	}
-          	scope.gridsterItem.sizeY = scope.gridsterItem.sizeY + 4;
+          	scope.$parent.gridsterItem.sizeY = scope.$parent.gridsterItem.sizeY + 4;
           }else{
           	$parent.removeClass('expanded saveLargeFont');
-          	scope.gridsterItem.sizeY = scope.gridsterItem.sizeY - 4;
+          	scope.$parent.gridsterItem.sizeY = scope.$parent.gridsterItem.sizeY - 4;
           	//Wait the end of transition to not blink wrong size element
           	setTimeout(function(){
           		$widget__header.css({'height': '100%'})

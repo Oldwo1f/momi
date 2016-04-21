@@ -86,22 +86,22 @@ angular.module('core')
     	
     }
     return {
-      scope: false,
+      scope: {},
       replace: true,
       templateUrl: 'js/backoffice/core/partials/titleDashWidget.html',
       link:function(scope,element,attrs){
       	console.log('dashTitle directive');
       		
       	// console.log(scope.gridsterItem);
-      	thisresize(scope.gridsterItem)
+      	thisresize(scope.$parent.gridsterItem)
 
-      	scope.$on('gridster-item-resized', function(e,item) {
+      	scope.$parent.$on('gridster-item-resized', function(e,item) {
       		console.log('Listen fore titleDash resize');
       		thisresize(item)
 
       		
 		})
-      	scope.$on('gridster-item-transition-end', function(e,item) {
+      	scope.$parent.$on('gridster-item-transition-end', function(e,item) {
       		// console.log('Listen fore titleDash ---->initialized');
 // console.log(scope.widgetList);
 
