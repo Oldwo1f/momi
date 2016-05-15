@@ -14,6 +14,13 @@ angular.module('momi-blog')
       		$scope.returnParentState=function(){
 				$state.go('^')
 			}
+			$scope.returnPreviousState=function(){
+				if($rootScope.previousState){
+					$state.go($rootScope.previousState.name, $rootScope.previousStateParams)
+				}else{
+					$state.go('^')
+				}
+			}
 			$scope.returnDashboardState=function(){
 				$state.go('dashboard')
 			}

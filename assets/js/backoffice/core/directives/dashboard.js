@@ -72,26 +72,73 @@ angular.module('core')
         $scope.swipe =function(to,from){
             // console.log(to);
             console.log('SWIPE');
-            
-            if(to.name == 'dashboard' )
-            {
-                $('.pageDash').addClass('pageVisible').removeClass('pageAfter pageBefore');
-                $('.page1').addClass('pageAfter').removeClass('pageVisible pageBefore');
-                $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
-            }else 
-            if(to.parent == 'dashboard' )
-            {
-                $('.pageDash').addClass('pageBefore').removeClass('pageVisible pageAfter');
-                $('.page1').addClass('pageVisible').removeClass('pageAfter pageBefore');
-                $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
-            }
-            else 
-            {
+            console.log(to);
+            console.log(from);
+            console.log(to.views);
+            var toViewName = _.map(to.views,function(value,key){ return key;})
+            toViewName = toViewName[0];
+            console.log(toViewName);
+            if(!from){
+                if(to.name == 'dashboard' )
+                {
+                    $('.pageDash').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                    $('.page1').addClass('pageAfter').removeClass('pageVisible pageBefore');
+                    $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
+                }else 
+                if(to.parent == 'dashboard' )
+                {
+                    $('.pageDash').addClass('pageBefore').removeClass('pageVisible pageAfter');
+                    $('.page1').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                    $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
+                }
+                else 
+                {
+                    $('.pageDash').addClass('pageBefore').removeClass('pageVisible pageAfter');
+                    $('.page1').addClass('pageBefore').removeClass('pageVisible pageAfter');
+                    $('.page2').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                }
+            }else{
+                var fromViewName = _.map(from.views,function(value,key){ return key;})
+                fromViewName = fromViewName[0];
+                console.log(fromViewName);
 
-                
-                $('.pageDash').addClass('pageBefore').removeClass('pageVisible pageAfter');
-                $('.page1').addClass('pageBefore').removeClass('pageVisible pageAfter');
-                $('.page2').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                if(fromViewName == toViewName && 'page1' == fromViewName && from.name != to.name)
+                {
+                    console.log('SAME PAGE');
+                        $('.pageDash').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                        $('.page1').addClass('pageAfter').removeClass('pageVisible pageBefore');
+                        $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
+
+                        setTimeout(function(){
+                            $('.pageDash').addClass('pageBefore').removeClass('pageVisible pageAfter');
+                            $('.page1').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                            $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore'); 
+                      
+
+                        },500)
+
+
+                }else{
+                    if(to.name == 'dashboard' )
+                    {
+                        $('.pageDash').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                        $('.page1').addClass('pageAfter').removeClass('pageVisible pageBefore');
+                        $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
+                    }else 
+                    if(to.parent == 'dashboard' )
+                    {
+                        $('.pageDash').addClass('pageBefore').removeClass('pageVisible pageAfter');
+                        $('.page1').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                        $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
+                    }
+                    else 
+                    {
+                        $('.pageDash').addClass('pageBefore').removeClass('pageVisible pageAfter');
+                        $('.page1').addClass('pageBefore').removeClass('pageVisible pageAfter');
+                        $('.page2').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                    }
+                }
+
             }
 
 
@@ -114,6 +161,7 @@ angular.module('core')
         $scope.$on('$stateChangeSuccess',function (e,toState,toParams,fromState,fromParams){
           console.log('$stateChangeSuccess');
             $rootScope.previousState = fromState;
+            $rootScope.previousStateParams = fromParams;
 
             $scope.swipe(toState, fromState)
         });

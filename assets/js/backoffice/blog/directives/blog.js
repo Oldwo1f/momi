@@ -28,7 +28,7 @@ angular.module('momi-blog')
 			
 			$scope.returnPreviousState=function(){
 				if($rootScope.previousState){
-					$state.go($rootScope.previousState.name)
+					$state.go($rootScope.previousState.name, $rootScope.previousStateParams)
 				}else{
 					$state.go('^')
 				}

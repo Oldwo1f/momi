@@ -22,10 +22,8 @@ angular.module('momi-categories')
 				$state.go('dashboard')
 			}
 			$scope.returnPreviousState=function(){
-
-				console.log($rootScope.previousState);
 				if($rootScope.previousState){
-					$state.go($rootScope.previousState.name)
+					$state.go($rootScope.previousState.name, $rootScope.previousStateParams)
 				}else{
 					$state.go('^')
 				}
