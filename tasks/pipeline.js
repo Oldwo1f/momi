@@ -21,6 +21,11 @@ var cssFilesToInject = [
   
   'bower_components/font-awesome/css/font-awesome.css',
   'bower_components/angular-gridster/dist/angular-gridster.min.css',
+  'bower_components/textAngular/dist/textAngular.css',
+  'bower_components/angularjs-color-picker/dist/angularjs-color-picker.min.css',
+  'bower_components/ng-tags-input/ng-tags-input.css',
+
+  // 'bower_components/angular-material/angular-material.css',
   'styles/**/*.css',
   'styles/main.css',
   'styles/importer.css'
@@ -36,15 +41,40 @@ var jsFilesToInject = [
   // Dependencies like jQuery, or Angular are brought in here
   'bower_components/jquery/dist/jquery.min.js',
   'bower_components/bootstrap/dist/js/bootstrap.min.js',
+  'bower_components/tinycolor/dist/tinycolor-min.js',
   'js/dependencies/**/*.js',
+  'bower_components/moment/moment.js',
+  'bower_components/moment/locale/fr.js',
   'bower_components/angular/angular.min.js',
   'bower_components/angular-ui-router/release/angular-ui-router.min.js',
-  'bower_components/angular-sails/dist/angular-sails.js',
+  'bower_components/angularSails/dist/ngsails.io.js',
   'bower_components/flexi-list-master/flexi-list.js',
   'bower_components/javascript-detect-element-resize/jquery.resize.js',
   'bower_components/angular-gridster/dist/angular-gridster.min.js',
   'bower_components/angular-sanitize/angular-sanitize.min.js',
   'bower_components/angular-animate/angular-animate.min.js',
+  'bower_components/tinymce-dist/tinymce.js',
+  'bower_components/angular-ui-tinymce/src/tinymce.js',
+  'bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
+  'bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js',
+  'bower_components/angular-moment/angular-moment.js',
+  'bower_components/angular-aria/angular-aria.min.js',
+  'bower_components/angular-material/angular-material.js',
+  'bower_components/angular-file-model/angular-file-model.js',
+  'bower_components/ng-file-upload/ng-file-upload.js',
+  'bower_components/ng-tags-input/ng-tags-input.js',
+  'bower_components/spin.js/spin.js',
+  'bower_components/angular-spinner/angular-spinner.js',
+  'bower_components/ng-file-upload/ng-file-upload.min.js',
+  'bower_components/angular-file-upload/angular-file-upload.min.js',
+  'bower_components/angular-ui-sortable/sortable.js',
+  'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
+  // 'bower_components/angularjs-color-picker/dist/angularjs-color-picker.min.js',
+
+  // 'bower_components/textAngular/dist/textAngular-rangy.min.js',
+  // 'bower_components/textAngular/dist/textAngular-sanitize.min.js',
+  // 'bower_components/textAngular/dist/textAngular.min.js',
+  'bower_components/ngSlimscroll/src/js/min/ngSlimscroll.js',
 
 
   // All of the rest of your client-side js files

@@ -40,7 +40,17 @@ angular.module('core')
       scope: false,
       replace: true,
       templateUrl: 'js/backoffice/core/partials/dashboard.html',
-      controller:function($scope,$element,$attrs,$transclude,$rootScope,$state){
+      controller:function($scope,$element,$attrs,$transclude,$rootScope,$state,usSpinnerService){
+        $rootScope.startSpin = function(){
+            usSpinnerService.spin('mainSpinner');
+        }
+        $rootScope.stopSpin = function(){
+            setTimeout(function(){
+                
+            usSpinnerService.stop('mainSpinner');
+            },500)
+        }
+
 
         $scope.widgetList = widgetService.list;
         console.log(widgetService.list);
@@ -48,63 +58,78 @@ angular.module('core')
         $scope.columnwidth = 0;
         $scope.columnheight = 0;
 
-        $scope.swipe =function(){
-          console.log('SWIPE');
+        $scope.initSwipe =function(to,from){
+            console.log('SWIPEINIT');
+            // if(to.parent == 'dashboard' )
+            // {
+            //     $('.pageDash').addClass('pageVisible').removeClass('pageAfter');
+            //     $('.page1').addClass('pageAfter').removeClass('pageVisible');
+            // }
 
-          $('.pageVisible').addClass('pageBefore').removeClass('pageVisible');
-          $('.pageAfter').addClass('pageVisible').removeClass('pageAfter');
-          // $('.pageBefore').addClass('pageVisible').removeClass('pageAfter');
+        
 
+        }
+        $scope.swipe =function(to,from){
+            // console.log(to);
+            console.log('SWIPE');
+            
+            if(to.name == 'dashboard' )
+            {
+                $('.pageDash').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                $('.page1').addClass('pageAfter').removeClass('pageVisible pageBefore');
+                $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
+            }else 
+            if(to.parent == 'dashboard' )
+            {
+                $('.pageDash').addClass('pageBefore').removeClass('pageVisible pageAfter');
+                $('.page1').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
+            }
+            else 
+            {
+
+                
+                $('.pageDash').addClass('pageBefore').removeClass('pageVisible pageAfter');
+                $('.page1').addClass('pageBefore').removeClass('pageVisible pageAfter');
+                $('.page2').addClass('pageVisible').removeClass('pageAfter pageBefore');
+            }
 
 
         }
-        $scope.swipeback =function(){
-          console.log('SWIPEswipeback');
-          $('.pageVisible').addClass('pageAfter').removeClass('pageVisible');
-          // $('.pageAfter').addClass('pageVisible').removeClass('pageAfter');
-          $('.pageBefore').addClass('pageVisible').removeClass('pageBefore');
-        }
-        $scope.returnDashboardState =function(){
+        // $scope.swipeback =function(){
+        //   console.log('SWIPEswipeback');
+        //   $('.pageVisible').addClass('pageAfter').removeClass('pageVisible');
+        //   // $('.pageAfter').addClass('pageVisible').removeClass('pageAfter');
+        //   $('.pageBefore').addClass('pageVisible').removeClass('pageBefore');
+        // }
+        
+        $scope.swipe($state.current)
+        // $scope.$on('$viewContentLoading',function(e,t){
+        //   console.log('$viewContentLoaded');
+        //   if($state.current.name != "dashboard")
+        //     $scope.swipe()
           
-          $state.go('dashboard');
-          $scope.swipeback();
+          
+        // });
+        $scope.$on('$stateChangeSuccess',function (e,toState,toParams,fromState,fromParams){
+          console.log('$stateChangeSuccess');
+            $rootScope.previousState = fromState;
 
-        }
-        $scope.$on('$viewContentLoading',function(e,t){
-          console.log('$viewContentLoaded');
-          if($state.current.name != "dashboard")
-            $scope.swipe()
-          
-          
+            $scope.swipe(toState, fromState)
+        });
+        $scope.$on('$stateChangeStart',function (e,toState,toParams,fromState,fromParams){
+          console.log('$stateChangeStart');
+            $scope.initSwipe(toState, fromState)
         });
         // INIT FIRST SWIPE IF view is on right page
-        if($state.current.name != "dashboard")
-          $scope.swipe()
-        console.log($state.current.name);
-        $scope.$on('$stateChangeSuccess',function(e,t){
-          // console.log('$stateChangeSuccess');
-          // console.log(e);
-          // console.log(toState);
-          // if(toState != "dashboard")
-          // $scope.swipe()
+        // if($state.current.name != "dashboard")
+        //   $scope.swipe()
+        // console.log($state.current.name);
+        // $scope.$on('$stateChangeSuccess',function(e,t){
+     
           
           
-        });
-        
-        $rootScope.$on('gridster-item-resized', function(sizes, gridster) {
-                console.log('Listen resize');
-
-              // sizes[0] = width
-              // sizes[1] = height
-              // gridster.
-          })
-
-        $scope.$on('gridster-item-initialized', function(item) {
-          console.log(' INIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIT ');
-          // resize();
-        })
-
-
+        // });
         
 
       },

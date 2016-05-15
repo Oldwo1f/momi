@@ -1,4 +1,4 @@
-angular.module('social')
+angular.module('momi-user')
   .directive('userProfileWidget', function(){
 
     'use strict';

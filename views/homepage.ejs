@@ -10,28 +10,31 @@
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="/bower_components/angular-gridster/dist/angular-gridster.min.css">
+    <link rel="stylesheet" href="/bower_components/textAngular/dist/textAngular.css">
+    <link rel="stylesheet" href="/bower_components/angularjs-color-picker/dist/angularjs-color-picker.min.css">
+    <link rel="stylesheet" href="/bower_components/ng-tags-input/ng-tags-input.css">
     <link rel="stylesheet" href="/styles/font-pe.css">
+    <link rel="stylesheet" href="/styles/image-crop.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/material.css">
+    <link rel="stylesheet" href="/styles/socialicon.css">
+    <link rel="stylesheet" href="/styles/tinymce.css">
     <!--STYLES END-->
     <style>
 
     </style>
   </head>
 <!-- ng-controller="appCtrl" -->
- <body ng-class="currentTheme">
-    <div id="loading">
+ <body ng-class="currentTheme" ng-controller="appController">
+    <!-- <div id="loading">
         <div class="loader loader-light loader-large"></div>
-    </div>
+    </div> -->
+    <span us-spinner  spinner-key="mainSpinner"></span>
             
-
-    <div class="pageVisible">
-        <dashboard></dashboard>
-    </div>
-    <div class="pageAfter">
-        <div class="swiperback" ng-click="returnDashboardState()"></div>
-        <div ui-view></div>
-    </div>
+  
+    <div ui-view="dashboard"></div>
+    
 
 
      
@@ -46,23 +49,67 @@
     <script src="/js/dependencies/sails.io.js"></script>
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/tinycolor/dist/tinycolor-min.js"></script>
+    <script src="/js/dependencies/color-picker.js"></script>
+    <script src="/js/dependencies/jquery-ui.min.js"></script>
+    <script src="/js/dependencies/jquery.autoElipsis.js"></script>
+    <script src="/js/dependencies/lodash.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/moment/locale/fr.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="/bower_components/angular-sails/dist/angular-sails.js"></script>
+    <script src="/bower_components/angularSails/dist/ngsails.io.js"></script>
     <script src="/bower_components/flexi-list-master/flexi-list.js"></script>
     <script src="/bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
     <script src="/bower_components/angular-gridster/dist/angular-gridster.min.js"></script>
     <script src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="/bower_components/tinymce-dist/tinymce.js"></script>
+    <script src="/bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+    <script src="/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+    <script src="/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
+    <script src="/bower_components/angular-moment/angular-moment.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="/bower_components/angular-material/angular-material.js"></script>
+    <script src="/bower_components/angular-file-model/angular-file-model.js"></script>
+    <script src="/bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="/bower_components/ng-tags-input/ng-tags-input.js"></script>
+    <script src="/bower_components/spin.js/spin.js"></script>
+    <script src="/bower_components/angular-spinner/angular-spinner.js"></script>
+    <script src="/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="/bower_components/angular-ui-sortable/sortable.js"></script>
+    <script src="/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
+    <script src="/bower_components/ngSlimscroll/src/js/min/ngSlimscroll.js"></script>
     <script src="/js/backoffice/core/app.annotated.js"></script>
     <script src="/js/backoffice/core/widgetService.annotated.js"></script>
+    <script src="/js/backoffice/blog/index.annotated.js"></script>
+    <script src="/js/backoffice/categories/index.annotated.js"></script>
     <script src="/js/backoffice/social/index.annotated.js"></script>
     <script src="/js/backoffice/user/index.annotated.js"></script>
-    <script src="/js/backoffice/core/directives/bodyBg.annotated.js"></script>
+    <script src="/js/backoffice/blog/articleService.annotated.js"></script>
+    <script src="/js/backoffice/blog/directives/addArticle.annotated.js"></script>
+    <script src="/js/backoffice/blog/directives/blog.annotated.js"></script>
+    <script src="/js/backoffice/categories/directives/categories.annotated.js"></script>
+    <script src="/js/backoffice/categories/services/categoryService.annotated.js"></script>
+    <script src="/js/backoffice/core/directives/auditref.annotated.js"></script>
     <script src="/js/backoffice/core/directives/dashboard.annotated.js"></script>
     <script src="/js/backoffice/core/directives/dashboardconfigWidget.annotated.js"></script>
+    <script src="/js/backoffice/core/directives/ellipsis.annotated.js"></script>
+    <script src="/js/backoffice/core/directives/inputcount.annotated.js"></script>
     <script src="/js/backoffice/core/directives/menuWidget.annotated.js"></script>
+    <script src="/js/backoffice/core/directives/removeremove.annotated.js"></script>
     <script src="/js/backoffice/core/directives/titleDashWidget.annotated.js"></script>
+    <script src="/js/backoffice/core/directives/urlprefixer.annotated.js"></script>
+    <script src="/js/backoffice/core/filters/bigNumerFilter.annotated.js"></script>
+    <script src="/js/backoffice/core/filters/byteFilters.annotated.js"></script>
+    <script src="/js/backoffice/core/filters/duration.annotated.js"></script>
+    <script src="/js/backoffice/core/filters/regex.annotated.js"></script>
+    <script src="/js/backoffice/core/services/categoryService.annotated.js"></script>
+    <script src="/js/backoffice/core/services/documentService.annotated.js"></script>
+    <script src="/js/backoffice/core/services/imageService.annotated.js"></script>
+    <script src="/js/backoffice/core/services/tagService.annotated.js"></script>
+    <script src="/js/backoffice/easyImageCrop/colorpicker.annotated.js"></script>
+    <script src="/js/backoffice/easyImageCrop/imageCrop.annotated.js"></script>
     <script src="/js/backoffice/social/directives/socialWidget.annotated.js"></script>
     <script src="/js/backoffice/user/directives/userProfileWidget.annotated.js"></script>
     <script src="/js/backoffice/user/directives/usersPage.annotated.js"></script>

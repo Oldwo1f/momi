@@ -50,23 +50,19 @@ angular.module('core').factory('widgetService',function ($compile,$http) {
 			// {
 			// 	console.log('true');
 				service.list = response.data;
-			// }else{
-			// 	console.log('false');
-			// 	service.list = service.defaultList;
-			// }
-		    // this callback will be called asynchronously
-		    // when the response is available
+				return service.list;
 		  }, function errorCallback(response) {
 		    // called asynchronously if an error occurs
 		    // or server returns response with an error status.
-		    service.list = service.defaultList;
+		    	service.list = service.defaultList;
+				return service.list;
 		  });
 		
 	}
 
 
 
-	service.restoreDash();
+	// service.restoreDash();
 
 
 

@@ -15,7 +15,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-       'assets/js/dependencies/sails.io.js',
+      'test_front/config.js',
+
+      'assets/js/dependencies/sails.io.js',
 
       'bower_components/angular/angular.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
@@ -44,6 +46,7 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
         '!assets/js/dependencies/*.js': ['coverage'],
+        'test_front/config.js':['browserify'],
         'test_front/**/*.test.js':['browserify'],
         'assets/**/*.js': ['coverage'],
         'api/**/*.js': ['coverage'],

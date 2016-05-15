@@ -17,7 +17,7 @@
  *
  */
 module.exports = function (grunt) {
-  grunt.registerTask('default', ['compileAssets', 'linkAssets',  'watch']);
+  grunt.registerTask('default', ['compileAssets', 'linkAssets']);
   grunt.registerTask('bower', ['clean:components','copy:components']);
   grunt.registerTask('debug', ['ngAnnotate:backoffice','concurrent:target']);
   grunt.registerTask('test', ['mochaTest:backoffice','karma:front','watch:test']);

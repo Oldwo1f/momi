@@ -1,4 +1,4 @@
-angular.module('social')
+angular.module('momi-social')
   .directive('socialWidget', function(){
 
     'use strict';

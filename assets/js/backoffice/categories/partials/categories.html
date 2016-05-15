@@ -1,0 +1,114 @@
+<div class="my-container">
+
+
+<div infinite-scroll="myPagingFunction()">
+	<article class="widget">
+		<header class="pageHeader">
+
+			<a  class="rightBtn" ng-click="returnDashboardState()">
+				<span ><i class="fa fa-dashboard"></i></span>
+			</a>
+			<a  class="rightBtn" ng-click="returnPreviousState()">
+				<span  ><i class="fa fa-long-arrow-left"></i></span>
+			</a>
+			<div class="pageTitle">
+				<i class="pe-7f-way"></i><h3>Mes catégories</h3>
+			</div>
+			<div class="searchBar">
+				<input class="" type="text" ng-blur="searchArticle()" ng-model="searchSlug" placeholder="Recherche dans les catégories">
+				<span class="iconsearch"><i class="fa fa-search"></i></span>
+			</div>
+			<!-- <a class="leftBtn" href="">
+				<span  ><i class="pe-7s-way"></i></span>
+			</a> -->
+			<!-- <a class="leftBtn" ui-sref="add">
+				<span  ><i class="pe-7s-plus"></i></span>
+			</a> -->
+		</header>
+		
+		<div class="widget__content table-responsive">
+			
+			<table class="table media-table">
+		  	<thead>
+		  		<tr>
+		  			<!-- <i ng-if="!searchSlug" ng-show="sort=='date DESC'" class="pe-7s-angle-down"></i>  <i ng-if="!searchSlug" ng-show="sort=='date ASC'" class="pe-7s-angle-up"> -->
+		  			<th width="150" ng-click="changeSort('date');" >Image </th>
+		  			<th  ng-click="changeSort('status');">Titre</th>
+		  			<th style="width:150px;">Couleur</th>
+		  			<th style="width:150px;" >Couleur du text</th>
+
+
+		  			<!-- <i ng-if="!searchSlug" ng-show="sort=='status DESC'" class="pe-7s-angle-down pull-right"></i> <i ng-if="!searchSlug" ng-show="sort=='status ASC'" class="pe-7s-angle-up pull-right" />
+		  			<span class="pull-right">Status</span> -->
+		  		</tr>
+		  	</thead>
+		  	<tbody>
+
+		  	
+		  		<tr class="tableRowCat" ng-repeat="cat in categoriesList">
+
+		  			<td>
+		  				<p class="post__date">
+		  					
+		  					<span class="dddd">{{cat.createdAt | amDateFormat:'dddd'}}</span>
+		  					<span class="DD">{{cat.createdAt | amDateFormat:'DD'}}</span>
+		  					<span class="MM ">{{cat.createdAt | amDateFormat:'MMM'}}</span>
+		  				</p>
+		  			</td>
+		  			<td>
+		  				<!-- <div class="media">
+
+								<figure class="pull-left post__img" ng-if="article.images.length > 0 && (!article.videoUrl || !article.videoHost)">
+									<img class="media-object" ng-src="image/adminThumbs/{{article.images[0].filename}}">
+								</figure>
+								<figure  class="pull-left post__img post_video" ng-if="article.videoUrl && article.videoHost">
+									<div ng-if="article.videoHost =='youtube'"> <i class="socicon-youtube" aria-hidden="true"></i></div>
+									<div ng-if="article.videoHost =='dailymotion'"> <i class="socicon-dailymotion" aria-hidden="true"></i></div> 
+									<div ng-if="article.videoHost =='vimeo'"> <i class="socicon-vimeo" aria-hidden="true"></i></div>
+								</figure>
+								<div class="media-body post_desc">
+									<h3>{{cat.title}}</h3>
+									<div class="btnstable">
+										
+									<button class="btn blue btn-sm"  ui-sref="edit({id: article.id})" >Edit</button>
+									<div class="btn-group block">
+									  <a ng-click="article.status='actif';update(article.id, 'status','actif')" type="button" class="fakeColorGreen btn active"  ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}" style="border-right:0px">Actif</a>
+									  <a ng-click="article.status='draft';update(article.id, 'status','draft')" type="button" class="fakeColorOrange btn active" ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}" >Brouillon</a>
+									  <a ng-click="article.status='inactif';update(article.id, 'status','inactif')" type="button" class="fakeColorRed btn active" ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}"  style="border-left:0px">Inactif</a>
+									</div>
+									</div>
+								</div>
+							</div> -->
+									<h3>{{cat.name}}</h3>
+
+		  			</td>
+		  			<td >
+		  				<!-- <input minicolors="miniColorsSetting" id="color-input" class="form-control" type="text" ng-model="cat.color"> -->
+		  				<color-picker ng-model="cat.color"  color-picker-format="'hex'" color-picker-alpha="false" color-picker-swatch-only="true" color-picker-on-Blur="changeColor(cat.color, cat.id)"></color-picker>
+		  			</td>
+		  			<td>
+		  				<div class="formGroup">
+							<div class="btn-group block">
+							  <a ng-click="cat.textColor='black';update(cat.id,'textColor',cat.textColor)" type="button" class="fakeColorBlack btn active"  ng-class="{'black':cat.textColor=='black','white':cat.textColor=='white'}" style="border-right:0px">Noir</a>
+							  <a ng-click="cat.textColor='white';update(cat.id,'textColor',cat.textColor)" type="button" class="fakeColorWhite btn active" ng-class="{'black':cat.textColor=='black','white':cat.textColor=='white'}"  style="border-left:0px">Blanc</a>
+							</div>
+						</div>
+		  			</td>
+		  		</tr>
+
+
+		  	</tbody>
+			</table>
+			<div class="endInfinite">
+				
+				<span us-spinner="spinneropts"  spinner-key="articleSpinner"></span>
+				<span ng-if="fin">Fin</span>
+			</div>
+			
+
+			
+		</div> <!-- /widget__content -->
+
+	</article>
+</div>
+</div>

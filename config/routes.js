@@ -37,7 +37,21 @@ module.exports.routes = {
   // },
   '/':'adminController.serveApp',
   'POST /saveDash':'testController.saveDash',
-  '/restoreDash':'testController.restoreDash'
+  '/restoreDash':'testController.restoreDash',
+
+
+
+  
+  'GET /tag/searchAutocomplete/:searchText':'tagController.searchAutocomplete',
+  'GET /category/searchAutocomplete/:searchText':'categoryController.searchAutocomplete',
+  'POST /article/:id/documents':'articleController.uploadDocument',
+  'POST /article/:id/images':'articleController.uploadImage',
+  'GET /image/:size/:name':'ImageController.serveImage',
+  'POST /image/resize':'ImageController.resizeImage',
+  'get /article/search/:sort/:slug':'articleController.search',
+  // 'POST /article/:id/tags/:pk':'ArticleController.addTag',
+  // 'POST /article/:id/tags':'ArticleController.addTag',
+  // 'DELETE /article/:id/tags/:pk':'ArticleController.removeTag',
 
   /***************************************************************************
   *                                                                          *

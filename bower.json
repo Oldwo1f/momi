@@ -18,13 +18,30 @@
     "bootstrap": "3.3.6",
     "startbootstrap-sb-admin-2": "1.0.8",
     "angular-animate": "1.5.0",
-    "angular-moment": "0.10.3",
+    "angular-moment": "~0.10.3",
     "angular-ui-router": "~0.2.18",
-    "angular-sails": "~1.1.4"
+    "angular-ui-tinymce": "~0.0.15",
+    "angular-bootstrap-datetimepicker": "~1.0.1",
+    "moment": "~2.13.0",
+    "angular-material": "~1.0.7",
+    "angular-aria": "~1.5.5",
+    "angular-file-model": "~0.3.1",
+    "ng-file-upload": "~12.0.4",
+    "angularSails": "~0.12.1",
+    "ng-tags-input": "~3.0.0",
+    "angular-spinner": "~0.8.1",
+    "angular-file-upload": "~2.2.0",
+    "angular-ui-sortable": "~0.14.0",
+    "ngInfiniteScroll": "1.0.0",
+    "angularjs-color-picker": "~1.1.1"
   },
   "resolutions": {
     "font-awesome": "4.5.0",
     "angular": "1.5.5",
-    "angular-animate": "~1.5.5"
+    "angular-animate": "~1.5.5",
+    "moment": ">=2.8.0 <2.11.0"
+  },
+  "devDependencies": {
+    "angular-ui-tinymce": "~0.0.15"
   }
 }

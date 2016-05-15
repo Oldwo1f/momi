@@ -1,4 +1,4 @@
-angular.module('user')
+angular.module('momi-user')
   .directive('usersPage', function(){
 
     'use strict';

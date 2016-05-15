@@ -6,7 +6,8 @@ module.exports = function(grunt) {
 		dev: {
                	script:'app.js',
 				options: {
-					ignore: ['api/controllers/**','!assets/**/*.annotate.js','api/services/**','api/models/**','node_modules/**','.tmp/**','tasks/','!.rebooted','!dash.js'],
+					ignore: ['assets/**/*.annotate.js','node_modules/**','.tmp/**','tasks/','.rebooted','dash.js'],
+					// ignore: ['api/controllers/**','!assets/**/*.annotate.js','api/services/**','api/models/**','node_modules/**','.tmp/**','tasks/','!.rebooted','!dash.js'],
 					ext: 'js,html',
 					callback: function (nodemon) {
 						// console.log("NODEMON CALLBACK");
@@ -21,7 +22,7 @@ module.exports = function(grunt) {
 										console.log('REBOOTED');
 										require('fs').writeFileSync('.rebooted', 'rebooted');
 										REBOOTING = false;
-								}, 5000);
+								}, 4000);
 							}
 
 				        });

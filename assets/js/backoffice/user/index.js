@@ -1,13 +1,13 @@
-angular.module('user', ['ui.router'])
+angular.module('momi-user', ['ui.router'])
 .config(function($stateProvider, $urlRouterProvider){
 
     $stateProvider
       .state('users', {
         url : '/users',
+        parent:'dashboard',
         views:{
-        	'': {
-        		template: '<users-page></users-page>' 
-
+            'page1': {
+                template: '<users-page></users-page>',
         	}
 
         }
