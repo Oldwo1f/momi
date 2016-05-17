@@ -15,7 +15,7 @@
 				<i class="pe-7f-way"></i><h3>Mes catégories</h3>
 			</div>
 			<div class="searchBar">
-				<input class="" type="text" ng-blur="searchArticle()" ng-model="searchSlug" placeholder="Recherche dans les catégories">
+				<input class="" type="text" ng-blur="searchCategories()" ng-keypress="blurOnEnter($event)" ng-model="searchSlug" placeholder="Recherche dans les catégories">
 				<span class="iconsearch"><i class="fa fa-search"></i></span>
 			</div>
 			<!-- <a class="leftBtn" href="">
@@ -32,8 +32,10 @@
 		  	<thead>
 		  		<tr>
 		  			<!-- <i ng-if="!searchSlug" ng-show="sort=='date DESC'" class="pe-7s-angle-down"></i>  <i ng-if="!searchSlug" ng-show="sort=='date ASC'" class="pe-7s-angle-up"> -->
-		  			<th width="150" ng-click="changeSort('date');" >Image </th>
-		  			<th  ng-click="changeSort('status');">Titre</th>
+		  			<th width="210"  >Image </th>
+		  			<th  ng-click="changeSort('name');">Titre <i ng-if="!searchSlug" ng-show="sort=='name DESC'" class="pe-7s-angle-down"></i>  <i ng-if="!searchSlug" ng-show="sort=='name ASC'" class="pe-7s-angle-up"></th>
+		  			<th style="width:80px;" ng-click="changeSort('nbProjects');" >Projet <i ng-if="!searchSlug" ng-show="sort=='nbProjects DESC'" class="pe-7s-angle-down"></i>  <i ng-if="!searchSlug" ng-show="sort=='nbProjects ASC'" class="pe-7s-angle-up"></th>
+		  			<th style="width:80px;"ng-click="changeSort('nbArticles');" >Article <i ng-if="!searchSlug" ng-show="sort=='nbArticles DESC'" class="pe-7s-angle-down"></i> <i ng-if="!searchSlug" ng-show="sort=='nbArticles ASC'" class="pe-7s-angle-up"></th>
 		  			<th style="width:150px;">Couleur</th>
 		  			<th style="width:150px;" >Couleur du text</th>
 
@@ -48,39 +50,20 @@
 		  		<tr class="tableRowCat" ng-repeat="cat in categoriesList">
 
 		  			<td>
-		  				<p class="post__date">
-		  					
-		  					<span class="dddd">{{cat.createdAt | amDateFormat:'dddd'}}</span>
-		  					<span class="DD">{{cat.createdAt | amDateFormat:'DD'}}</span>
-		  					<span class="MM ">{{cat.createdAt | amDateFormat:'MMM'}}</span>
-		  				</p>
+		  				<div class="btn btn-primary" ng-click="ModalImage(cat)" ng-if="!cat.images[0]">Ajouter une image</div>
+		  				<figure class="pull-left tableCat__img" ng-if="cat.images[0]" ng-click="ModalImage(cat)">
+							<img class="media-object" ng-src="image/resized/{{cat.images[0].filename}}" alt="user">
+							
+						</figure>
 		  			</td>
 		  			<td>
-		  				<!-- <div class="media">
-
-								<figure class="pull-left post__img" ng-if="article.images.length > 0 && (!article.videoUrl || !article.videoHost)">
-									<img class="media-object" ng-src="image/adminThumbs/{{article.images[0].filename}}">
-								</figure>
-								<figure  class="pull-left post__img post_video" ng-if="article.videoUrl && article.videoHost">
-									<div ng-if="article.videoHost =='youtube'"> <i class="socicon-youtube" aria-hidden="true"></i></div>
-									<div ng-if="article.videoHost =='dailymotion'"> <i class="socicon-dailymotion" aria-hidden="true"></i></div> 
-									<div ng-if="article.videoHost =='vimeo'"> <i class="socicon-vimeo" aria-hidden="true"></i></div>
-								</figure>
-								<div class="media-body post_desc">
-									<h3>{{cat.title}}</h3>
-									<div class="btnstable">
-										
-									<button class="btn blue btn-sm"  ui-sref="edit({id: article.id})" >Edit</button>
-									<div class="btn-group block">
-									  <a ng-click="article.status='actif';update(article.id, 'status','actif')" type="button" class="fakeColorGreen btn active"  ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}" style="border-right:0px">Actif</a>
-									  <a ng-click="article.status='draft';update(article.id, 'status','draft')" type="button" class="fakeColorOrange btn active" ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}" >Brouillon</a>
-									  <a ng-click="article.status='inactif';update(article.id, 'status','inactif')" type="button" class="fakeColorRed btn active" ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}"  style="border-left:0px">Inactif</a>
-									</div>
-									</div>
-								</div>
-							</div> -->
-									<h3>{{cat.name}}</h3>
-
+		  				<input type="text" class="stacked-input" ng-model="cat.name" ng-blur="update(cat.id,'name',cat.name)">
+		  			</td>
+		  			<td>
+		  				<span class="spanNumber">{{cat.nbProjects}}</span>
+		  			</td>
+		  			<td>
+		  				<span class="spanNumber">{{cat.nbArticles}}</span>
 		  			</td>
 		  			<td >
 		  				<!-- <input minicolors="miniColorsSetting" id="color-input" class="form-control" type="text" ng-model="cat.color"> -->
@@ -99,6 +82,9 @@
 
 		  	</tbody>
 			</table>
+
+			
+
 			<div class="endInfinite">
 				
 				<span us-spinner="spinneropts"  spinner-key="articleSpinner"></span>

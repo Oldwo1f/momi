@@ -3,9 +3,11 @@ angular.module('core').factory('widgetService',function ($compile,$http) {
 	var service = {};
 	service.list = {};
 	service.defaultList = {
-	titleDashWidget : { enabled : true, required : false, widgetName :'titleDashWidget',html: '<title-dash-widget></title-dash-widget>',sizeX: 4, sizeY: 2 , minSizeY:1,maxSizeY :24,minSizeX:1 , maxSizeX : 24, col:0 ,row: 0,noresize:false,transparent: false,myclasses:'tata' },
-	menuWidget : { enabled : true, required : false, widgetName :'menuWidget',html: '<menu-widget></menu-widget>',sizeX: 4, sizeY: 6 , minSizeY:1,maxSizeY :12,minSizeX:1 , maxSizeX : 24, col:0 ,row: 2,noresize:false,transparent: false,myclasses:'titi' },
-	dashboardconfigWidget : { enabled : true, required : true, widgetName :'dashboardconfigWidget',html: '<dashboardconfig-widget></dashboardconfig-widget>',sizeX: 8, sizeY: 1 , minSizeY:1,maxSizeY :12,minSizeX:1 , maxSizeX : 24, col:6 ,row: 2,noresize:false,transparent: false,myclasses:'titi' },
+	titleDashWidget : { enabled : true, required : false, widgetName :'titleDashWidget',html: '<title-dash-widget></title-dash-widget>',sizeX: 4, sizeY: 2 , minSizeY:1,maxSizeY :24,minSizeX:1 , maxSizeX : 24, col:0 ,row: 0,noresize:false,transparent: false },
+	menuWidget : { enabled : true, required : false, widgetName :'menuWidget',html: '<menu-widget></menu-widget>',sizeX: 4, sizeY: 6 , minSizeY:1,maxSizeY :12,minSizeX:1 , maxSizeX : 24, col:0 ,row: 2,noresize:false,transparent: false },
+	dashboardconfigWidget : { enabled : true, required : true, widgetName :'dashboardconfigWidget',html: '<dashboardconfig-widget></dashboardconfig-widget>',sizeX: 8, sizeY: 1 , minSizeY:1,maxSizeY :12,minSizeX:1 , maxSizeX : 24, col:6 ,row: 2,noresize:false,transparent: false },
+	lastarticleWidget : { enabled : true, required : true, widgetName :'lastarticleWidget',html: '<lastarticle-widget></lastarticle-widget>',sizeX: 8, sizeY: 1 , minSizeY:1,maxSizeY :12,minSizeX:1 , maxSizeX : 24, col:8 ,row: 8,noresize:false,transparent: false },
+	categorycloudWidget : { enabled : true, required : true, widgetName :'categorycloudWidget',html: '<categorycloud-widget></categorycloud-widget>',sizeX: 8, sizeY: 1 , minSizeY:1,maxSizeY :12,minSizeX:1 , maxSizeX : 24, col:8 ,row: 8,noresize:false,transparent: false},
 	};
 
 	
@@ -49,6 +51,9 @@ angular.module('core').factory('widgetService',function ($compile,$http) {
 			// if(response.data.length>0)
 			// {
 			// 	console.log('true');
+
+				// service.list = service.defaultList
+				// return service.defaultList
 				service.list = response.data;
 				return service.list;
 		  }, function errorCallback(response) {

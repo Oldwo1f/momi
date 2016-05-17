@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/bower_components/textAngular/dist/textAngular.css">
     <link rel="stylesheet" href="/bower_components/angularjs-color-picker/dist/angularjs-color-picker.min.css">
     <link rel="stylesheet" href="/bower_components/ng-tags-input/ng-tags-input.css">
+    <link rel="stylesheet" href="/bower_components/jqcloud2/dist/jqcloud.min.css">
     <link rel="stylesheet" href="/styles/font-pe.css">
     <link rel="stylesheet" href="/styles/image-crop.css">
     <link rel="stylesheet" href="/styles/importer.css">
@@ -20,6 +21,8 @@
     <link rel="stylesheet" href="/styles/material.css">
     <link rel="stylesheet" href="/styles/socialicon.css">
     <link rel="stylesheet" href="/styles/tinymce.css">
+    <link rel="stylesheet" href="/styles/widget/categorycloud.css">
+    <link rel="stylesheet" href="/styles/widget/lastarticleWidget.css">
     <!--STYLES END-->
     <style>
 
@@ -50,6 +53,7 @@
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/bower_components/tinycolor/dist/tinycolor-min.js"></script>
+    <script src="/bower_components/jqcloud2/dist/jqcloud.min.js"></script>
     <script src="/js/dependencies/jquery-ui.min.js"></script>
     <script src="/js/dependencies/jquery.autoElipsis.js"></script>
     <script src="/js/dependencies/lodash.js"></script>
@@ -88,11 +92,16 @@
     <script src="/js/backoffice/blog/articleService.annotated.js"></script>
     <script src="/js/backoffice/blog/directives/addArticle.annotated.js"></script>
     <script src="/js/backoffice/blog/directives/blog.annotated.js"></script>
+    <script src="/js/backoffice/blog/directives/lastArticleWidget.annotated.js"></script>
     <script src="/js/backoffice/categories/directives/categories.annotated.js"></script>
+    <script src="/js/backoffice/categories/directives/categoryCloudWidget.annotated.js"></script>
+    <script src="/js/backoffice/core/directives/angular-jqcloud.annotated.js"></script>
     <script src="/js/backoffice/core/directives/auditref.annotated.js"></script>
+    <script src="/js/backoffice/core/directives/categoryCloudWidget.annotated.js"></script>
     <script src="/js/backoffice/core/directives/dashboard.annotated.js"></script>
     <script src="/js/backoffice/core/directives/dashboardconfigWidget.annotated.js"></script>
     <script src="/js/backoffice/core/directives/ellipsis.annotated.js"></script>
+    <script src="/js/backoffice/core/directives/enterBlur.annotated.js"></script>
     <script src="/js/backoffice/core/directives/inputcount.annotated.js"></script>
     <script src="/js/backoffice/core/directives/menuWidget.annotated.js"></script>
     <script src="/js/backoffice/core/directives/removeremove.annotated.js"></script>
@@ -101,6 +110,7 @@
     <script src="/js/backoffice/core/filters/bigNumerFilter.annotated.js"></script>
     <script src="/js/backoffice/core/filters/byteFilters.annotated.js"></script>
     <script src="/js/backoffice/core/filters/duration.annotated.js"></script>
+    <script src="/js/backoffice/core/filters/randomSrc.annotated.js"></script>
     <script src="/js/backoffice/core/filters/regex.annotated.js"></script>
     <script src="/js/backoffice/core/services/categoryService.annotated.js"></script>
     <script src="/js/backoffice/core/services/documentService.annotated.js"></script>

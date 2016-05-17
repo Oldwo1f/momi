@@ -25,6 +25,18 @@ angular.module('core')
 
         return deferred.promise;
     };
+    service.fetchLast= function() {
+        var deferred = $q.defer();
+
+        $sailsSocket.get('/article?sort=date DESC&limit=1&where={"status":"actif"}').success(function (data,status) {
+            console.log(data);
+            deferred.resolve(data[0]);
+        }).error(function (data,status) {
+            deferred.reject('error perso');
+        })
+
+        return deferred.promise;
+    };
     service.search= function(slug,sort) {
         var deferred = $q.defer();
         sort = sort? sort : 'date DESC'

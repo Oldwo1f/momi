@@ -29,7 +29,7 @@ angular.module('momi-blog', ['ui.router'])
 
 	        }
        	})
-      	.state('add', {
+      	.state('blog.add', {
 	        url : '/add',
 	        parent:'blog',
 	        views:{
@@ -48,7 +48,7 @@ angular.module('momi-blog', ['ui.router'])
 
 	        }
        	})
-      	.state('edit', {
+      	.state('blog.edit', {
 	        url : '/edit/:id',
 	        parent:'blog',
 	        views:{

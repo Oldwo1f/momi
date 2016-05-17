@@ -13,7 +13,10 @@ module.exports = {
   		textColor:{type:'string',defaultsTo:'red'},
   		color:{type:'string',defaultsTo:'green'},
   		nbArticles:{type:'int',defaultsTo:0},
-  		nbProjects:{type:'int',defaultsTo:0},
+        nbProjects:{type:'int',defaultsTo:0},
+  		total:{type:'int',defaultsTo:0},
+        images:{collection:'image',defaultsTo:[]},
+        
   		selfUpdate:function(options,cb){
         console.log('SELF UPDATE');
         console.log(options);
@@ -35,7 +38,10 @@ module.exports = {
                     }).then(function(result){
                         console.log(result[0]);
                         cb(null,result[0]);
-                        
+                        Category.publishUpdate( data.id , {
+                                nbArticles : data.nbArticles,
+                                total : data.total
+                        } )
                     })
                    
                 }).catch(function (err) {
@@ -52,6 +58,7 @@ module.exports = {
                      //&& data.nbArticles<=0 && data.nbArticles<=0 &&
                         return Category.destroy(data.id).then(function(result){
                             cb(null,result[0]);
+                            Category.publishDestroy( data.id )
                         })  
                     }else{
                         return Category.update(data.id ,
@@ -60,7 +67,10 @@ module.exports = {
                             total : data.total
                         }).then(function(result){
                             cb(null,result[0]);
-                            
+                            Category.publishUpdate( data.id , {
+                                nbArticles : data.nbArticles,
+                                total : data.total
+                            } )
                         })
 
                     }

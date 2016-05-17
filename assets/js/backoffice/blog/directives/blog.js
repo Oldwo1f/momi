@@ -95,19 +95,60 @@ angular.module('momi-blog')
 					})
 				}
 			}
+				$scope.blurSearch= 0;
 			$scope.searchArticle=function(){
-
-				console.log('$scope.searchSlug');
-				console.log($scope.searchSlug);
-				articleService.search($scope.searchSlug,$scope.sort).then(function(data){
-					console.log(data);
-					$scope.articlesList = data;
-				}).catch(function(e){
-					console.log('err');
-					console.log(e);
-				})
+				console.log('SEARCHARTICLE');
+				if($scope.searchSlug){
+					if($scope.blurSearch== 0){
+						console.log('$scope.searchSlug');
+						console.log($scope.searchSlug);
+						articleService.search($scope.searchSlug,$scope.sort).then(function(data){
+							console.log(data);
+							$scope.articlesList = data;
+						}).catch(function(e){
+							console.log('err');
+							console.log(e);
+						})
+					}else if($scope.blurSearch== 1){
+						console.log('$scope.searchSlug');
+						console.log($scope.searchSlug);
+						articleService.search($scope.searchSlug,$scope.sort).then(function(data){
+							console.log(data);
+							$scope.articlesList = data;
+							$scope.blurSearch = 2;
+						}).catch(function(e){
+							console.log('err');
+							console.log(e);
+						})
+					}else if($scope.blurSearch== 2){
+						console.log('$scope.searchSlug');
+						$scope.blurSearch = 0;
+					}
+				}else{
+					articleService.fetch($scope.sort,0,10).then(function(data){
+						console.log(data);
+						if(data.length==0)
+						{
+							$scope.fin = true
+						}else{
+							$scope.articlesList = data;
+						}
+						$scope.stopSpin()
+					})
+				}
 			}
 
+			$scope.blurOnEnter=function($event,$element) {
+				if($event.keyCode == 13){
+					// $event.currentTarget.blur()
+					console.log('ON ENTER');
+					$scope.blurSearch = 1;	
+					$scope.searchArticle();
+				}else{
+					$scope.blurSearch = 0;
+				}
+				
+			}
 			$scope.changeSort=function(type){
 				switch(type)
 				{
@@ -123,6 +164,13 @@ angular.module('momi-blog')
 							$scope.sort =	'status ASC'
 						}else{
 						 	$scope.sort =	'status DESC'
+						}
+					break;
+					case 'nbView':
+						if($scope.sort == 'nbView DESC'){
+							$scope.sort =	'nbView ASC'
+						}else{
+						 	$scope.sort =	'nbView DESC'
 						}
 					break;
 				}

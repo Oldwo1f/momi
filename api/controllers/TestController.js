@@ -47,7 +47,7 @@ module.exports = {
       }
 
       console.log('We can read File');
-      console.log(data);
+      // console.log(data);
       var result = JSON.parse(data);
       console.log(_.isEmpty(result))
       if(_.isEmpty(result))

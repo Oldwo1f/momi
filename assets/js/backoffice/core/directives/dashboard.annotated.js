@@ -97,7 +97,8 @@ angular.module('core')
                     $('.page1').addClass('pageBefore').removeClass('pageVisible pageAfter');
                     $('.page2').addClass('pageVisible').removeClass('pageAfter pageBefore');
                 }
-            }else{
+            }
+            else{
                 var fromViewName = _.map(from.views,function(value,key){ return key;})
                 fromViewName = fromViewName[0];
                 console.log(fromViewName);
@@ -143,6 +144,7 @@ angular.module('core')
 
 
         }
+       
         // $scope.swipeback =function(){
         //   console.log('SWIPEswipeback');
         //   $('.pageVisible').addClass('pageAfter').removeClass('pageVisible');
@@ -167,7 +169,7 @@ angular.module('core')
         });
         $scope.$on('$stateChangeStart',function (e,toState,toParams,fromState,fromParams){
           console.log('$stateChangeStart');
-            $scope.initSwipe(toState, fromState)
+            // $scope.initSwipe(toState, fromState)
         });
         // INIT FIRST SWIPE IF view is on right page
         // if($state.current.name != "dashboard")

@@ -24,6 +24,7 @@ var cssFilesToInject = [
   'bower_components/textAngular/dist/textAngular.css',
   'bower_components/angularjs-color-picker/dist/angularjs-color-picker.min.css',
   'bower_components/ng-tags-input/ng-tags-input.css',
+  'bower_components/jqcloud2/dist/jqcloud.min.css',
 
   // 'bower_components/angular-material/angular-material.css',
   'styles/**/*.css',
@@ -42,6 +43,7 @@ var jsFilesToInject = [
   'bower_components/jquery/dist/jquery.min.js',
   'bower_components/bootstrap/dist/js/bootstrap.min.js',
   'bower_components/tinycolor/dist/tinycolor-min.js',
+  'bower_components/jqcloud2/dist/jqcloud.min.js',
   'js/dependencies/**/*.js',
   'bower_components/moment/moment.js',
   'bower_components/moment/locale/fr.js',

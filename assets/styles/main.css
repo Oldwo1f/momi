@@ -4160,12 +4160,12 @@ input[name^="tab-radio"]:checked + label {
 
 
 
-.dashboardconfigWidget .widget__header {
+ .widget__header {
   position: relative;
   width: 100%;
   overflow: hidden;
 }
-.dashboardconfigWidget .widget__title {
+ .widget__title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -4406,8 +4406,8 @@ input::-webkit-input-placeholder {line-height:1.5rem;font-size: 1rem;}
 .addImages .form_col_r:last-child{ margin-bottom:100px;}
 .addImages .imageList {display:flex;flex-wrap:no-wrap;justify-content: flex-start; align-content:stretch;}
 .addImages .post__img{position: relative;width: 100%; max-width:200px;background: transparent;margin: 5px 0px 5px 5px;border-radius: 0px;}
-/*.addImages .post__img:last-child{margin-right: 5px;}*/
 .addImages  .completor{width: 100%; background: rgba(0,0,0,0.25);margin: 5px 0px 5px 5px;margin-right: 5px;}
+/*.addImages .post__img:last-child{margin-right: 5px;}*/
 /*.addImages .post__img:nth-child(1),.addImages .post__img:nth-child(2),.addImages .post__img:nth-child(3),.addImages .post__img:nth-child(4){margin-top:8px;}*/
 /*.addImages .post__img:nth-child(4n){margin-right:0px;}*/
 .addImages .post__img .media-object{width: 100%; background: transparent;border-radius: 0px;}
@@ -4520,7 +4520,7 @@ tags-input .tags .tag-item.selected{
 
 
 .my-container header.pageHeader { height:64px;width: 100%;position:relative;display: flex;align-items:center;background:none;}
-.my-container header.pageHeader .rightBtn{color:white;background: rgba(0,0,0,0.25);display:inline-block; font-size : 2rem;margin-right:1px;height:100%;padding:0px 20px;display: flex;align-items:center;justify-content:center;}
+.my-container header.pageHeader .rightBtn{color:white;background: rgba(0,0,0,0.25);display:inline-block; font-size : 2rem;margin-right:1px;height:100%;padding:0px 20px;display: flex;align-items:center;justify-content:center;cursor:pointer;}
 .my-container header.pageHeader .rightBtn:hover{background: rgba(0,0,0,0.35);}
 .my-container header.pageHeader .pageTitle{ flex-grow:10; background: rgba(0,0,0,0.25);display:inline-block;display: flex;align-items:center;justify-content:flex-start;font-size : 2rem; height:64px;padding: 0px 20px;}
 .my-container header.pageHeader .leftBtn{color:white;background: rgba(0,0,0,0.25);display:inline-block; font-size : 2rem;margin-left:1px;height:100%;padding:0px 20px;display: flex;align-items:center;justify-content:center;}
@@ -4547,13 +4547,33 @@ a:focus, a:hover{text-decoration: none;}
 
 
 
+.stacked-input{background:none; border:none;height: 34px;font-size: 1.2em;line-height: 34px;}
+.spanNumber{background:none; border:none;height: 34px;font-size: 1.2em;line-height: 34px; text-align: center;}
 
-
-
+.md-content-overflow .imgrelativecontainer{background:black;}
+.md-dialog-container md-toolbar .md-toolbar-tools{display:flex;align-items:center;}
+.md-dialog-container md-dialog .drop-zone{min-width: 500px;margin-bottom: 0;}
+.md-dialog-container md-dialog .btnADDIMG{font-size: 3rem;margin-left:10px;}
+/*.md-dialog-container md-dialog .messageImage{display: inline-block;}*/
+.md-dialog-container md-dialog button{width: 50%; height: 64px;}
+.md-dialog-container md-dialog-content{background:black;}
+.tableCat__img img{ height : 50px;}
+.modal__img  { position: relative;}
+.modal__img  .btnreresize{ cursor:pointer;position: absolute;right:10px;bottom: 40px;background: rgba(0,0,255,0.3);padding: 4px;}
+.modal__img  .btnreresize:hover{background: rgba(0,0,255,0.4);}
+.addImageBtnFakeBtn{;display: inline-block; float:right; font-size: 2rem;cursor: pointer;}
+.modal__img  .removeremove { position: absolute; right: 10px;bottom: 10px;}
+.modal__img  .removeremove .btn{ width: auto; height:auto;background:rgba(255,0,0,0.25);border:none; padding: 4px 6px 2px 6px;}
+.modal__img  .removeremove .btn:hover{background:rgba(255,0,0,0.35);}
 
 
 .my-container header.pageHeader .pageTitle i {margin-right:15px;}
 
+.tableRowCat td:first-child{padding:5px;vertical-align: middle;text-align: center;}
+.md-dialog-container .imageList {background:rgba(255,0,0,0.0);width: 100%;position: relative;display: flex;padding: 10px;}
+.md-dialog-container .imageList .modal__img { margin-right:5px;max-width:200px;}
+.md-dialog-container .imageList .modal__img:last-child { margin-right:0px;}
+.md-dialog-container .imageList .modal__img img{max-width:200px;}
 
 
 

@@ -10,7 +10,7 @@ angular.module('momi-categories')
       	},
 		replace: true,
 		templateUrl: 'js/backoffice/categories/partials/categories.html',
-		controller:["$scope", "$rootScope", "categoryService", "tagService", "imageService", "documentService", "$sailsSocket", "$stateParams", "$state", "usSpinnerService", function($scope,$rootScope,categoryService,tagService,imageService,documentService,$sailsSocket,$stateParams,$state,usSpinnerService){
+		controller:["$mdDialog", "$scope", "$rootScope", "categoryService", "tagService", "imageService", "documentService", "$sailsSocket", "$stateParams", "$state", "usSpinnerService", function($mdDialog,$scope,$rootScope,categoryService,tagService,imageService,documentService,$sailsSocket,$stateParams,$state,usSpinnerService){
 			console.log($scope.categoriesList);
 
 			$scope.returnParentState=function(){
@@ -115,239 +115,565 @@ angular.module('momi-categories')
 			// 		$scope.articlesList = data;
 			// 	})
 			// }
-			// $scope.pagin=1;
-			// $scope.myPagingFunction=function(){
-			// 	if(!$scope.searchSlug){
-			// 		$scope.startSpin();
-			// 		$scope.pagin++;
-			// 		console.log('myPagingFunction');
-			// 		articleService.fetch($scope.sort,$scope.pagin,10).then(function(data){
+			$scope.pagin=1;
+			$scope.myPagingFunction=function(){
+				if(!$scope.searchSlug){
+					$scope.startSpin();
+					$scope.pagin++;
+					console.log('myPagingFunction');
+					categoryService.fetch($scope.sort,$scope.pagin,10).then(function(data){
+						console.log(data);
+						if(data.length==0)
+						{
+							$scope.fin = true
+						}else{
+							$scope.categoriesList = _.union($scope.categoriesList , data);
+						}
+						$scope.stopSpin()
+					})
+				}
+			}
+			$scope.changeSort=function(type){
+				switch(type)
+				{
+					case 'name':
+						if($scope.sort == 'name ASC'){
+							$scope.sort =	'name DESC'
+						}else{
+						 	$scope.sort =	'name ASC'
+						}
+					break;
+					case 'nbArticles':
+						if($scope.sort == 'nbArticles DESC'){
+							$scope.sort =	'nbArticles ASC'
+						}else{
+						 	$scope.sort =	'nbArticles DESC'
+						}
+					break;
+					case 'nbProjects':
+						if($scope.sort == 'nbProjects DESC'){
+							$scope.sort =	'nbProjects ASC'
+						}else{
+						 	$scope.sort =	'nbProjects DESC'
+						}
+					break;
+				}
+				// $stateParams.sort = $scope.sort;
+				console.log($scope.sort);
+				$state.transitionTo('categories', { sort: $scope.sort,page:$scope.page,nbPerPage:$scope.nbPerPage}, {location:true});
+				// console.log('fetchArticles');
+				// $scope.fetchArticles()
+				
+			}	
+			
+			// $scope.blurOnEnter=function($event,$element) {
+			// 	if($event.keyCode == 13){
+			// 		$event.currentTarget.blur()	
+			// 		return true;
+			// 	}
+			// 	else
+			// 		return false
+			// }
+			// $scope.searchCategories=function(){
+
+			// 	console.log('$scope.searchSlug');
+			// 	console.log($scope.searchSlug);
+			// 	if($scope.searchSlug){
+
+			// 		categoryService.searchCategories($scope.searchSlug,$scope.sort).then(function(data){
+			// 			console.log(data);
+			// 			$scope.categoriesList = data;
+			// 		}).catch(function(e){
+			// 			console.log('err');
+			// 			console.log(e);
+			// 		})
+			// 	}else{
+			// 		categoryService.fetch($scope.sort,0,10).then(function(data){
 			// 			console.log(data);
 			// 			if(data.length==0)
 			// 			{
 			// 				$scope.fin = true
 			// 			}else{
-			// 				$scope.articlesList = _.union($scope.articlesList , data);
+			// 				$scope.categoriesList = data;
 			// 			}
 			// 			$scope.stopSpin()
 			// 		})
 			// 	}
 			// }
-			// $scope.searchArticle=function(){
-
-			// 	console.log('$scope.searchSlug');
-			// 	console.log($scope.searchSlug);
-			// 	articleService.search($scope.searchSlug,$scope.sort).then(function(data){
-			// 		console.log(data);
-			// 		$scope.articlesList = data;
-			// 	}).catch(function(e){
-			// 		console.log('err');
-			// 		console.log(e);
-			// 	})
-			// }
-
-			// $scope.changeSort=function(type){
-			// 	switch(type)
-			// 	{
-			// 		case 'date':
-			// 			if($scope.sort == 'date DESC'){
-			// 				$scope.sort =	'date ASC'
-			// 			}else{
-			// 			 	$scope.sort =	'date DESC'
-			// 			}
-			// 		break;
-			// 		case 'status':
-			// 			if($scope.sort == 'status DESC'){
-			// 				$scope.sort =	'status ASC'
-			// 			}else{
-			// 			 	$scope.sort =	'status DESC'
-			// 			}
-			// 		break;
-			// 	}
-			// 	// $stateParams.sort = $scope.sort;
-			// 	console.log($scope.sort);
-			// 	$state.transitionTo('blog', { sort: $scope.sort,page:$scope.page,nbPerPage:$scope.nbPerPage}, {location:true});
-			// 	console.log('fetchArticles');
-			// 	// $scope.fetchArticles()
+			$scope.blurSearch = 0;
+			$scope.searchCategories=function(){
+				console.log('searchCategories');
+				if($scope.searchSlug){
+					if($scope.blurSearch== 0){
+						console.log('$scope.searchSlug');
+						console.log($scope.searchSlug);
+						categoryService.searchCategories($scope.searchSlug,$scope.sort).then(function(data){
+							console.log(data);
+							$scope.categoriesList = data;
+						}).catch(function(e){
+							console.log('err');
+							console.log(e);
+						})
+					}else if($scope.blurSearch== 1){
+						console.log('$scope.searchSlug');
+						console.log($scope.searchSlug);
+						categoryService.searchCategories($scope.searchSlug,$scope.sort).then(function(data){
+							console.log(data);
+							$scope.categoriesList = data;
+							$scope.blurSearch = 2;
+						}).catch(function(e){
+							console.log('err');
+							console.log(e);
+						})
+					}else if($scope.blurSearch== 2){
+						console.log('$scope.searchSlug');
+						$scope.blurSearch = 0;
+					}
+				}else{
+					categoryService.fetch($scope.sort,0,10).then(function(data){
+						console.log(data);
+						if(data.length==0)
+						{
+							$scope.fin = true
+						}else{
+							$scope.categoriesList = data;
+						}
+						$scope.stopSpin()
+					})
+				}
 				
-			// }	
-			// $scope.update=function(articleid,attribute,value){
-			// 	console.log(articleid);
-			// 	$rootScope.startSpin();
-			// 	var attrToUpdate = {};
-			// 	attrToUpdate[attribute] = value;
-			// 	articleService.update(articleid,attrToUpdate).then(function(data){
-			// 		console.log('----------------------------------------------------------');
-			// 		console.log(data);
-			// 		// console.log($scope.$parent);
-			// 		// $rootScope.$broadcast('articleSelfChange',data);
-
-   //      			$rootScope.stopSpin();
-			// 	},function(d){
-			// 		console.log('EROOR');
-			// 	})
-			// }	
-			// $rootScope.$on('articleSelfChange',function(e,data){
+			}
+		
+			$scope.blurOnEnter=function($event,$element) {
+				if($event.keyCode == 13){
+					console.log('ON ENTER');
+					$scope.blurSearch = 1;	
+					$scope.searchCategories();
+				}else{
+					$scope.blurSearch = 0;
+				}
+				
+			}
+			// $rootScope.$on('categorySelfChangeImg',function(e,data){
+			// 	console.log('categorySelfChangeImg');
 			// 	console.log(data);
-			// 		var index = _.findIndex($scope.articlesList, function(o) { return o.id == data.id; });
+			// 	console.log($scope.categoryList);
+			// 		var index = _.findIndex($scope.categoryList, function(o) { return o.id == data.id; });
 			// 		if( index !== -1) {
-			// 			$scope.articlesList[index] = data;
-			// 		}
-			// })		
-			// $rootScope.$on('articleSelfRemove',function(e,id){
-			// 	console.log(id);
-			// 	console.log('articleSelfRemove');
-			// 		var index = _.findIndex($scope.articlesList, function(o) { return o.id == id; });
-			// 		if( index !== -1) {
-			// 			$scope.articlesList.splice(index,1)
-			// 		}
-			// })	
-			// $rootScope.$on('articleSelfChangeImg',function(e,data){
-			// 	console.log(data);
-			// 		var index = _.findIndex($scope.articlesList, function(o) { return o.id == data.id; });
-			// 		if( index !== -1) {
-			// 			$scope.articlesList[index].images = data.images;
-			// 		}
-			// })	
-			// $rootScope.$on('articleSelfChangeDoc',function(e,data){
-			// 	console.log(data);
-			// 		var index = _.findIndex($scope.articlesList, function(o) { return o.id == data.id; });
-			// 		if( index !== -1) {
-			// 			$scope.articlesList[index].document = data.document;
-			// 		}
-			// })	
-			// $rootScope.$on('articleSelfChangeTag',function(e,data){
-			// 	console.log(data);
-			// 		var index = _.findIndex($scope.articlesList, function(o) { return o.id == data.id; });
-			// 		if( index !== -1) {
-			// 			$scope.articlesList[index].tags = data.tags;
-			// 		}
-			// })	
-			// $rootScope.$on('articleSelfChangeCat',function(e,data){
-			// 	console.log(data);
-			// 		var index = _.findIndex($scope.articlesList, function(o) { return o.id == data.id; });
-			// 		if( index !== -1) {
-			// 			$scope.articlesList[index].categories = data.categories;
+			// 			$scope.categoryList[index].images = data.images;
+			// 			$scope.$applyAsync()
 			// 		}
 			// })
+			$scope.reloadsFirstImg =function(id,filename){
+				console.log($scope.categoriesList);
 
-			//     $sailsSocket.subscribe('article',function(data){
-			//         console.log('ON ARTICLE');
-			//         console.log(data);
-			//         if(data.verb =='created'){
+				var tmpfilename =filename + '?rdm='+Math.round(Math.random() * 999999);
+				for(var i in $scope.categoriesList)
+				{
+					if($scope.categoriesList[i].images.length){
+						
+						var index = _.findIndex($scope.categoriesList[i].images, function(o) { return o.id == id; });
+						if( index !== -1) {
+							$scope.categoriesList[i].images[index].filename= tmpfilename;
+							
+								
+						}
+						// $scope.categoriesList[0].filename
+						// for(var j in $scope.categoriesList.images)
+					}
+				}
+			}
+			// $rootScope.$on('categorySelfChangeImg2',function(e,cat){
+			// 	console.log('categorySelfChangeImg2');
+			// 	console.log(cat);
+					
+			// 		// console.log($scope.categoryList);
 
-			//         	$scope.articlesList.unshift(data.data)
+				
+
+			// 			console.log('hehe');
+			// 			var tmp = cat.images[0].fileName;
+			// 			cat.images[0].fileName = '';
+			// 			cat.images[0].fileName= tmp;
+			// 		$scope.$applyAsync()
+
+			// })
+			$scope.ModalImage=function(Cat){
+				
+				// $scope.showAdvanced = function(ev) {
+				// console.log('showadvan');
+
+			    // var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+			    $mdDialog.show({
+			      controller: ["$scope", "$rootScope", "categoryService", "Upload", "$timeout", function($scope,$rootScope,categoryService, Upload,$timeout){
+			      	
+			      	console.log(Cat.id);
+			      	$scope.Cat = Cat;
+			      	$scope.indexImage=0;
+        			$scope.uploadingImages=[];
+
+			      	$scope.imgcrop = {};
+				    $scope.imgcrop.imgEditId = 0;
+					$scope.imgcrop.displayHeight = 0;
+					$scope.imgcrop.displayWidth = 0;
+					$scope.imgcrop.scaledWidth = 0;
+					$scope.imgcrop.scaledHeight = 0;
+					$scope.imgcrop.scaledTop = 0;
+					$scope.imgcrop.scaledLeft = 0;
+					$scope.imgcrop.containerWidth = 0;
+					$scope.imgcrop.containerHeight = 0;
+					$scope.imgcrop.aspectRatio = '4/1';
+					$scope.imgcrop.imgSrc = "";
+					$scope.imgcrop.aspectRatioPaysage = '4/1';
+					$scope.imgcrop.aspectRatioPortrait = '4/1';
+
+
+					$scope.removeImg=function(img){
+						$rootScope.startSpin();
+						categoryService.removeImage(Cat.id,img).then(function(data){
+							var index = _.findIndex($scope.Cat.images, function(o) { return o.id == img; });
+							if( index !== -1) {
+								$scope.Cat.images.splice(index, 1);
+							}
+							//  else {
+							// 	$scope.formData.tags.push(tag_with_id);
+							// }
+							$rootScope.$broadcast('categorySelfChangeImg',data);
+							$rootScope.stopSpin();
+						},function(d){
+							console.log('EROOR');
+						})
+					}
+
+			      	$scope.addImgCrop=function($files){
+						console.log('uploadFiles');
+							
+						console.log($files);
+						// $scope.imgcrop = {};
+						$scope.imgcrop.imgEditId = 0;
+						$scope.imgcrop.displayHeight = 0;
+						$scope.imgcrop.displayWidth = 0;
+						$scope.imgcrop.scaledWidth = 0;
+						$scope.imgcrop.scaledHeight = 0;
+						$scope.imgcrop.scaledTop = 0;
+						$scope.imgcrop.containerWidth = 0;
+						$scope.imgcrop.containerHeight = 0;
+						$scope.imgcrop.scaledLeft = 0;
+						$scope.imgcrop.imgSrc = '';
+						$('#imageCropSelector').css({'display':'none'})
+						// $files[0].$ngfBlobUrl;
+
+						if(typeof($files[0])== 'object'){
+							$scope.imgcrop.imgSrc = $files[0].$ngfBlobUrl;
+							$('#imageCropSource').show();
+
+							$scope.imgcrop.file = $files[0];
+							$scope.$applyAsync();
+						    if($files[0].$ngfWidth < $files[0].$ngfHeight)
+			            	{
+			            		$scope.imgcrop.aspectRatio = $scope.imgcrop.aspectRatioPortrait;
+			            		$scope.imgcrop.landscape = false;
+			            	}else{
+			            		$scope.imgcrop.aspectRatio = $scope.imgcrop.aspectRatioPaysage;
+			            		$scope.imgcrop.landscape = true;
+			            	}
+						}
+
+					};
+					$scope.uploadImage = function () {
+
+		        		console.log($scope.imgcrop);
+		        		console.log('UPLOAD IMAGE');
+				        $scope.dataToSend = {};
+				        $scope.fileToSend = $scope.imgcrop.file; 
+				        $scope.dataToSend.file = $scope.imgcrop.file; 
+				        $scope.dataToSend.displayHeight = $scope.imgcrop.displayHeight;
+				        $scope.dataToSend.displayWidth = $scope.imgcrop.displayWidth;
+				        $scope.dataToSend.scaledWidth = $scope.imgcrop.scaledWidth;
+				        $scope.dataToSend.scaledHeight = $scope.imgcrop.scaledHeight;
+				        $scope.dataToSend.scaledTop = $scope.imgcrop.scaledTop;
+				        $scope.dataToSend.scaledLeft = $scope.imgcrop.scaledLeft;
+				        $scope.dataToSend.aspectRatio = $scope.imgcrop.aspectRatio;
+				        $scope.dataToSend.landscape = $scope.imgcrop.landscape;
+				        $scope.dataToSend.containerWidth = $scope.imgcrop.containerWidth;
+				        $scope.dataToSend.containerHeight = $scope.imgcrop.containerHeight;
+				        $scope.uploadingImages[$scope.indexImage] = {};
+				        $scope.uploadingImages[$scope.indexImage].status = 'start';
+				        $scope.uploadingImages[$scope.indexImage].text='0%';
+				        $scope.uploadingImages[$scope.indexImage].file=$scope.imgcrop.file;
+
+		                $scope.uploadingImages[$scope.indexImage].status='progress';
+		                (function(indexImage){
+		                	$scope.imgcrop.imgEditId = 0;
+		                	$scope.imgcrop.displayHeight = 0;
+							$scope.imgcrop.displayWidth = 0;
+							$scope.imgcrop.scaledWidth = 0;
+							$scope.imgcrop.scaledHeight = 0;
+							$scope.imgcrop.scaledTop = 0;
+							$scope.imgcrop.scaledLeft = 0;
+							$scope.imgcrop.containerWidth = 0;
+							$scope.imgcrop.containerHeight = 0;
+							$scope.imgcrop.aspectRatio = '4/1';
+							$scope.imgcrop.imgSrc = "";
+							$('#imageCropSource').hide();
+
+		                    Upload.upload({
+		                        url: '/category/'+Cat.id+'/images',
+		                        data: {file :$scope.fileToSend}
+		                      
+		                        
+		                    }).then(function (data) {
+		                    	console.log(data);
+		           //          	console.log(data.data.child);
+		                    	// $rootScope.$broadcast('categorySelfChangeImg',data.data.parent);
+		                    	// $scope.Cat.images.push(data.data.child)
+		                    	$scope.dataToSend.imgid= data.data.child.id;
+		                    	$scope.dataToSend.filename= data.data.child.filename;
+		                    	$rootScope.startSpin();
+		      					$sailsSocket.post('/image/resize/',$scope.dataToSend).success(function (data,status) {
+						            console.log('SUCCESS RESIZE ! !');
+
+						           
+
+						            $rootScope.stopSpin();
+						          
+						        }).error(function (data,status) {
+						            console.log(data);
+						            console.log('errOR');
+						        })
+
+
+		                        $scope.uploadingImages[indexImage].text='Envoi terminé';
+		                        (function(indexImage){
+
+		                            $timeout(function () {
+		                                $scope.uploadingImages[indexImage].status = 'success';
+		                            },2000)
+		                        })(indexImage)
+		                        // $mdDialog.hide()
+
+		                    },function (evt) {
+		                    	console.log('BIG');
+		                        //HANDLE ERROR
+		                    },function (evt) {
+		                        $scope.uploadingImages[indexImage].progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+		                        $scope.uploadingImages[indexImage].text = $scope.uploadingImages[indexImage].progressPercentage+'%'
+		                    });
+		                })($scope.indexImage)
+				        $scope.indexImage++;
+				    };
+
+				    $scope.resizeOnly=function(){
+		        		$rootScope.startSpin();
+						$scope.dataToSend = {};
+				        $scope.dataToSend.displayHeight = $scope.imgcrop.displayHeight;
+				        $scope.dataToSend.displayWidth = $scope.imgcrop.displayWidth;
+				        $scope.dataToSend.scaledWidth = $scope.imgcrop.scaledWidth;
+				        $scope.dataToSend.scaledHeight = $scope.imgcrop.scaledHeight;
+				        $scope.dataToSend.scaledTop = $scope.imgcrop.scaledTop;
+				        $scope.dataToSend.scaledLeft = $scope.imgcrop.scaledLeft;
+				        $scope.dataToSend.aspectRatio = $scope.imgcrop.aspectRatio;
+				        $scope.dataToSend.landscape = $scope.imgcrop.landscape;
+				        $scope.dataToSend.containerWidth = $scope.imgcrop.containerWidth;
+				        $scope.dataToSend.containerHeight = $scope.imgcrop.containerHeight;
+
+
+				        console.log('-<->-<-<-<-<-<-<-<-<-<6-<-<-<-<-<-<-<--<');
+				        console.log($scope.imgcrop.filename);
+				        console.log($scope.imgcrop.filename.lastIndexOf('?'));
+
+				        if($scope.imgcrop.filename.lastIndexOf('?') != -1)
+				        {
+				        	$scope.dataToSend.filename = $scope.imgcrop.filename.substring(0,$scope.imgcrop.filename.lastIndexOf('?'))
+				        }else{
+					        $scope.dataToSend.filename= $scope.imgcrop.filename;
+				        }
+				        console.log($scope.dataToSend.filename);
+
+				        $scope.dataToSend.imageId= $scope.imgcrop.imgEditId;
+						$('#imageCropSource').hide();
+
+				        $scope.imgcrop.imgEditId = 0;
+		            	$scope.imgcrop.displayHeight = 0;
+						$scope.imgcrop.displayWidth = 0;
+						$scope.imgcrop.scaledWidth = 0;
+						$scope.imgcrop.scaledHeight = 0;
+						$scope.imgcrop.scaledTop = 0;
+						$scope.imgcrop.scaledLeft = 0;
+						$scope.imgcrop.containerWidth = 0;
+						$scope.imgcrop.containerHeight = 0;
+						$scope.imgcrop.aspectRatio = '16/9';
+						$scope.imgcrop.imgSrc = "";
+
+				        $sailsSocket.post('/image/resize/',$scope.dataToSend).success(function (data,status) {
+				            console.log('SUCCESS RESIZE______');
+				     //         var tmp = $scope.Cat.images[0]
+				     //         console.log(tmp);
+				     //         console.log($scope.Cat.images);
+				     //         $scope.Cat.images.splice(0,1)
+				     //         console.log($scope.Cat.images);
+									// // $scope.Cat.images=[];
+									// $scope.Cat.images.push(tmp);
+				     //         console.log($scope.Cat.images);
+				     //         $scope.$applyAsync()
+				            $rootScope.stopSpin();
+				            
+				        }).error(function (data,status) {
+				            console.log(data);
+				            console.log('errOR');
+				        })
+			        }
+
+		        	
+				    $scope.resizeagain=function(img){
+				    	console.log(img);
+
+				    	$scope.imgcrop.imgSrc = 'image/originalSize/'+img.filename;
+				    	$scope.imgcrop.imgEditId = img.id;
+				    	$scope.imgcrop.filename = img.filename;
+						
+				    }
+				    
+
+					// $scope.uploadDocument=function($files){
+					// 	console.log('fileDrop');
+					// 	console.log($files);
+
+
+
+					// };
+					$scope.removeImgCrop = function(){
+						console.log('CANCEL IMAGE');
+						setTimeout(function(){
+							// $('#imageCropSource').attr('src','');
+							$('#imageCropSource').hide();
+							$scope.imgcrop.imgSrc = '';
+							$scope.$applyAsync();
+							console.log($('.md-dialog-container md-dialog-content'));
+							$('.md-dialog-container md-dialog-content').css('overflow','hidden');
+							setTimeout(function(){
+								$('.md-dialog-container md-dialog-content').css('overflow','auto');
+							},1)
+						},1)
+						// $scope.$applyAsync();
+					}
+
+
+			      // },
+			     }],
+			      templateUrl: 'js/backoffice/categories/partials/dialogImgCat.html',
+			      parent: angular.element(document.body),
+			      // targetEvent: ev,
+			      clickOutsideToClose:true,
+			    })
+			    .then(function(answer) {
+			      $scope.status = 'You said the information was "' + answer + '".';
+			    }, function() {
+			      $scope.status = 'You cancelled the dialog.';
+			    });
+			    
+			// };
+
+
+
+			}
+			
+
+			
+				
+			
+
+
+			    $sailsSocket.subscribe('category',function(data){
+			        console.log('ON CATEGORY');
+			        console.log(data);
+			        if(data.verb =='created'){
+
+			        	$scope.categoriesList.unshift(data.data)
 			        	
-			//         }else
-			//         if(data.verb =='updated'){
-			//         	// _.find($scope.articlesList,function(o) { return o.age < 40; });
-			//         	var index = _.findIndex($scope.articlesList, function(o) { return o.id == data.id; });
-			// 			if( index !== -1) {
+			        }else
+			        if(data.verb =='updated'){
+			        	// _.find($scope.articlesList,function(o) { return o.age < 40; });
+			        	var index = _.findIndex($scope.categoriesList, function(o) { return o.id == data.id; });
+						if( index !== -1) {
 							
-			// 				console.log($scope.articlesList[index]);
-			// 				_.merge($scope.articlesList[index], data.data)
-			// 				console.log(data.id);
-			// 				// $scope.$broadcast('ellipsContent-'+data.id);
-			// 			}
-			//         }else
-			//         if(data.verb =='destroyed'){
-			//         	// _.find($scope.articlesList,function(o) { return o.age < 40; });
-			//         	var index = _.findIndex($scope.articlesList, function(o) { return o.id == data.id; });
-			// 			if( index !== -1) {
+							console.log($scope.categoriesList[index]);
+							_.merge($scope.categoriesList[index], data.data)
+							console.log(data.id);
+							// $scope.$broadcast('ellipsContent-'+data.id);
+						}
+			        }else
+			        if(data.verb =='destroyed'){
+			        	// _.find($scope.articlesList,function(o) { return o.age < 40; });
+			        	var index = _.findIndex($scope.categoriesList, function(o) { return o.id == data.id; });
+						if( index !== -1) {
 							
-			// 				console.log($scope.articlesList[index]);
-			// 				$scope.articlesList.splice(index,1)
-			// 				// console.log(data.id);
-			// 				// $scope.$broadcast('ellipsContent-'+data.id);
-			// 			}
-			//         }else
-			//         if(data.verb =='addedTo'){
-			// 				console.log('addedTO');
-			// 				var articleTochange = _.find($scope.articlesList, function(o){ return o.id == data.id})
+							console.log($scope.categoriesList[index]);
+							$scope.categoriesList.splice(index,1)
+							// console.log(data.id);
+							// $scope.$broadcast('ellipsContent-'+data.id);
+						}
+			        }
+			        else
+			        if(data.verb =='addedTo'){
+							console.log('addedTO');
+							var categoryTochange = _.find($scope.categoriesList, function(o){ return o.id == data.id})
+							console.log(categoryTochange);
+							
+						if(data.attribute == 'images'){
 
-			// 				if(data.attribute == 'tags'){
+							console.log('images');
+							console.log(data.addedId);
+							imageService.fetchOne(data.addedId).then(function(img){
+								console.log(img);
+								// setTimeout(function(){
+									categoryTochange.images.push(img)
+									
+								// },500)
 
-			// 					if(articleTochange){
+							},function(d){
+								console.log('EROOR');
+							})
+						}
+							
+						}else
+						if(data.verb =='removedFrom'){
+							console.log('removeFrom');
+							var categoryTochange = _.find($scope.categoriesList, function(o){ return o.id == data.id})
 
-			// 					tagService.fetchOne(data.addedId).then(function(tag){
-			// 						console.log(tag);
-			// 						articleTochange.tags.push(tag)
+							
+							if(data.attribute == 'images'){
+								var index = _.findIndex(categoryTochange.images, function(o) { return o.id == data.removedId; });
+								if( index !== -1) {
+									categoryTochange.images.splice(index,1)
+								}
+							}
+							
 
-			// 					},function(d){
-			// 						console.log('EROOR');
-			// 					})
-			// 					}
-			// 				}else
-			// 				if(data.attribute == 'categories'){
+						}
+			    })
+				$sailsSocket.subscribe('image',function(data){
+			        console.log('ON category');
+			        console.log(data);
+			        
+			        if(data.verb =='updated'){
 
-			// 					console.log('categories');
-			// 					console.log(data.addedId);
+			        	console.log('updated');
+			        	console.log(data.id);
+			        	// console.log($scope.articlesList);
 
-			// 					categoryService.fetchOne(data.addedId).then(function(cat){
-			// 						console.log(cat);
-			// 						articleTochange.categories.push(cat)
-
-			// 					},function(d){
-			// 						console.log('EROOR');
-			// 					})
-			// 				}
-			// 				if(data.attribute == 'images'){
-
-			// 					console.log('images');
-			// 					console.log(data.addedId);
-			// 					imageService.fetchOne(data.addedId).then(function(cat){
-			// 						console.log(cat);
-			// 						articleTochange.images.push(cat)
-
-			// 					},function(d){
-			// 						console.log('EROOR');
-			// 					})
-			// 				}
-			// 				if(data.attribute == 'documents'){
-
-			// 					console.log('documents');
-			// 					console.log(data.addedId);
-			// 					documentService.fetchOne(data.addedId).then(function(cat){
-			// 						console.log(cat);
-			// 						articleTochange.documents.push(cat)
-
-			// 					},function(d){
-			// 						console.log('EROOR');
-			// 					})
-			// 				}
-
-			// 			}else
-			// 			if(data.verb =='removedFrom'){
-			// 				console.log('removeFrom');
-			// 				var articleTochange = _.find($scope.articlesList, function(o){ return o.id == data.id})
-
-			// 				if(data.attribute == 'tags'){
-			// 					var index = _.findIndex(articleTochange.tags, function(o) { return o.id == data.removedId; });
-			// 					if( index !== -1) {
-			// 						articleTochange.tags.splice(index,1)
-			// 					}
-			// 				}
-			// 				if(data.attribute == 'categories'){
-			// 					var index = _.findIndex(articleTochange.categories, function(o) { return o.id == data.removedId; });
-			// 					if( index !== -1) {
-			// 						articleTochange.categories.splice(index,1)
-			// 					}
-			// 				}
-			// 				if(data.attribute == 'images'){
-			// 					var index = _.findIndex(articleTochange.images, function(o) { return o.id == data.removedId; });
-			// 					if( index !== -1) {
-			// 						articleTochange.images.splice(index,1)
-			// 					}
-			// 				}
-			// 				if(data.attribute == 'documents'){
-			// 					var index = _.findIndex(articleTochange.documents, function(o) { return o.id == data.removedId; });
-			// 					if( index !== -1) {
-			// 						articleTochange.documents.splice(index,1)
-			// 					}
-			// 				}
-
-			// 			}
-			//     })
+			        	
+	     //    			var index = _.findIndex($scope.formData.categories, function(o) { return o.id == data.id; });
+						// if( index !== -1) {
+						// 	console.log(data.data);
+						// 	// $scope.articlesList[i].categories.splice(index,1,data.data)
+						// 	_.merge($scope.formData.categories[index], data.data)
+						// }
+			        	$scope.reloadsFirstImg(data.id,data.data.filename);
+			        
+			        }
+				       
+				})
 		}],
 		link:function(scope,element,attrs){
 			

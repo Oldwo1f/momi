@@ -22,7 +22,7 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
     service.fetch= function(sort,page,nbPerPage) {
         var deferred = $q.defer();
         sort = sort? sort : 'date DESC'
-        nbPerPage = nbPerPage ? nbPerPage : 3
+        nbPerPage = nbPerPage ? nbPerPage : 10
         page = page ? page : 1
         console.log('sort', sort);
         console.log('nbPerPage', nbPerPage);
@@ -35,6 +35,37 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
             console.log(data);
             deferred.reject(data);
         })
+        return deferred.promise;      
+    }
+    service.fetchAll= function(sort,page,nbPerPage) {
+        var deferred = $q.defer();
+        $sailsSocket.get('/category?sort=createdAt DESC&limit=10000').success(function (data,status) {
+            console.log('SUCCESSSUCCESSSUCCESSSUCCESSSUCCESS');
+            console.log(data);
+            deferred.resolve(data);
+        }).error(function (data,status) {
+            console.log(data);
+            deferred.reject(data);
+        })
+        return deferred.promise;      
+    }
+    service.removeImage=function(id,imgID){
+
+        console.log('REMOVE Image Service');
+        var deferred = $q.defer();
+        console.log(id);
+        console.log(imgID);
+        if(imgID){
+            $sailsSocket.delete('/category/'+id+'/images/'+imgID).success(function (data,status) {
+                console.log('SUCCESS');
+                console.log(data);
+                deferred.resolve(data);
+            }).error(function (data,status) {
+                console.log(data);
+                deferred.reject(data);
+            })
+        }
+        
         return deferred.promise;      
     }
 	// service.fetchCategories=function(orded){
@@ -58,7 +89,7 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
             		resultArray.push(data.hits.hits[i]._source);
             	}
             }
-            console.log(resultArray);
+            // console.log(resultArray);
             deferred.resolve(resultArray);
         }).error(function (data,status) {
             console.log(data);

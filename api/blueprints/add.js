@@ -64,6 +64,7 @@ module.exports = function addToCollection (req, res) {
     child[childPkAttr] = supposedChildPk;
   }else if(req.secondid){
     console.log('REQ SECOND ID');
+    console.log(req.secondid);
     child = {};
     child[childPkAttr] = req.secondid;
   }
@@ -98,13 +99,18 @@ module.exports = function addToCollection (req, res) {
     // get ahold of the created child record data, unless you create it first.
     actualChildPkValue: ['parent', function(cb) {
 
+
+        console.log('here');
+
       // Below, we use the primary key attribute to pull out the primary key value
       // (which might not have existed until now, if the .add() resulted in a `create()`)
 
       // If the primary key was specified for the child record, we should try to find
       // it before we create it.
       if (child[childPkAttr]) {
+        console.log(child[childPkAttr]);
         ChildModel.findOne(child[childPkAttr]).exec(function foundChild(err, childRecord) {
+
           childRecord.selfUpdate({parentType: req.options.model,parentId:parentPk , verb:'add'},function(e,data){
             console.log('after cb self FIND');
             // console.log(data);

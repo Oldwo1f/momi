@@ -149,6 +149,36 @@ angular.module('momi-blog')
 						// }
 			   //      }
 			    })
+			$sailsSocket.subscribe('category',function(data){
+			        console.log('ON category');
+			        console.log(data);
+			        
+			        if(data.verb =='updated'){
+
+			        	console.log('updated');
+			        	console.log(data.id);
+			        	// console.log($scope.articlesList);
+
+			        	
+	        			var index = _.findIndex($scope.formData.categories, function(o) { return o.id == data.id; });
+						if( index !== -1) {
+							console.log(data.data);
+							// $scope.articlesList[i].categories.splice(index,1,data.data)
+							_.merge($scope.formData.categories[index], data.data)
+						}
+			        	
+			        	// _.find($scope.articlesList,function(o) { return o.age < 40; });
+			   //      	var index = _.findIndex($scope.articlesList, function(o) { return o.id == data.id; });
+						// if( index !== -1) {
+							
+						// 	console.log($scope.articlesList[index]);
+						// 	_.merge($scope.articlesList[index], data.data)
+						// 	console.log(data.id);
+						// 	// $scope.$broadcast('ellipsContent-'+data.id);
+						// }
+			        }
+			       
+			})
 
 			$scope.closeDatePicker=function(t,tt){
 				$('.open').removeClass('open')
@@ -252,14 +282,23 @@ angular.module('momi-blog')
 					newCategory.color = 'darkgrey';
 					newCategory.textColor = 'white';
 				}
+				console.log(newCategory);
 				articleService.addCategory($scope.formData.id,newCategory).then(function(data){
 					$rootScope.$broadcast('articleSelfChangeCat',data.parent);
+
+					console.log(data);
 					var tag_with_id =data.child;
 					var index = _.findIndex($scope.formData.categories, function(o) { return o.name == name || o.text == name; });
-					if( index !== -1) {
+					
+					console.log('index='+index);
+					if( index != -1) {
+						console.log('index different -1');
 						$scope.formData.categories.splice(index, 1, tag_with_id);
 					} else {
+						console.log('---------------------------------------------------------');
+						console.log(tag_with_id);
 						$scope.formData.categories.push(tag_with_id);
+
 
 					}
 					$rootScope.stopSpin();
@@ -270,11 +309,15 @@ angular.module('momi-blog')
 				})
 			}	
 			function transformCategory(newCategory){
+
+				console.log('transformCategory');
 				if (newCategory.id){
 					return newCategory
 				}else{
 					return {
 				    	name: newCategory,
+				    	color : 'darkgrey',
+						textColor : 'white'
 					};
 				}
 			}	
@@ -579,15 +622,7 @@ angular.module('momi-blog')
 		    	$scope.imgcrop.imgSrc = 'image/originalSize/'+img.filename;
 		    	$scope.imgcrop.imgEditId = img.id;
 		    	$scope.imgcrop.filename = img.filename;
-				// $('#imageCropSelector').css({'display':'none'})
-		    	// if($scope.imgcrop.landscape)
-		    	// {
-		    	// 	$scope.imgcrop.landscape = false;
-		    	// 	$scope.imgcrop.aspectRatio = $scope.imgcrop.aspectRatioPortrait
-		    	// }else{
-		    	// 	$scope.imgcrop.landscape = true;
-		    	// 	$scope.imgcrop.aspectRatio = $scope.imgcrop.aspectRatioPaysage
-		    	// }
+				
 		    }
 		    $scope.imgcrop = {};
 		    $scope.imgcrop.imgEditId = 0;
@@ -604,41 +639,7 @@ angular.module('momi-blog')
 			$scope.imgcrop.aspectRatioPaysage = '16/9';
 			$scope.imgcrop.aspectRatioPortrait = '3/4';
 
-			// $scope.changeImageUrl=function(t){
-			// 	console.log('changeImageUrl');
-			// 	$('#imageCropSelector').css({'display':'none'})
-			// 	// files = t.files
-			// 	setTimeout(function(){
-			// 		console.log($scope.NewImage);
-			// 	    var url = $(t).val();
-			// 	    var input = t;
-			// 	    console.log(url);
-			// 	    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-			// 	    if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
-			// 	     {
-			// 	     	console.log('COOL');
-			// 	        var reader = new FileReader();
-			// 	        reader.onload = function (e) {
-			// 	        	console.log(e);
-			// 	    		var  img = new Image();
-			// 	    		img.onload = function () {
-			// 	                console.log("Width:" + this.width + "   Height: " + this.height);//this will give you image width and height and you can easily validate here....
-			// 	            	if(this.width < this.height)
-			// 	            	{
-			// 	            		$scope.imgcrop.aspectRatio = $scope.imgcrop.aspectRatioPortrait;
-			// 	            	}else{
-			// 	            		$scope.imgcrop.aspectRatio = $scope.imgcrop.aspectRatioPaysage;
-			// 	            	}
-			// 	            };
-			// 	            img.src = e.target.result;
-			// 	    		$scope.imgSrc = e.target.result;
-			// 	    		$scope.$applyAsync();
-			// 	        }
-			// 	       reader.readAsDataURL(input.files[0]);
-			// 	    }
-			// 	},1)
-			// };
-
+			
 			$scope.addImgCrop=function($files){
 				console.log('uploadFiles');
 				console.log($files);

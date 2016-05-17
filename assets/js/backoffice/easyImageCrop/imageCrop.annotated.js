@@ -62,8 +62,6 @@ angular.module('core')
 			var scrollLeft = 0;
 			var scrollTop = 0;
 
-						console.log('offset');
-			console.log(offset);
 			// Optional pass of aspect ratio.
 			if($scope.aspectRatio){
 				ratioValues = $scope.aspectRatio.split("/");
@@ -94,7 +92,6 @@ angular.module('core')
 			// Handle a change in the image we are cropping.
 			$scope.$watch("imgSrc", function(newValue, oldValue){
 				if(newValue !== oldValue){
-console.log('TTTTTTTTTTTTTTTTTTTTTt');
 					// There are a lot of default values that we need to reset.
 					$window.document.getElementById("cropToolLoading").style.display= "block";
 					var imageCropSelector = $window.document.getElementById("imageCropSelector");
@@ -444,8 +441,7 @@ console.log($scope.currentImageWidth);
 
 
 
-				console.log($scope.scaledHeight);
-				console.log($scope.scaledWidth);
+				
 
 		        $('.imageCropper').css({'marginBottom':'0px'})				
 
@@ -623,7 +619,6 @@ console.log($scope.currentImageWidth);
 			});			
 
 			$element[0].children[2].addEventListener("dblclick", function(){
-				console.log(this);
 				if(!draggingRectangle && !resizingRectangle && !mouseModifyingRectangle){
 					resetBackgroundColor();
 		        	$('.imageCropper').css({'marginBottom':'-2px'})				

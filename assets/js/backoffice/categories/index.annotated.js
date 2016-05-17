@@ -17,7 +17,7 @@ angular.module('momi-categories', ['ui.router'])
 	    .state('categories', {
 	        url : '/categories',
 	        params:{
-	        	sort:'date DESC',
+	        	sort:'name ASC',
 	        	page:1,
 	        	nbPerPage : 10
 	    	},
@@ -35,7 +35,7 @@ angular.module('momi-categories', ['ui.router'])
 
 	                        console.log('RESOLVE');
 	                        console.log($stateParams);
-	                        return categoryService.fetch($stateParams.sort)
+	                        return categoryService.fetch($stateParams.sort,$stateParams.page,$stateParams.nbPerPage)
 	                    }]
 	                }
 	        	}

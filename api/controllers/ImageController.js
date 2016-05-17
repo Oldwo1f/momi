@@ -39,6 +39,12 @@ module.exports = {
 				     cropwidth:req.body.scaledWidth, cropheight:req.body.scaledHeight,
 				     x:req.body.scaledLeft, y:req.body.scaledTop
 				}).then(function(image) {
+					if(req.body.imageId)
+					{
+						console.log('ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
+						console.log(req.body.imageId);
+						Image.publishUpdate(req.body.imageId,{'filename' : req.body.filename})
+					}
 					res.ok('resized')
 				},function (err) {
 				    console.log(err);

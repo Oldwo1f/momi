@@ -1,0 +1,73 @@
+<md-dialog aria-label="Mango (Fruit)"  ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+		<div ngf-drop="addImgCrop($files)" ngf-pattern="'image/*'"ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" ngf-drag-over-class="'dragover'" ng-model="file" class="drop-zone" >Déposer une image ici</div>
+        <div class="button btnADDIMG" ngf-select="addImgCrop($files)" ng-model="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"> <i class="pe-7s-plus"></i></div>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+				
+			<div class="imgrelativecontainer addImages">
+				
+				<div image-crop 
+			    		aspect-ratio="imgcrop.aspectRatio" 
+			    		img-src="imgcrop.imgSrc" 
+			    		img-load="'imgLoader.gif'" 
+			    		display-height="imgcrop.displayHeight"
+			    		display-width = "imgcrop.displayWidth"
+			    		scaled-height="imgcrop.scaledHeight" 
+			    		scaled-width="imgcrop.scaledWidth" 
+			    		scaled-top="imgcrop.scaledTop" 
+			    		scaled-left="imgcrop.scaledLeft" 
+			    		container-width="imgcrop.containerWidth" 
+			    		container-height="imgcrop.containerHeight" 
+			    		style=" width: 100%; position:relative;" class="imageCropper" ng-class="{imageCropperH0: !imgcrop.imgSrc}">
+					</div>
+				<button ng-if="imgcrop.imgSrc" class="btn red pull-left" ng-click="removeImgCrop()">Annuler</button>
+				<button ng-if="imgcrop.scaledWidth && !imgcrop.imgEditId" class="btn blue pull-left" ng-click="uploadImage()">Ajouter cette image</button>
+				<button ng-if="imgcrop.scaledWidth && imgcrop.imgEditId" class="btn blue pull-left" ng-click="resizeOnly()">Redimentionner l'image</button>
+				<!-- <div class="landscapeportrait"  ng-if="imgcrop.scaledWidth"> -->
+					<!-- <button class="btn blue" ng-click="changeOrientation()"><i class="fa fa-exchange"></i></button> -->
+				<!-- </div> -->
+				<p class="messageImage pull-left"  ng-if="imgcrop.imgSrc && !imgcrop.scaledWidth"><span>Vous devez redimentionner votre image avant de l'envoyer ver le server. <br> Faite un rectangle dessu le plus grand possible.</span></p>
+			</div>
+			
+			<div class="clearfix"></div>
+			<div ng-repeat="uploadingImage in uploadingImages" class="uploadingDoc" ng-if="uploadingImage.status == 'progress'">
+				<span>{{uploadingImage.file.name}}</span>
+				<span>{{uploadingImage.text}}</span>
+				<md-progress-linear md-mode="determinate" value="{{uploadingImage.progressPercentage}}"></md-progress-linear>
+					
+			</div> 
+      		<div class="smallSeparator" ng-if="Cat.images.length"></div>
+			<div class="imageList" ng-model="Cat.images" ng-if="Cat.images.length">
+				<figure class="pull-left modal__img" ng-repeat="img in Cat.images">
+					<img class="media-object" ng-src="image/adminThumbs/{{img.filename}}" alt="user">
+					<div class="btnreresize" ng-click="resizeagain(img)"><i class="fa fa-crop"></i></div>
+					<removeremove class="removeremove" action="removeImg" itemid="img.id"></removeremove>
+				</figure>
+				
+				<!-- ng-if  number of image > 4 -->
+				<!-- <div class="completor"></div> -->
+			</div>
+			
+    </md-dialog-content>
+   <!--  <md-dialog-actions layout="row">
+	
+
+
+
+      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+        More on Wikipedia
+      </md-button>
+      <span flex></span>
+      <md-button ng-click="answer('not useful')">
+       Not Useful
+      </md-button>
+      <md-button ng-click="answer('useful')" style="margin-right:20px;">
+        Useful
+      </md-button>
+    </md-dialog-actions> -->
+  </form>
+</md-dialog>

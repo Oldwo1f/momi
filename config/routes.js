@@ -46,6 +46,7 @@ module.exports.routes = {
   'GET /category/searchAutocomplete/:searchText':'categoryController.searchAutocomplete',
   'POST /article/:id/documents':'articleController.uploadDocument',
   'POST /article/:id/images':'articleController.uploadImage',
+  'POST /category/:id/images':'categoryController.uploadImage',
   'GET /image/:size/:name':'ImageController.serveImage',
   'POST /image/resize':'ImageController.resizeImage',
   'get /article/search/:sort/:slug':'articleController.search',
