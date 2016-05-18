@@ -1,8 +1,8 @@
 angular.module('core')
-  .directive('categorycloudWidget', ["widgetService", "categoryService", "$sailsSocket", "$rootScope", function (widgetService,categoryService,$sailsSocket,$rootScope){
+  .directive('tagcloudWidget', ["widgetService", "tagService", "$sailsSocket", "$rootScope", function (widgetService,tagService,$sailsSocket,$rootScope){
     var toto;
     'use strict';
-    var thisresize = function(item, first, categoriesCloud,cloudCatOpts){
+    var thisresize = function(item, first, tagsCloud,cloudTagOpts){
 
         console.log(item);
 
@@ -73,27 +73,27 @@ angular.module('core')
 				// 		classFont='largeFont';
 	   //      	}
     //     	}
-    // $('#cloudCat').jQCloud('destroy');
+    // $('#cloudTag').jQCloud('destroy');
 
-    $('#cloudCat').css('height' , item.getElementSizeY()-94 +'px')
-    $('#noCatElment').css('height' , item.getElementSizeY()-94 +'px')
+    $('#cloudTag').css('height' , item.getElementSizeY()-94 +'px')
+    $('#noTagElment').css('height' , item.getElementSizeY()-94 +'px')
     if(classToSet == 'style1')
-        $('#cloudCat').css('height' , item.getElementSizeY()-20 +'px')
-        $('#noCatElment').css('height' , item.getElementSizeY()-20 +'px')
+        $('#cloudTag').css('height' , item.getElementSizeY()-20 +'px')
+        $('#noTagElment').css('height' , item.getElementSizeY()-20 +'px')
 
-    $('#cloudCat').css('width' , item.getElementSizeX()-20 +'px')
+    $('#cloudTag').css('width' , item.getElementSizeX()-20 +'px')
 
     if(first == 'first'){
     }
     else{
         
-        cloudCatOpts.height = item.getElementSizeY()-94
+        cloudTagOpts.height = item.getElementSizeY()-94
         if(classToSet == 'style1')
-            cloudCatOpts.height=  item.getElementSizeY()-20
-        cloudCatOpts.width = item.getElementSizeX()-20
-        $('#cloudCat').jQCloud('destroy'); 
+            cloudTagOpts.height=  item.getElementSizeY()-20
+        cloudTagOpts.width = item.getElementSizeX()-20
+        $('#cloudTag').jQCloud('destroy'); 
 
-        $('#cloudCat').jQCloud(categoriesCloud, cloudCatOpts);
+        $('#cloudTag').jQCloud(tagsCloud, cloudTagOpts);
   
     }
 
@@ -101,63 +101,63 @@ angular.module('core')
    	
         	item.$element.removeClass('style0 style1 style2 style3 style4 style5 style6 style7 style8 style9 style10 style11 style12 style13 style14 style15 smallFont extralargeFont mediumFont  largeFont')
         	.addClass(classToSet+ ' ' + classFont)
-        	.addClass('categorycloudWidget')
+        	.addClass('tagcloudWidget')
     	
     }
     return {
       scope: {},
       replace: true,
-      templateUrl: 'js/backoffice/categories/partials/categoryCloudWidget.html',
-      controller:["$scope", "categoryService", "$state", "$rootScope", function($scope,categoryService,$state,$rootScope){
+      templateUrl: 'js/backoffice/categories/partials/tagCloudWidget.html',
+      controller:["$scope", "tagService", "$state", "$rootScope", function($scope,tagService,$state,$rootScope){
             
-        $scope.cloudCatOpts = {
+        $scope.cloudTagOpts = {
             steps: 10,
             autoResize:true,
             delay:100,
+            // colors:['#00CCFF','#03C3FE','#06BAFD','#09B1FD','#0CA8FC','#0FA0FC','#1297FB','#158EFB','#1885FA','#1C7DFA'],
             // removeOverflowing:false,
             afterCloudRender:function(){
-                // console.log('afterCloudRender');
+                console.log('afterCloudRender');
             }
         }
               
            
       }],
       link:function(scope,element,attrs){
-        $rootScope.$on('categorySelfChange',function(e,data){
-                console.log('categorySelfChangecategorySelfChangecategorySelfChangecategorySelfChangecategorySelfChange');
+        $rootScope.$on('tagSelfChange',function(e,data){
+                console.log('tagSelfChangetagSelfChangetagSelfChangetagSelfChangetagSelfChange');
                 console.log(data);
-                    var index = _.findIndex(scope.categoriesCloud, function(o) { return o.myid == data.id; });
+                    var index = _.findIndex(scope.tagsCloud, function(o) { return o.myid == data.id; });
                     if( index !== -1) {
 
                         var dataUsable = {};
-                            dataUsable.text = data.name
+                            dataUsable.text = data.text
                             dataUsable.myid = data.id
                             dataUsable.html = {};
                             dataUsable.weight = data.total
                             dataUsable.html.title = data.total
-                         
-                            dataUsable.html.style = 'background:'+data.color+';'+ 'color:'+data.textColor+';'
-                            dataUsable.savedcolor = data.color
-                            dataUsable.savedtextColor = data.textColor
                             dataUsable.html.class = 'CatInCloud'
                         
-                        _.merge(scope.categoriesCloud[index], dataUsable)
-                        $('#cloudCat').jQCloud('update', scope.categoriesCloud);
+                        _.merge(scope.tagsCloud[index], dataUsable)
+                        console.log(dataUsable);
+                        console.log( scope.tagsCloud);
+                        $('#cloudTag').jQCloud('update', scope.tagsCloud);
 
                     }
             })
-        $sailsSocket.subscribe('category',function(data){
-                console.log('ON category');
+        $sailsSocket.subscribe('tag',function(data){
+                console.log('ON tag');
                 console.log(data);
                 
                 if(data.verb =='updated'){
 
-                    var index = _.findIndex(scope.categoriesCloud, function(o) { return o.myid == data.id; });
+                    var index = _.findIndex(scope.tagsCloud, function(o) { return o.myid == data.id; });
+                    console.log(index);
                     if( index !== -1) {
 
                         var dataUsable = {};
-                        if(data.data.name)
-                            dataUsable.text = data.data.name
+                        if(data.data.text)
+                            dataUsable.text = data.data.text
                         if(data.data.id)
                             dataUsable.myid = data.data.id
                         dataUsable.html = {};
@@ -165,19 +165,11 @@ angular.module('core')
                             dataUsable.weight = data.data.total
                             dataUsable.html.title = data.data.total
                         }
-                        if(data.data.color){
-                            dataUsable.html.style = 'background:'+data.data.color+';'+ 'color:'+scope.categoriesCloud[index].savedtextColor+';'
-                            dataUsable.savedcolor = data.data.color
-                            
-                        }
-                        if(data.data.textColor){
-                          dataUsable.html.style = 'background:'+scope.categoriesCloud[index].savedcolor+';'+ 'color:'+data.data.textColor+';'
-                          dataUsable.savedtextColor = data.data.textColor
-                        }
-                            dataUsable.html.class = 'CatInCloud'
                         
-                        _.merge(scope.categoriesCloud[index], dataUsable)
-                        $('#cloudCat').jQCloud('update', scope.categoriesCloud);
+                        dataUsable.html.class = 'CatInCloud'
+                        console.log(dataUsable);
+                        _.merge(scope.tagsCloud[index], dataUsable)
+                        $('#cloudTag').jQCloud('update', scope.tagsCloud);
 
                     }
                 }                
@@ -186,58 +178,54 @@ angular.module('core')
                     data = data.data
 
                     var dataUsable = {};
-                        dataUsable.text = data.name
+                        dataUsable.text = data.text
                         dataUsable.myid = data.id
                         dataUsable.html = {};
                         dataUsable.weight = data.total
                         dataUsable.html.title = data.total
-                     
-                        dataUsable.html.style = 'background:'+data.color+';'+ 'color:'+data.textColor+';'
-                        dataUsable.savedcolor = data.color
-                        dataUsable.savedtextColor = data.textColor
                         dataUsable.html.class = 'CatInCloud'
                     
-                    scope.categoriesCloud.push(dataUsable)
-                    $('#cloudCat').jQCloud('update', scope.categoriesCloud);
+                    scope.tagsCloud.push(dataUsable)
+                    $('#cloudTag').jQCloud('update', scope.tagsCloud);
                 }              
                 if(data.verb =='destroyed'){
                     console.log('destroyed');
-                    var index = _.findIndex(scope.categoriesCloud, function(o) { return o.myid == data.id; });
+                    var index = _.findIndex(scope.tagsCloud, function(o) { return o.myid == data.id; });
                     console.log(index);
                     if( index !== -1) {
                         
-                        console.log(scope.categoriesCloud[index]);
-                        scope.categoriesCloud.splice(index,1)
+                        console.log(scope.tagsCloud[index]);
+                        scope.tagsCloud.splice(index,1)
                     }    
 
                         
                         
-                    $('#cloudCat').jQCloud('update', scope.categoriesCloud);
+                    $('#cloudTag').jQCloud('update', scope.tagsCloud);
                 }
                
         })
          
 
-        categoryService.fetchAll().then(function(data){
-          data = _.map(data,function(c){
+        tagService.fetchAll().then(function(data){
 
-            return {'text':c.name,'myid':c.id,'weight':c.total,
+            console.log(data);
+           data = _.map(data,function(c){
 
-                  'savedcolor':c.color,
-                  'savedtextColor':c.textColor,
+            return {'text':c.text,'myid':c.id,'weight':c.total,
                 html:{
                   'title': c.total,
-                  'style': 'background:'+c.color+';'+'color:'+c.textColor+';',
-                  'class': 'CatInCloud',
+                  'class': 'TagInCloud',
                 }
             }
             
           })
+
+          console.log(data);
           
-            thisresize(scope.$parent.gridsterItem, 'first', scope.categoriesCloud)
-            scope.categoriesCloud =data
-            // console.log(scope.cloudCatOpts);
-            $('#cloudCat').jQCloud(scope.categoriesCloud, scope.cloudCatOpts);
+            scope.tagsCloud =data
+            thisresize(scope.$parent.gridsterItem, 'first', scope.tagsCloud)
+            // console.log(scope.cloudTagOpts);
+            $('#cloudTag').jQCloud(scope.tagsCloud, scope.cloudTagOpts);
 
 
           // scope.$applyAsync()
@@ -246,10 +234,10 @@ angular.module('core')
         })
       	scope.$parent.$on('gridster-item-resized', function(e,item) {
       		console.log('Listen fore titleDash resize');
-            delete scope.categoriesCloud['height']
-            delete scope.categoriesCloud['width']
-            var tmp = scope.categoriesCloud
-      		thisresize(item,'null',tmp,scope.cloudCatOpts);
+            delete scope.tagsCloud['height']
+            delete scope.tagsCloud['width']
+            var tmp = scope.tagsCloud
+      		thisresize(item,'null',tmp,scope.cloudTagOpts);
 
 
       		

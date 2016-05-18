@@ -26,7 +26,10 @@
  
 		<div class="widget__content filled">
 			 
-			<div id="cloudCat"></div>
+			<div id="cloudCat" ng-show="categoriesCloud.length>0"></div>
+			<div id="noCatElment" ng-show="categoriesCloud.length<=0">
+				<span>Aucune catégorie</span>
+			</div>
 
 			<!-- <jqcloud words="categoriesCloud" myoptions="cloudCatOpts" id="cloudCat"></jqcloud> -->
 			<!-- <div>

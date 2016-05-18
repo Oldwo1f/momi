@@ -31,6 +31,11 @@ module.exports = {
                         nbArticles : data.nbArticles,
                         total : data.total
                     }).then(function(result){
+
+                        Tag.publishUpdate( data.id , {
+                                nbArticles : data.nbArticles,
+                                total : data.total
+                        } )
                         console.log('--------------');
                         console.log(result[0]);
                         cb(null,result[0]);
@@ -84,6 +89,7 @@ module.exports = {
                      //&& data.nbArticles<=0 && data.nbArticles<=0 &&
                         return Tag.destroy(data.id).then(function(result){
                             cb(null,result[0]);
+                            Tag.publishDestroy( data.id )
                         })
                     }else{
                         return Tag.update(data.id ,
@@ -91,7 +97,10 @@ module.exports = {
                             nbArticles : data.nbArticles,
                             total : data.total
                         }).then(function(result){
-                            cb(null,result[0]);
+                            Tag.publishUpdate( data.id , {
+                                nbArticles : data.nbArticles,
+                                total : data.total
+                            } )
                             
                         })
 

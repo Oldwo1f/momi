@@ -58,7 +58,7 @@ angular.module('momi-categories')
 					console.log('----------------------------------------------------------');
 					console.log(data);
 					// console.log($scope.$parent);
-					// $rootScope.$broadcast('articleSelfChange',data);
+					$rootScope.$broadcast('categorySelfChange',data);
 
         			$rootScope.stopSpin();
 				},function(d){

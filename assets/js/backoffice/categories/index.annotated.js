@@ -42,6 +42,35 @@ angular.module('momi-categories', ['ui.router'])
 
 	        }
        	})
+      $stateProvider
+	    .state('tags', {
+	        url : '/tags',
+	        params:{
+	        	sort:'text ASC',
+	        	page:1,
+	        	nbPerPage : 10
+	    	},
+	        parent:'dashboard',
+	        views:{
+	        	'page1': {
+	        		template: '<tags tags-list="tagsList"></tags>',
+	        		controller:["$scope", "tagsList", function($scope, tagsList){
+	        			console.log(tagsList);
+	        			$scope.tagsList = tagsList;
+	        		}],
+	        		resolve:{
+	                    tagsList :  ["tagService", "$stateParams", function(tagService, $stateParams){
+	                        
+
+	                        console.log('RESOLVE');
+	                        console.log($stateParams);
+	                        return tagService.fetch($stateParams.sort,$stateParams.page,$stateParams.nbPerPage)
+	                    }]
+	                }
+	        	}
+
+	        }
+       	})
       	// .state('add', {
 	      //   url : '/add',
 	      //   parent:'blog',

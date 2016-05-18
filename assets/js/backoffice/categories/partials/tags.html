@@ -1,0 +1,84 @@
+<div class="my-container">
+
+
+<div infinite-scroll="myPagingFunction()">
+	<article class="widget">
+		<header class="pageHeader">
+
+			<a  class="rightBtn" ng-click="returnDashboardState()">
+				<span ><i class="fa fa-dashboard"></i></span>
+			</a>
+			<a  class="rightBtn" ng-click="returnPreviousState()">
+				<span  ><i class="fa fa-long-arrow-left"></i></span>
+			</a>
+			<div class="pageTitle">
+				<i class="pe-7f-way"></i><h3>Mes Tags</h3>
+			</div>
+			<div class="searchBar">
+				<input class="" type="text" ng-blur="searchTags()" ng-keypress="blurOnEnter($event)" ng-model="searchSlug" placeholder="Recherche dans les tags">
+				<span class="iconsearch"><i class="fa fa-search"></i></span>
+			</div>
+			<!-- <a class="leftBtn" href="">
+				<span  ><i class="pe-7s-way"></i></span>
+			</a> -->
+			<!-- <a class="leftBtn" ui-sref="add">
+				<span  ><i class="pe-7s-plus"></i></span>
+			</a> -->
+		</header>
+		
+		<div class="widget__content table-responsive">
+			<div class="tag_col_right">
+				<div id="cloudTags" ng-show="tagsCloudtag.length>0"></div>
+				<div id="noTagElments" ng-show="tagsCloudtag.length<=0">
+					<span>Aucun Tag</span>
+				</div>
+			</div>	
+			
+
+		  		<div class="theadTag">
+		  			<div  ng-click="changeSort('text');">Titre 
+		  				<i ng-if="!searchSlug" ng-show="sort=='text DESC'" class="pe-7s-angle-down"></i><i ng-if="!searchSlug" ng-show="sort=='text ASC'" class="pe-7s-angle-up"></i>
+		  			</div>
+		  			<div  ng-click="changeSort('nbProjects');" >Projet 
+		  				<i ng-if="!searchSlug" ng-show="sort=='nbProjects DESC'" class="pe-7s-angle-down"></i>  <i ng-if="!searchSlug" ng-show="sort=='nbProjects ASC'" class="pe-7s-angle-up"></i>
+		  			</div>
+		  			<div ng-click="changeSort('nbArticles');" >Article 
+		  				<i ng-if="!searchSlug" ng-show="sort=='nbArticles DESC'" class="pe-7s-angle-down"></i> <i ng-if="!searchSlug" ng-show="sort=='nbArticles ASC'" class="pe-7s-angle-up"></i>
+		  			</div>
+
+		  		</div>
+		  		<div class="tableRowTag" ng-repeat="tag in tagsList" rel="{{tag.id}}">
+
+		  			
+		  			<span class="td">
+		  				<input type="text" class="stacked-input" ng-model="tag.text" ng-blur="update(tag.id,'text',tag.text)">
+		  			</span class="td">
+		  			<span class="td">
+		  				<span class="spanNumber">{{tag.nbProjects}}</span>
+		  			</span class="td">
+		  			<span class="td">
+		  				<span class="spanNumber">{{tag.nbArticles}}</span>
+		  			</span class="td">
+		  			
+		  		</div>
+
+
+		  	<!-- </tbody>
+			</table> -->
+
+			
+
+			<div class="endInfinite">
+				
+				<span us-spinner="spinneropts"  spinner-key="articleSpinner"></span>
+				<span ng-if="fin">Fin</span>
+			</div>
+			
+			
+
+			
+		</div> <!-- /widget__content -->
+
+	</article>
+</div>
+</div>

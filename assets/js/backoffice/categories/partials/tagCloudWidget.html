@@ -1,0 +1,38 @@
+<div class="maincontent">
+	<!-- <div class="toggleEditmode" style="z-index:1000;" ng-click="toogleEditMode()" >
+		<input type="checkbox" ng-model="editionMode" id="switch-editmode" class="sw" checked />
+		<label class="switch2 green" for="switch-editmode" title="Entrer/sortir du mode edition"></label> 
+	</div>
+	<div class="savedash"  ng-click="saveDash()">
+		<a class="btn-circle btn-sm" title="Save Dashboard"><i class="pe-7f-paperclip"></i></a>
+	</div> -->
+	<article class="widget ">
+
+		<header class="widget__header ">
+				<div class="widget__icon"><i  class="pe-7s-ticket"></i></div>
+				<div class="widget__title">
+					<span>Tags </span> 
+					
+					
+				</div>
+				<!-- <div class="switcherConfigMode keepThisEvent btn-header" ng-click="toogleEditMode()">
+					<input type="checkbox" ng-model="editionMode" id="switch-editmode" class="sw" checked />
+					<label class="switch2 green" for="switch-editmode" title="Entrer/sortir du mode edition"></label> 
+				</div>
+				<div  class="keepThisEvent btn-header" ng-click="saveDash()" title="Save Dashboard"><i class="pe-7s-diskette"></i></div>
+				<div  class="keepThisEvent btn-header" ng-click="restoreDefault()" title="Restaurer le dashboard par default"><i class="pe-7s-refresh"></i></div> -->
+				<!-- <div class="btn-header" ui-sref="categories" ><i class="pe-7s-right-arrow"></i></div> -->
+		</header>
+ 
+		<div class="widget__content filled">
+			 
+			<div id="cloudTag" ng-show="tagsCloud.length>0"></div>
+			<div id="noTagElment" ng-show="tagsCloud.length<=0">
+				<span>Aucun Tag</span>
+			</div>
+
+			
+
+		</div>
+	</article>
+</div>

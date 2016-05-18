@@ -53,11 +53,12 @@
 		          </md-card-title-media>
 		        </md-card-title>
 		        <md-card-actions layout="row" layout-align="end center">
-		          	<div class="tablecat" ng-repeat="cat in lastArticle.categories" style="color:{{cat.textColor}};background-color : {{cat.color}};border-color : {{cat.color}}">
-  						<span>{{cat.name}}</span>
-  					</div>
+		          	
   					<div class="tabletag" ng-repeat="tag in lastArticle.tags">
   						<span>{{tag.text}}</span>
+  					</div>
+  					<div class="tablecat" ng-repeat="cat in lastArticle.categories" style="color:{{cat.textColor}};background-color : {{cat.color}};border-color : {{cat.color}}">
+  						<span>{{cat.name}}</span>
   					</div>
 		        </md-card-actions>
 		    </md-card>
