@@ -4,7 +4,6 @@ angular.module('core')
     'use strict';
     var thisresize = function(item, first, categoriesCloud,cloudCatOpts){
 
-        console.log(item);
 
         	var classToSet= 'style1' ,classFont='smallFont';
         	var x = item.sizeX, y = item.sizeY;
@@ -15,6 +14,12 @@ angular.module('core')
 
             if(y >12 || x >12){
                classToSet = 'style0'; 
+            }
+            if(x+y >10){
+               classFont = 'mediumFont'; 
+            }
+            if(y+x > 15){
+               classFont = 'largeFont'; 
             }
         // if(x < 5)
         //   {
@@ -116,7 +121,6 @@ angular.module('core')
             delay:100,
             // removeOverflowing:false,
             afterCloudRender:function(){
-                // console.log('afterCloudRender');
             }
         }
               
@@ -124,8 +128,6 @@ angular.module('core')
       },
       link:function(scope,element,attrs){
         $rootScope.$on('categorySelfChange',function(e,data){
-                console.log('categorySelfChangecategorySelfChangecategorySelfChangecategorySelfChangecategorySelfChange');
-                console.log(data);
                     var index = _.findIndex(scope.categoriesCloud, function(o) { return o.myid == data.id; });
                     if( index !== -1) {
 
@@ -147,8 +149,6 @@ angular.module('core')
                     }
             })
         $sailsSocket.subscribe('category',function(data){
-                console.log('ON category');
-                console.log(data);
                 
                 if(data.verb =='updated'){
 
@@ -201,12 +201,9 @@ angular.module('core')
                     $('#cloudCat').jQCloud('update', scope.categoriesCloud);
                 }              
                 if(data.verb =='destroyed'){
-                    console.log('destroyed');
                     var index = _.findIndex(scope.categoriesCloud, function(o) { return o.myid == data.id; });
-                    console.log(index);
                     if( index !== -1) {
                         
-                        console.log(scope.categoriesCloud[index]);
                         scope.categoriesCloud.splice(index,1)
                     }    
 
@@ -236,16 +233,13 @@ angular.module('core')
           
             thisresize(scope.$parent.gridsterItem, 'first', scope.categoriesCloud)
             scope.categoriesCloud =data
-            // console.log(scope.cloudCatOpts);
             $('#cloudCat').jQCloud(scope.categoriesCloud, scope.cloudCatOpts);
 
 
           // scope.$applyAsync()
         }).catch(function(e){
-          console.log(e);
         })
       	scope.$parent.$on('gridster-item-resized', function(e,item) {
-      		console.log('Listen fore titleDash resize');
             delete scope.categoriesCloud['height']
             delete scope.categoriesCloud['width']
             var tmp = scope.categoriesCloud

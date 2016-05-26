@@ -59,6 +59,10 @@ module.exports = function expand(req, res) {
     .findOne(parentPk)
     .populate(relation, populate)
     .exec(function found(err, matchingRecord) {
+
+      console.log('POPULATE');
+      console.log(matchingRecord);
+
       if (err) return res.serverError(err);
       if (!matchingRecord) return res.notFound('No record found with the specified id.');
       if (!matchingRecord[relation]) return res.notFound(util.format('Specified record (%s) is missing relation `%s`', parentPk, relation));

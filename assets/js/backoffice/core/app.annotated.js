@@ -34,30 +34,31 @@ var listWidgetDirectivesApp = function listWidgetDirectivesApp() {
 
 
 
+ 
 
 
 
 
 
 
-
-angular.module('core', ['sails.io','color.picker','infinite-scroll','ui.sortable','ngTagsInput','ngFileUpload','ngMaterial','ui.router','gridster','ngSanitize','ngAnimate','ui.tinymce','angularMoment','ui.bootstrap.datetimepicker','jkuri.slimscroll','angularSpinner','momi-social','momi-user','momi-blog','momi-categories'])
+angular.module('core', ['angular-notification-icons','ngLetterAvatar','sails.io','color.picker','satellizer','infinite-scroll','ui.sortable','ngTagsInput','ngFileUpload','ngMaterial','ui.router','gridster','ngSanitize','ngAnimate','ui.tinymce','angularMoment','ui.bootstrap.datetimepicker','jkuri.slimscroll','angularSpinner','momi-social','momi-user','momi-blog','momi-categories','momi-login'])
 .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){
 
     $stateProvider
       .state('dashboard', {
         url : '/dashboard',
+        requiredLogin: true,
+
         views:{
             'dashboard':{
                 template:'<dashboard></dashboard>',
                 resolve:{
                     widgetlist:  ["widgetService", function(widgetService){
-                        console.log('widget resolve');
                         var t = widgetService.restoreDash();
-                        console.log(t);
                           return t
-                    }]
-                }
+                    }],
+                },
+
             }
         }
       
@@ -69,18 +70,78 @@ angular.module('core', ['sails.io','color.picker','infinite-scroll','ui.sortable
 
 .run(["amMoment", function(amMoment) {
     amMoment.changeLocale('fr');
+}])
+.config(["$sailsSocketProvider", function($sailsSocketProvider) {
+
+    $sailsSocketProvider.interceptors.push(function($q,$state,$rootScope) { return { 
+          'responseError': function(rejection) {
+            // do something on error
+            console.log('ERRRRRRRRRRRRRRRRRRRERRRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR');
+            
+            console.log(rejection);
+            if(rejection.status == '401'){
+
+                $('.pageDash').addClass('pageVisible').removeClass('pageAfter pageBefore');
+                $('.page1').addClass('pageAfter').removeClass('pageVisible pageBefore');
+                $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
+                $rootScope.stopSpin()
+                $state.go('logout')
+            }
+            // if (canRecover(rejection)) {
+            //   return responseOrNewPromise
+            // }
+            return $q.reject(rejection);
+          }
+    };
+    });
+
+
+  
+
+
+
 }]);
-angular.module('core').controller('appController',["$rootScope", function($rootScope){
+angular.module('core').controller('appController',["$rootScope", "$auth", "$state", "$sailsSocket", "userService", function($rootScope,$auth,$state, $sailsSocket, userService){
+
+
+  if($auth.getToken()){
+    $sailsSocket.defaults.headers.common.Authorization = 'Bearer '+ $auth.getToken();
+    userService.selfProfile($auth.getPayload().sub).then(function(){
+      console.log('cool');
+    })
+  }
+
+   $rootScope.$on('$stateChangeStart',function (e,toState,toParams,fromState,fromParams){
+
+            // if (toState.name == 'login' && $auth.isAuthenticated()){
+            //     // requiredLogin = false;
+            //     e.preventDefault();
+            //     $state.go('/')
+            // }
+
+            if ($auth.isAuthenticated() && toState.name == 'logout') {
+                
+            }
+            else
+            if (!$auth.isAuthenticated() && toState.name != 'login') {
+                e.preventDefault();
+                $state.go('login');
+            }
+
+   });
    
 }])
 
 
-// $(window).resize(function() {
-//   height = $(window).height()-67
-//   $('#page-wrapper').css({'min-height':height+'px'});
-// }).resize()
+$(window).resize(function() {
+  height = $(window).height()
+  $('.containerLogin').css({'height':height+'px'});
+}).resize()
+
 $(window).load(function(){
 	$('#loading').fadeOut(1000);
+  
+  
 })
 
 angular.module('core').config(['tagsInputConfigProvider', function(tagsInputConfigProvider) {

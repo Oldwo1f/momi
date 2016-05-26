@@ -205,11 +205,9 @@ angular.module('core')
 		})
 
       	scope.$parent.$on('gridster-item-transition-end', function(e,item) {
-      		// console.log('Listen fore titleDash ---->initialized');
 
 		})
 		scope.$parent.$on('gridster-item-initialized', function(item) {
-          console.log(' INIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIT ');
           // resize();
         })
 

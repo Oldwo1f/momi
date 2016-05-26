@@ -36,7 +36,9 @@
 		  			<span class="pull-right">Status</span>
 		  			</th>
 		  			<th>Post Info</th>
-		  			<th style="width: 75px;" ng-click="changeSort('nbView');">Vue <i ng-if="!searchSlug" ng-show="sort=='nbView DESC'" class="pe-7s-angle-down pull-right"></i> <i ng-if="!searchSlug" ng-show="sort=='nbView ASC'" class="pe-7s-angle-up pull-right" /></th>
+		  			<th style="width: 75px;">Auteurs</th>
+		  				
+		  			<th style="width: 75px;" ng-click="changeSort('nbView');"> <i class="fa fa-eye"></i> <i ng-if="!searchSlug" ng-show="sort=='nbView DESC'" class="pe-7s-angle-down pull-right"></i> <i ng-if="!searchSlug" ng-show="sort=='nbView ASC'" class="pe-7s-angle-up pull-right" /></th>
 		  		</tr>
 		  	</thead>
 		  	<tbody>
@@ -68,12 +70,13 @@
 									<!-- <p>A classic approach...</p> -->
 									<div class="btnstable">
 										
-									<button class="btn blue btn-sm"  ui-sref="blog.edit({id: article.id})" >Edit</button>
-									<div class="btn-group block">
-									  <a ng-click="article.status='actif';update(article.id, 'status','actif')" type="button" class="fakeColorGreen btn active"  ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}" style="border-right:0px">Actif</a>
-									  <a ng-click="article.status='draft';update(article.id, 'status','draft')" type="button" class="fakeColorOrange btn active" ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}" >Brouillon</a>
-									  <a ng-click="article.status='inactif';update(article.id, 'status','inactif')" type="button" class="fakeColorRed btn active" ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}"  style="border-left:0px">Inactif</a>
-									</div>
+										<button class="btn blue btn-sm"  ui-sref="blog.edit({id: article.id})" >Edit</button>
+										<div class="btn-group block">
+										  <a ng-click="article.status='actif';update(article.id, 'status','actif')" type="button" class="fakeColorGreen btn active"  ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}" style="border-right:0px">Actif</a>
+										  <a ng-click="article.status='draft';update(article.id, 'status','draft')" type="button" class="fakeColorOrange btn active" ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}" >Brouillon</a>
+										  <a ng-click="article.status='inactif';update(article.id, 'status','inactif')" type="button" class="fakeColorRed btn active" ng-class="{'green':article.status=='actif','orange':article.status=='draft','red':article.status=='inactif'}"  style="border-left:0px">Inactif</a>
+										</div>
+										<div class="lockicon" ng-if="article.privateContent"><i class="fa fa-lock"></i></div>
 									</div>
 								</div>
 							</div>
@@ -92,7 +95,16 @@
 		  			</td>
 		  			<td>
 		  				<!-- <a href="#" onclick="return false;" class="post__del"><i class="pe-7f-close"></i></a> -->
-		  				<i class="fa fa-eyes"></i>
+		  				<!-- <i class="fa fa-eyes"></i> -->
+		  				<!-- <span class="numberTable">{{article.authors[0].firstname}} {{article.authors[0].name}}</span> -->
+		  				<div ng-repeat="author in article.authors | limitTo:2" class="author">
+		  					<img  ng-if="author.images[0]" height="50" width="50" ng-src="image/resized/{{author.images[0].filename}}" alt="">
+		  					<ng-letter-avatar  ng-if="!author.images[0]" charCount="1" data="{{author.firstname}} {{author.name}}" fontsize="25" height="50" width="50" shape="round"></ng-letter-avatar>
+		  					
+		  				</div>
+		  			</td> 
+		  			<td>
+		  				<!-- <a href="#" onclick="return false;" class="post__del"><i class="pe-7f-close"></i></a> -->
 		  				<span class="numberTable">{{article.nbView}}</span>
 		  			</td>
 		  		</tr>

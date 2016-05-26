@@ -3,7 +3,6 @@ angular.module('core')
   .directive('dashboardconfigWidget',function (widgetService,$compile,$timeout,$rootScope){
     'use strict';
 	var thisresize = function(item,expanded){
-    console.log('THIS RESIZE ');
 
     	var classToSet= 'style0' ,classFont='smallFont';
     	var x = item.sizeX, y = item.sizeY;
@@ -28,7 +27,6 @@ angular.module('core')
     	}
 
 
-    	console.log(classToSet);
     	item.$element.removeClass('style0 style1 style2 style3 style4 style5 style6 style7 style8 style9 style10 style11 style12 style13 style14 style15 smallFont extralargeFont mediumFont  largeFont')
     	.addClass(classToSet+ ' ' + classFont)
     	.addClass('dashboardconfigWidget')
@@ -38,12 +36,10 @@ angular.module('core')
       replace: true,
       templateUrl: 'js/backoffice/core/partials/dashboardconfigWidget.html',
       link:function(scope,element,attrs){
-      	console.log('dashboardconfigWidget directive');
       	// scope.currentTheme = 'bg3';
       	scope.editionMode = false;
       	scope.expanded = false;
         scope.widgetList = widgetService.list;
-        console.log(scope.list);
       	thisresize(scope.$parent.gridsterItem,scope.expanded)
 
 
@@ -74,9 +70,7 @@ angular.module('core')
       	scope.toogleEditMode = function(){
           
 
-          console.log(scope.$parent);
           scope.editionMode = !scope.editionMode;
-          console.log('$scope.editionMode = '+ scope.editionMode);
           if(scope.editionMode)
           {
           	scope.$parent.gridster.draggable.enabled = true;
@@ -90,7 +84,6 @@ angular.module('core')
 
         }
       	scope.restoreDefault = function(){
-      		console.log('restoreDefault');
           	scope.$emit('restoreDefault',scope.currentTheme);
           	
 
@@ -98,12 +91,9 @@ angular.module('core')
 
       	scope.expandWidget = function(){
 
-      		console.log(scope.columnheight);
           scope.expanded = !scope.expanded;
-          console.log('$scope.expanded = '+ scope.expanded);
           var $parent = element.parent();
           var $widget__header = $('.widget__header');
-          console.log($parent);
           if(scope.expanded)
           {
           	$widget__header.css({'height': $widget__header.height()})

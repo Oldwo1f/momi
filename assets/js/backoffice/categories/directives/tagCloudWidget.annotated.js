@@ -4,7 +4,6 @@ angular.module('core')
     'use strict';
     var thisresize = function(item, first, tagsCloud,cloudTagOpts){
 
-        console.log(item);
 
         	var classToSet= 'style1' ,classFont='smallFont';
         	var x = item.sizeX, y = item.sizeY;
@@ -15,6 +14,12 @@ angular.module('core')
 
             if(y >12 || x >12){
                classToSet = 'style0'; 
+            }
+            if(x+y >10){
+               classFont = 'mediumFont'; 
+            }
+            if(y+x > 15){
+               classFont = 'largeFont'; 
             }
         // if(x < 5)
         //   {
@@ -117,7 +122,6 @@ angular.module('core')
             // colors:['#00CCFF','#03C3FE','#06BAFD','#09B1FD','#0CA8FC','#0FA0FC','#1297FB','#158EFB','#1885FA','#1C7DFA'],
             // removeOverflowing:false,
             afterCloudRender:function(){
-                console.log('afterCloudRender');
             }
         }
               
@@ -125,8 +129,6 @@ angular.module('core')
       }],
       link:function(scope,element,attrs){
         $rootScope.$on('tagSelfChange',function(e,data){
-                console.log('tagSelfChangetagSelfChangetagSelfChangetagSelfChangetagSelfChange');
-                console.log(data);
                     var index = _.findIndex(scope.tagsCloud, function(o) { return o.myid == data.id; });
                     if( index !== -1) {
 
@@ -139,20 +141,15 @@ angular.module('core')
                             dataUsable.html.class = 'CatInCloud'
                         
                         _.merge(scope.tagsCloud[index], dataUsable)
-                        console.log(dataUsable);
-                        console.log( scope.tagsCloud);
                         $('#cloudTag').jQCloud('update', scope.tagsCloud);
 
                     }
             })
         $sailsSocket.subscribe('tag',function(data){
-                console.log('ON tag');
-                console.log(data);
                 
                 if(data.verb =='updated'){
 
                     var index = _.findIndex(scope.tagsCloud, function(o) { return o.myid == data.id; });
-                    console.log(index);
                     if( index !== -1) {
 
                         var dataUsable = {};
@@ -167,7 +164,6 @@ angular.module('core')
                         }
                         
                         dataUsable.html.class = 'CatInCloud'
-                        console.log(dataUsable);
                         _.merge(scope.tagsCloud[index], dataUsable)
                         $('#cloudTag').jQCloud('update', scope.tagsCloud);
 
@@ -189,12 +185,9 @@ angular.module('core')
                     $('#cloudTag').jQCloud('update', scope.tagsCloud);
                 }              
                 if(data.verb =='destroyed'){
-                    console.log('destroyed');
                     var index = _.findIndex(scope.tagsCloud, function(o) { return o.myid == data.id; });
-                    console.log(index);
                     if( index !== -1) {
                         
-                        console.log(scope.tagsCloud[index]);
                         scope.tagsCloud.splice(index,1)
                     }    
 
@@ -208,7 +201,6 @@ angular.module('core')
 
         tagService.fetchAll().then(function(data){
 
-            console.log(data);
            data = _.map(data,function(c){
 
             return {'text':c.text,'myid':c.id,'weight':c.total,
@@ -220,20 +212,16 @@ angular.module('core')
             
           })
 
-          console.log(data);
           
             scope.tagsCloud =data
             thisresize(scope.$parent.gridsterItem, 'first', scope.tagsCloud)
-            // console.log(scope.cloudTagOpts);
             $('#cloudTag').jQCloud(scope.tagsCloud, scope.cloudTagOpts);
 
 
           // scope.$applyAsync()
         }).catch(function(e){
-          console.log(e);
         })
       	scope.$parent.$on('gridster-item-resized', function(e,item) {
-      		console.log('Listen fore titleDash resize');
             delete scope.tagsCloud['height']
             delete scope.tagsCloud['width']
             var tmp = scope.tagsCloud

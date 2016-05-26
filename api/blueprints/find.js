@@ -23,7 +23,7 @@ var  _ = require('lodash');
  */
 
 module.exports = function findRecords (req, res) {
-
+  console.log('FIND');
   // Look up the model
   var Model = actionUtil.parseModel(req);
 

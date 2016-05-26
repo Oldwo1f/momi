@@ -9,8 +9,35 @@ angular.module('momi-blog')
       	},
       	replace: true,
       	templateUrl: 'js/backoffice/blog/partials/addArticle.html',
-      	controller:["$state", "$timeout", "$scope", "$rootScope", "articleService", "$mdToast", "imageService", "documentService", "tagService", "categoryService", "$q", "Upload", "$sailsSocket", function($state,$timeout,$scope,$rootScope,articleService,$mdToast,imageService,documentService, tagService, categoryService, $q, Upload,$sailsSocket){
+      	controller:["$state", "$timeout", "$scope", "userService", "$rootScope", "articleService", "$mdToast", "imageService", "documentService", "tagService", "categoryService", "$q", "Upload", "$sailsSocket", function($state,$timeout,$scope,userService,$rootScope,articleService,$mdToast,imageService,documentService, tagService, categoryService, $q, Upload,$sailsSocket){
 
+      		$scope.touched = false;
+      		console.log($state);
+      		console.log($state.current.name);
+      		if($state.current.name == 'blog.edit'){
+      			$scope.touched = true;
+      		}
+      		$rootScope.$on('$stateChangeStart',function (e,toState,toParams,fromState,fromParams){
+
+
+      			console.log('STATE CHANGE START');
+      			console.log($scope.touched);
+      			console.log($scope.formData.id);
+      			if($scope.touched == false){
+	      			articleService.remove($scope.formData.id).then(function(data){
+						console.log('----------------------------------------------------------');
+						$rootScope.$broadcast('articleSelfRemove',data.id);
+						
+	            		// $state.go('^')
+
+	        			$rootScope.stopSpin();
+					},function(d){
+						console.log('EROOR'); 
+					})
+      			}
+		          
+
+		   });
       		$scope.returnParentState=function(){
 				$state.go('^')
 			}
@@ -29,7 +56,13 @@ angular.module('momi-blog')
     		$scope.searchText = null;
     		
       		$scope.NewImage='';
+
+      		console.log($scope.newArticle);
 			$scope.formData=$scope.newArticle;
+			if($state.current.name != 'blog.edit'){
+      			// $scope.touched = true;
+				$rootScope.$broadcast('articleSelfAdd',$scope.newArticle);
+      		}
 
 			$sailsSocket.subscribe('article',function(data){
 			        console.log('ON ARTICLE2');
@@ -37,7 +70,16 @@ angular.module('momi-blog')
 			        if(data.id == $scope.newArticle.id)
 			        {
 			        	console.log('cool');
-			        	if(data.verb =='updated'){
+			        	if(data.verb =='created'){
+			        	// _.find($scope.articlesList,function(o) { return o.age < 40; });
+			        	// var index = _.findIndex($scope.articlesList, function(o) { return o.id == data.id; });
+						// if( index !== -1) {
+							console.log('created');
+							// console.log($scope.articlesList[index]);
+							// _.merge($scope.formData, data.data)
+
+						}else
+						if(data.verb =='updated'){
 			        	// _.find($scope.articlesList,function(o) { return o.age < 40; });
 			        	// var index = _.findIndex($scope.articlesList, function(o) { return o.id == data.id; });
 						// if( index !== -1) {
@@ -100,6 +142,18 @@ angular.module('momi-blog')
 									console.log('EROOR');
 								})
 							}
+							if(data.attribute == 'authors'){
+
+								console.log('authors');
+								console.log(data.addedId);
+								userService.fetchOne(data.addedId).then(function(user){
+									console.log(user);
+									$scope.formData.authors.push(user)
+
+								},function(d){
+									console.log('EROOR');
+								})
+							}
 
 						}else
 						if(data.verb =='removedFrom'){
@@ -126,6 +180,12 @@ angular.module('momi-blog')
 								var index = _.findIndex($scope.formData.documents, function(o) { return o.id == data.removedId; });
 								if( index !== -1) {
 									$scope.formData.documents.splice(index,1)
+								}
+							}
+							if(data.attribute == 'authors'){
+								var index = _.findIndex($scope.formData.authors, function(o) { return o.id == data.removedId; });
+								if( index !== -1) {
+									$scope.formData.authors.splice(index,1)
 								}
 							}
 
@@ -184,6 +244,7 @@ angular.module('momi-blog')
 				$('.open').removeClass('open')
 			}
 			$scope.update=function(attribute){
+
 				$rootScope.startSpin();
 				var attrToUpdate = {};
 				attrToUpdate[attribute] = $scope.formData[attribute];
@@ -191,6 +252,7 @@ angular.module('momi-blog')
 					console.log('----------------------------------------------------------');
 					console.log(data);
 					console.log($scope.$parent);
+					$scope.touched = true;
 					$rootScope.$broadcast('articleSelfChange',data);
 
         			$rootScope.stopSpin();
@@ -227,6 +289,9 @@ angular.module('momi-blog')
 		    $scope.autocompleteCategories =function(query) {
 		    	return categoryService.searchCategories(query)
 		    }
+		    $scope.autocompleteAuthors =function(query) {
+		    	return userService.searchUsers(query)
+		    }
 		   
 
 		    $scope.unselectOnBlur=function(){
@@ -246,6 +311,8 @@ angular.module('momi-blog')
 					} else {
 						$scope.formData.tags.push(tag_with_id);
 					}
+					$scope.touched = true;
+
 				$rootScope.stopSpin();
 				},function(d){
 					console.log(d);
@@ -301,6 +368,8 @@ angular.module('momi-blog')
 
 
 					}
+					$scope.touched = true;
+
 					$rootScope.stopSpin();
 						
 				},function(d){
@@ -326,6 +395,65 @@ angular.module('momi-blog')
 				$rootScope.startSpin();
 				articleService.removeCategory($scope.formData.id,category).then(function(data){
 					$rootScope.$broadcast('articleSelfChangeCat',data);
+					$rootScope.stopSpin();
+				},function(d){
+					console.log('EROOR');
+				})
+			}	
+
+			$scope.addAuthor=function(newAuthor){
+				var name = newAuthor.name;
+				$rootScope.startSpin();
+				if(!newAuthor.id)
+				{
+					newAuthor={};
+					newAuthor.name = name;
+					newAuthor.color = 'darkgrey';
+					newAuthor.textColor = 'white';
+				}
+				console.log(newAuthor);
+				articleService.addAuthor($scope.formData.id,newAuthor).then(function(data){
+					$rootScope.$broadcast('articleSelfChangeAuthorAdd',data);
+					data = data.data;
+					// console.log(data);
+					var tag_with_id =data.child;
+					var index = _.findIndex($scope.formData.authors, function(o) { return o.name == name || o.text == name; });
+					
+					// console.log('index='+index);
+					if( index != -1) {
+						// console.log('index different -1');
+						$scope.formData.authors.splice(index, 1, tag_with_id);
+					} else {
+						// console.log('---------------------------------------------------------');
+						// console.log(tag_with_id);
+						$scope.formData.authors.push(tag_with_id);
+
+
+					}
+					$scope.touched = true;
+
+					$rootScope.stopSpin();
+						
+				},function(d){
+					console.log('EROOR');
+				})
+			}	
+			function transformAuthor(newAuthor){
+
+				console.log('transformAuthor');
+				if (newAuthor.id){
+					return newAuthor
+				}else{
+					return {
+				    	name: newAuthor,
+					};
+				}
+			}	
+
+			$scope.removeAuthor=function(author){
+				$rootScope.startSpin();
+				articleService.removeAuthor($scope.formData.id,author).then(function(data){
+					$rootScope.$broadcast('articleSelfChangeAuthorRemove',data);
 					$rootScope.stopSpin();
 				},function(d){
 					console.log('EROOR');
@@ -432,6 +560,8 @@ angular.module('momi-blog')
 			                        $rootScope.$broadcast('articleSelfChangeDoc',data.data.parent);
 			                        // $rootScope.$broadcast('articleSelfChange',data.parent);
 			                        $scope.uploadsDocument[i].text='Envoi terminé';
+									$scope.touched = true;
+
 			                        (function(i){
 
 	                                    $timeout(function () {
@@ -591,6 +721,8 @@ angular.module('momi-blog')
 
 
                         $scope.uploadingImages[indexImage].text='Envoi terminé';
+						$scope.touched = true;
+
                         (function(indexImage){
 
                             $timeout(function () {

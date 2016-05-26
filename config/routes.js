@@ -39,7 +39,7 @@ module.exports.routes = {
   'POST /saveDash':'testController.saveDash',
   '/restoreDash':'testController.restoreDash',
 
-
+ 
 
   
   'GET /tag/searchAutocomplete/:searchText':'tagController.searchAutocomplete',
@@ -50,6 +50,25 @@ module.exports.routes = {
   'GET /image/:size/:name':'ImageController.serveImage',
   'POST /image/resize':'ImageController.resizeImage',
   'get /article/search/:sort/:slug':'articleController.search',
+  'get /article/:sort/:limit/:page':'articleController.fetch',
+  'get /articleActif/:sort/:limit/:page':'articleController.fetchActive',
+  'get /article/:id':'articleController.fetchOne',
+
+  //USER
+  // 'POST /user':'UserController.create',
+  'GET /user/verifyUniqueEmail/:email':'UserController.verifyUniqueEmail',
+  'POST /user/firstConnexion':'UserController.firstConnexion',
+  'POST /auth/login':'UserController.login',
+  'POST /user/:id/images':'userController.uploadImage',
+  'get /user/search/:sort/:slug':'userController.search',
+  'GET /user/searchAutocomplete/:searchText':'userController.searchAutocomplete',
+
+  
+  // LOGIN
+
+  'get /toto' :'testController.toto',
+
+
   // 'POST /article/:id/tags/:pk':'ArticleController.addTag',
   // 'POST /article/:id/tags':'ArticleController.addTag',
   // 'DELETE /article/:id/tags/:pk':'ArticleController.removeTag',

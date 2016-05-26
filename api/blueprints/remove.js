@@ -34,9 +34,9 @@ module.exports = function remove(req, res) {
   var ChildModel = req._sails.models[associationAttr.collection];
 
   console.log('REMOVE');
-  console.log(ChildModel);
-  console.log(childPk);
-  // var childPkAttr = ChildModel.primaryKey;
+  // console.log(ChildModel);
+  // console.log(childPk);
+  var childPkAttr = ChildModel.primaryKey;
 
   if(_.isUndefined(childPk)) {
     return res.serverError('Missing required child PK.');
@@ -45,7 +45,7 @@ module.exports = function remove(req, res) {
   Model
   .findOne(parentPk).exec(function found(err, parentRecord) {
     if (err) return res.serverError(err);
-    if (!parentRecord) return res.notFound();
+    if (!parentRecord) return res.notFound(); 
     if (!parentRecord[relation]) return res.notFound();
 
     parentRecord[relation].remove(childPk);
@@ -62,6 +62,7 @@ module.exports = function remove(req, res) {
         if (!parentRecord[Model.primaryKey]) return res.serverError();
 
         ChildModel.findOne(childPk).exec(function foundChild(err, childRecord) {
+          console.log(childRecord);
           childRecord.selfUpdate({parentType: req.options.model,parentId:parentPk , verb:'remove'},function(e,data){
             console.log('after cb self remove');
               if (req._sails.hooks.pubsub) {
@@ -72,10 +73,14 @@ module.exports = function remove(req, res) {
                 console.log('REMOVE ES in then end of remove fn');
                   // return callback()
                 // res.created(matchingRecord);
-              return res.ok(parentRecord);
               }).catch(function(err){
+
+                // return res.ok(parentRecord);
+
                      console.log(err);
               })
+                return res.ok(parentRecord);
+              
           });
         });
 

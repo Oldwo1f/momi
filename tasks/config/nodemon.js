@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 										console.log('REBOOTED');
 										require('fs').writeFileSync('.rebooted', 'rebooted');
 										REBOOTING = false;
-								}, 4000);
+								}, 5000);
 							}
 
 				        });

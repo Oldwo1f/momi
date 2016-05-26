@@ -14,6 +14,7 @@ module.exports = {
   		nbView : {type:'integer',defaultsTo:0},
   		status : {type:'string',required:true},
         activeComent:{type:'boolean',defaultsTo:true},
+        privateContent:{type:'boolean',defaultsTo:false},
         videoUrl:{type:'text',defaultsTo:null},
         videoHost:{type:'text',defaultsTo:null},
 
@@ -21,7 +22,8 @@ module.exports = {
         tags:{collection:'tag',defaultsTo:[]},
         categories:{collection:'category',defaultsTo:[]},
         documents:{collection:'document',defaultsTo:[]},
-  		images:{collection:'image',defaultsTo:[]},
+        images:{collection:'image',defaultsTo:[]},
+  		authors:{collection:'user',defaultsTo:[]},
     //     author: {
     // 			model: 'user'
     // 		},

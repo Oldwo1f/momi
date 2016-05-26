@@ -17,5 +17,10 @@
 #noCatElment{text-align: center;display:flex;justify-content:center;align-items:center;}
 
 .tagcloudWidget.style1 .widget__header{display:none;}
-.tagcloudWidget.style1 .maincontent{border: solid 1px rgba(255, 255, 255, 0.1)}
+.tagcloudWidget.style1 .maincontent{border: solid 1px rgba(255, 255, 255, 0.03)}
 .tagcloudWidget.style1 .widget__content.filled{background:transparent;}
+
+.tagcloudWidget.smallFont #cloudTag{font-size: 0.8rem;}
+.tagcloudWidget.smallFont #cloudTag .w10{font-size: 400%;}
+.tagcloudWidget.mediumFont #cloudTag{font-size: 1rem;}
+.tagcloudWidget.largeFont #cloudTag{font-size: 1.8rem;}

@@ -20,8 +20,6 @@ angular.module('momi-blog', ['ui.router'])
 	                    articlesList :  function(articleService, $stateParams){
 	                        
 
-	                        console.log('RESOLVE');
-	                        console.log($stateParams);
 	                        return articleService.fetch($stateParams.sort,$stateParams.page,$stateParams.nbPerPage)
 	                    }
 	                }

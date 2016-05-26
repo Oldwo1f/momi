@@ -204,6 +204,98 @@ module.exports = {
         		console.log(err);
         	})
         }
+        if(options.parentType == 'user')
+        {
+
+        		console.log('$$$$$$$$$$$$$$$$$ user $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
+        	//find article
+        	User.findOne(options.parentId).populate('images').then(function(user){
+        		
+        		console.log(user);
+
+
+        		if(options.verb == 'add'){
+            		console.log('IMG ADD');
+            		console.log(this.id);
+
+	               Image.findOne(childID).then(function(data){
+	               	// console.log(data);
+	                    
+	                    return Image.update(data.id ,
+	                    {
+	                        // nbArticles : data.nbArticles,
+	                        rank : user.images.length
+	                    }).then(function(result){
+	                        console.log(result[0]);
+	                        cb(null,data);
+	                        
+	                    })
+	                   
+	                }).catch(function (err) {
+	                    cb(err,null);
+	                });
+	            }
+	  
+	            if(options.verb == 'remove'){
+	            	console.log('IMG REMOVE');
+
+	            	return Promise.bind({})
+	            	.then(function(){
+	            		return Image.findOne(childID)
+	            	})
+	            	.then(function(data){
+	            		this.imgToremove = data
+	                    return Promise.map(user.images,function(img){
+	                    	if(img.rank > data.rank)
+	                    	{
+	                    		console.log('IFFFFFF');
+	                    		Image.findOne(img.id).then(function(data1){
+				                    return Image.update(data1.id ,
+				                    {
+				                        rank : data1.rank-1
+				                    }).then(function(result){
+				                        // cb(null,data);
+				                        return
+				                    })
+				                   
+				                })
+
+	                    	}
+	                    	else{
+	                    		return;
+	                    	} 
+	                    		
+	                    })
+	                   
+	                }).then(function(){
+	                	console.log('imgToREmove');
+	                	
+	                	// if()
+	                	return Image.destroy(this.imgToremove.id).then(function(data){
+                            cb(null,data);
+		                })
+
+
+	                	// return data.images.map
+	                }).catch(function (err) {
+	                    cb(err,null);
+	                });
+
+	            }	
+
+
+
+
+
+
+
+
+
+
+        	}).catch(function(err){
+        		console.log(err);
+        	})
+        }
 
 
 

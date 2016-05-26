@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="/bower_components/angularjs-color-picker/dist/angularjs-color-picker.min.css">
     <link rel="stylesheet" href="/bower_components/ng-tags-input/ng-tags-input.css">
     <link rel="stylesheet" href="/bower_components/jqcloud2/dist/jqcloud.min.css">
+    <link rel="stylesheet" href="/bower_components/angular-trustpass/dist/tr-trustpass.min.css">
+    <link rel="stylesheet" href="/bower_components/angular-notification-icons/dist/angular-notification-icons.min.css">
     <link rel="stylesheet" href="/styles/font-pe.css">
     <link rel="stylesheet" href="/styles/image-crop.css">
     <link rel="stylesheet" href="/styles/importer.css">
@@ -23,6 +25,7 @@
     <link rel="stylesheet" href="/styles/tinymce.css">
     <link rel="stylesheet" href="/styles/widget/categorycloud.css">
     <link rel="stylesheet" href="/styles/widget/lastarticleWidget.css">
+    <link rel="stylesheet" href="/styles/widget/profileWidget.css">
     <link rel="stylesheet" href="/styles/widget/tagcloudwidget.css">
     <!--STYLES END-->
     <style>
@@ -37,6 +40,7 @@
     <span us-spinner  spinner-key="mainSpinner"></span>
             
   
+    <div ui-view="pagelogin"></div>
     <div ui-view="dashboard"></div>
     
 
@@ -78,16 +82,21 @@
     <script src="/bower_components/angular-file-model/angular-file-model.js"></script>
     <script src="/bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="/bower_components/ng-tags-input/ng-tags-input.js"></script>
+    <script src="/bower_components/satellizer/satellizer.min.js"></script>
     <script src="/bower_components/spin.js/spin.js"></script>
+    <script src="/bower_components/angular-trustpass/dist/tr-trustpass.min.js"></script>
     <script src="/bower_components/angular-spinner/angular-spinner.js"></script>
     <script src="/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
     <script src="/bower_components/angular-ui-sortable/sortable.js"></script>
     <script src="/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
+    <script src="/bower_components/ngletteravatar/dist/ngletteravatar.min.js"></script>
+    <script src="/bower_components/angular-notification-icons/dist/angular-notification-icons.min.js"></script>
     <script src="/bower_components/ngSlimscroll/src/js/min/ngSlimscroll.js"></script>
     <script src="/js/backoffice/core/app.annotated.js"></script>
     <script src="/js/backoffice/core/widgetService.annotated.js"></script>
     <script src="/js/backoffice/blog/index.annotated.js"></script>
     <script src="/js/backoffice/categories/index.annotated.js"></script>
+    <script src="/js/backoffice/login/index.annotated.js"></script>
     <script src="/js/backoffice/social/index.annotated.js"></script>
     <script src="/js/backoffice/user/index.annotated.js"></script>
     <script src="/js/backoffice/blog/articleService.annotated.js"></script>
@@ -119,9 +128,13 @@
     <script src="/js/backoffice/core/services/documentService.annotated.js"></script>
     <script src="/js/backoffice/core/services/imageService.annotated.js"></script>
     <script src="/js/backoffice/core/services/tagService.annotated.js"></script>
+    <script src="/js/backoffice/core/services/userService.annotated.js"></script>
     <script src="/js/backoffice/easyImageCrop/colorpicker.annotated.js"></script>
     <script src="/js/backoffice/easyImageCrop/imageCrop.annotated.js"></script>
     <script src="/js/backoffice/social/directives/socialWidget.annotated.js"></script>
+    <script src="/js/backoffice/user/directives/profile.annotated.js"></script>
+    <script src="/js/backoffice/user/directives/profileWidget.annotated.js"></script>
+    <script src="/js/backoffice/user/directives/uniqueemail.annotated.js"></script>
     <script src="/js/backoffice/user/directives/userProfileWidget.annotated.js"></script>
     <script src="/js/backoffice/user/directives/usersPage.annotated.js"></script>
     <!--SCRIPTS END-->

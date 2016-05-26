@@ -1,4 +1,4 @@
-angular.module('core').factory('imageService',function ($compile,$sailsSocket,$q,$http) {
+angular.module('core').factory('imageService',function ($compile,$sailsSocket,$q,$http,$state) {
 	
 	var service = {};
 	
@@ -7,11 +7,10 @@ angular.module('core').factory('imageService',function ($compile,$sailsSocket,$q
        
         var deferred = $q.defer();
         $sailsSocket.get('/image/'+id).success(function (data,status) {
-            console.log('SUCCESS');
-            console.log(data);
             // service.list = data ;
             deferred.resolve(data);
         }).error(function (data,status) {
+            
             console.log(data);
             deferred.reject(data);
         })
@@ -117,6 +116,7 @@ angular.module('core').factory('imageService',function ($compile,$sailsSocket,$q
             console.log(data);
             deferred.resolve(data);
         }).error(function (data,status) {
+            
             console.log('serviceErr');
             console.log(data);
             deferred.reject(data);

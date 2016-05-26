@@ -53,13 +53,11 @@ angular.module('core')
 
 
         $scope.widgetList = widgetService.list;
-        console.log(widgetService.list);
         this.test ="yopaaa";
         $scope.columnwidth = 0;
         $scope.columnheight = 0;
 
         $scope.initSwipe =function(to,from){
-            console.log('SWIPEINIT');
             // if(to.parent == 'dashboard' )
             // {
             //     $('.pageDash').addClass('pageVisible').removeClass('pageAfter');
@@ -70,14 +68,8 @@ angular.module('core')
 
         }
         $scope.swipe =function(to,from){
-            // console.log(to);
-            console.log('SWIPE');
-            console.log(to);
-            console.log(from);
-            console.log(to.views);
             var toViewName = _.map(to.views,function(value,key){ return key;})
             toViewName = toViewName[0];
-            console.log(toViewName);
             if(!from){
                 if(to.name == 'dashboard' )
                 {
@@ -101,11 +93,9 @@ angular.module('core')
             else{
                 var fromViewName = _.map(from.views,function(value,key){ return key;})
                 fromViewName = fromViewName[0];
-                console.log(fromViewName);
 
                 if(fromViewName == toViewName && 'page1' == fromViewName && from.name != to.name)
                 {
-                    console.log('SAME PAGE');
                         $('.pageDash').addClass('pageVisible').removeClass('pageAfter pageBefore');
                         $('.page1').addClass('pageAfter').removeClass('pageVisible pageBefore');
                         $('.page2').addClass('pageAfter').removeClass('pageVisible pageBefore');
@@ -146,7 +136,6 @@ angular.module('core')
         }
        
         // $scope.swipeback =function(){
-        //   console.log('SWIPEswipeback');
         //   $('.pageVisible').addClass('pageAfter').removeClass('pageVisible');
         //   // $('.pageAfter').addClass('pageVisible').removeClass('pageAfter');
         //   $('.pageBefore').addClass('pageVisible').removeClass('pageBefore');
@@ -154,27 +143,23 @@ angular.module('core')
         
         $scope.swipe($state.current)
         // $scope.$on('$viewContentLoading',function(e,t){
-        //   console.log('$viewContentLoaded');
         //   if($state.current.name != "dashboard")
         //     $scope.swipe()
           
           
         // });
         $scope.$on('$stateChangeSuccess',function (e,toState,toParams,fromState,fromParams){
-          console.log('$stateChangeSuccess');
             $rootScope.previousState = fromState;
             $rootScope.previousStateParams = fromParams;
 
             $scope.swipe(toState, fromState)
+
+            
         });
-        $scope.$on('$stateChangeStart',function (e,toState,toParams,fromState,fromParams){
-          console.log('$stateChangeStart');
-            // $scope.initSwipe(toState, fromState)
-        });
+       
         // INIT FIRST SWIPE IF view is on right page
         // if($state.current.name != "dashboard")
         //   $scope.swipe()
-        // console.log($state.current.name);
         // $scope.$on('$stateChangeSuccess',function(e,t){
      
           
@@ -190,7 +175,6 @@ angular.module('core')
           })
           scope.$on('restoreDefault',function(e,theme){
             scope.widgetList = widgetService.defaultList;
-            console.log(scope.widgetList);
           })
 
 
@@ -200,7 +184,6 @@ angular.module('core')
             
           })
           scope.$on('gridster-resize', function(gridster) {
-            console.log('RESIZE grid CHANGE');
           })
 
 

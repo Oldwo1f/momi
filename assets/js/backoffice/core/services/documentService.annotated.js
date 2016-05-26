@@ -1,4 +1,4 @@
-angular.module('core').factory('documentService',["$compile", "$sailsSocket", "$q", "$http", function ($compile,$sailsSocket,$q,$http) {
+angular.module('core').factory('documentService',["$compile", "$sailsSocket", "$q", "$http", "$state", function ($compile,$sailsSocket,$q,$http,$state) {
 	
 	var service = {};
 	
@@ -7,10 +7,9 @@ angular.module('core').factory('documentService',["$compile", "$sailsSocket", "$
        
         var deferred = $q.defer();
         $sailsSocket.get('/document/'+id).success(function (data,status) {
-            console.log('SUCCESS');
-            console.log(data);
             deferred.resolve(data);
         }).error(function (data,status) {
+            
             console.log(data);
             deferred.reject(data);
         })

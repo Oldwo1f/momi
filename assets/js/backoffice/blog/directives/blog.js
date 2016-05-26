@@ -10,7 +10,7 @@ angular.module('momi-blog')
       	},
 		replace: true,
 		templateUrl: 'js/backoffice/blog/partials/blog.html',
-		controller:function($scope,$rootScope,articleService,tagService,imageService,documentService,$sailsSocket,$stateParams,$state,usSpinnerService){
+		controller:function($scope,$rootScope,userService,articleService,tagService,imageService,documentService,$sailsSocket,$stateParams,$state,usSpinnerService){
 			console.log($scope.articlesList);
 
 			$scope.returnParentState=function(){
@@ -204,12 +204,22 @@ angular.module('momi-blog')
 						$scope.articlesList[index] = data;
 					}
 			})		
+			$rootScope.$on('articleSelfAdd',function(e,data){
+				// console.log(id);
+				console.log('articleSelfAdd');
+					$scope.articlesList.unshift(data)
+			})			
 			$rootScope.$on('articleSelfRemove',function(e,id){
 				console.log(id);
 				console.log('articleSelfRemove');
 					var index = _.findIndex($scope.articlesList, function(o) { return o.id == id; });
+
+					console.log($scope.articlesList);
+					console.log(index);
 					if( index !== -1) {
+						console.log('index !== -1');
 						$scope.articlesList.splice(index,1)
+						console.log($scope.articlesList);
 					}
 			})	
 			$rootScope.$on('articleSelfChangeImg',function(e,data){
@@ -240,13 +250,50 @@ angular.module('momi-blog')
 						$scope.articlesList[index].categories = data.categories;
 					}
 			})
+			$rootScope.$on('articleSelfChangeAuthorAdd',function(e,data){
+				console.log('articleSelfChangeAuthorADD');
+				console.log(data);
+				var articleId= data.data.parent.id;
+				var authorId = data.addedAuthorId;
+				console.log(articleId);
+					var index = _.findIndex($scope.articlesList, function(o) { return o.id == articleId; });
+					console.log(index);
+					if( index !== -1) {
+						userService.fetchOne(authorId).then(function(author){
+							console.log('final author fetch==>');
+							console.log(author);
+							$scope.articlesList[index].authors.push(author)
+
+						},function(d){
+							console.log('EROOR');
+						})
+					}
+			})
+			$rootScope.$on('articleSelfChangeAuthorRemove',function(e,data){
+				console.log('articleSelfChangeAuthorRemove');
+				console.log(data);
+				var articleId= data.data.id;
+				var authorId = data.removedAuthorId;
+				console.log(articleId);
+				var index = _.findIndex($scope.articlesList, function(o) { return o.id == articleId; });
+				console.log(index);
+				if( index !== -1) {
+						var index2 = _.findIndex($scope.articlesList[index].authors, function(o) { return o.id == authorId; });
+						if( index2 !== -1)
+							$scope.articlesList[index].authors.splice(index2,1)
+
+				}	
+			})
 
 			    $sailsSocket.subscribe('article',function(data){
 			        console.log('ON ARTICLE');
 			        console.log(data);
 			        if(data.verb =='created'){
-
-			        	$scope.articlesList.unshift(data.data)
+			        	// articleService.fetchOne(data.id).then(function(data2){
+			        		// console.log(data2);
+			        		$scope.articlesList.unshift(data.data)
+			        		
+			        	// })
 			        	
 			        }else
 			        if(data.verb =='updated'){
@@ -278,7 +325,9 @@ angular.module('momi-blog')
 							if(data.attribute == 'tags'){
 
 								if(articleTochange){
-
+									if(typeof(articleTochange.tags) == 'undefined'){
+									articleTochange.tags = [];
+									}
 								tagService.fetchOne(data.addedId).then(function(tag){
 									console.log(tag);
 									articleTochange.tags.push(tag)
@@ -292,7 +341,9 @@ angular.module('momi-blog')
 
 								console.log('categories');
 								console.log(data.addedId);
-
+								if(typeof(articleTochange.categories) == 'undefined'){
+									articleTochange.categories = [];
+								}
 								categoryService.fetchOne(data.addedId).then(function(cat){
 									console.log(cat);
 									articleTochange.categories.push(cat)
@@ -305,6 +356,9 @@ angular.module('momi-blog')
 
 								console.log('images');
 								console.log(data.addedId);
+								if(typeof(articleTochange.images) == 'undefined'){
+									articleTochange.images = [];
+								}
 								imageService.fetchOne(data.addedId).then(function(cat){
 									console.log(cat);
 									articleTochange.images.push(cat)
@@ -317,9 +371,27 @@ angular.module('momi-blog')
 
 								console.log('documents');
 								console.log(data.addedId);
+								if(typeof(articleTochange.documents) == 'undefined'){
+									articleTochange.documents = [];
+								}
 								documentService.fetchOne(data.addedId).then(function(cat){
 									console.log(cat);
 									articleTochange.documents.push(cat)
+
+								},function(d){
+									console.log('EROOR');
+								})
+							}
+							if(data.attribute == 'authors'){
+
+								console.log('authors');
+								console.log(data.addedId);
+								console.log(articleTochange);
+								if(typeof(articleTochange.authors) == 'undefined'){
+									articleTochange.authors = [];
+								}
+								userService.fetchOne(data.addedId).then(function(author){
+									articleTochange.authors.push(author)
 
 								},function(d){
 									console.log('EROOR');
@@ -353,6 +425,12 @@ angular.module('momi-blog')
 								var index = _.findIndex(articleTochange.documents, function(o) { return o.id == data.removedId; });
 								if( index !== -1) {
 									articleTochange.documents.splice(index,1)
+								}
+							}
+							if(data.attribute == 'authors'){
+								var index = _.findIndex(articleTochange.authors, function(o) { return o.id == data.removedId; });
+								if( index !== -1) {
+									articleTochange.authors.splice(index,1)
 								}
 							}
 

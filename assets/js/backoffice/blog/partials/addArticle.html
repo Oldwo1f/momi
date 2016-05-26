@@ -1,5 +1,5 @@
 <div>
-	<div class="my-container">
+	<div class="my-container pageAddArticle">
 		
 	<header class="pageHeader">
 
@@ -32,7 +32,7 @@
 			<input type="text" class="stacked-input" ng-blur="update('title')" ng-model="formData.title" id="input-1" placeholder="Titre">
 <!-- category -->
 			<label for="input-2" class="stacked-label"><i class="pe-7s-way"></i></label>
-			<tags-input class="mycategoriesinput inputtag mb mt" ng-model="formData.categories" on-tag-removed="removeCategory($tag)" on-tag-adding="addCategory($tag)" add-on-enter="true"  ng-blur="unselectOnBlur()"  placeholder="Ajouter une catégorie" display-property="name" template="myCatTemplate">
+			<tags-input class="mycategoriesinput inputtag  mt" ng-model="formData.categories" on-tag-removed="removeCategory($tag)" on-tag-adding="addCategory($tag)" add-on-enter="true"  ng-blur="unselectOnBlur()"  placeholder="Ajouter une catégorie" display-property="name" template="myCatTemplate">
             	<auto-complete source="autocompleteCategories($query)" display-property="name" select-first-match="true" ></auto-complete>
         	</tags-input>
         	<script type="text/ng-template" id="myCatTemplate">
@@ -53,6 +53,33 @@
 
 			<label for="input-4" class="stacked-label mt0"><i class="pe-7s-note"></i></label>
 			<textarea ui-tinymce="tinymceOption" ng-model="formData.content" ng-model="tinymceModel" ng-blur="update('content')" placeholder="Contenu de l'article"></textarea>
+<!-- category -->
+			<label for="input-5" class="stacked-label mt0"><i class="pe-7s-user"></i></label>
+			<tags-input add-from-autocomplete-only="true" class="mycategoriesinput inputtag  mb" ng-model="formData.authors" on-tag-removed="removeAuthor($tag)" on-tag-adding="addAuthor($tag)" add-on-enter="true"  ng-blur="unselectOnBlur()"  placeholder="Ajouter un auteur" display-property="name" template="myAuthorTemplate">
+            	<auto-complete source="autocompleteAuthors($query)" template="autocomplete-template" display-property="name" select-first-match="true" ></auto-complete>
+        	</tags-input>
+        	<script type="text/ng-template" id="myAuthorTemplate">
+        		<div class="author-template" >
+
+			        	<img ng-if="data.images[0]" class="myprofiletableimage" width="50" height="50"  ng-src="image/resized/{{data.images[0].filename}}" alt="">
+		        		<ng-letter-avatar  ng-if="!data.images[0]" charCount="1" data="{{data.firstname}} {{data.name}}" fontsize="25" height="50" width="50" shape="round"></ng-letter-avatar>
+			          <span >{{data.name}} {{data.firstname}}</span>
+
+			          <a class="remove-button"  ng-click="$removeTag()">&#10006;</a>
+			     </div>
+			</script>
+		 	<script type="text/ng-template" id="autocomplete-template">
+				<div class="autocomplete-template">
+				<div class="left-panel pull-left">
+				  <img ng-if="data.images[0]" width="50" height="50" ng-src="image/resized/{{data.images[0].filename}}" />
+				  <ng-letter-avatar  ng-if="!data.images[0]" charCount="1" data="{{data.firstname}} {{data.name}}" fontsize="15" height="50" width="50" shape="round"></ng-letter-avatar>
+				</div>
+				<div class="right-panel pull-left">
+				  <span ng-bind-html="$highlight(data.firstname +' '+ data.name)"></span>
+				</div>
+				</div>
+			</script>
+								<!-- // <ng-letter-avatar  ng-if="!user.images.length" charCount="1" data="{{user.firstname}} {{user.name}}" shape="round"></ng-letter-avatar> -->
 
 		</div>
 		<div class="form_col_r">
@@ -96,6 +123,20 @@
 				  </ul>
 				</div>
 			</div>
+			<div class="smallSeparator"></div>
+			<div class="formGroup mb">
+				<div class="btn-group block">
+				  <a ng-click="formData.privateContent=false;update('privateContent')" type="button" class="fakeColorBlue btn active"  ng-class="{'blue':formData.privateContent==false,'violet':formData.privateContent==true}" style="border-right:0px">Public</a>
+				  <a ng-click="formData.privateContent=true;update('privateContent')" type="button" class="fakeColorViolet btn active" ng-class="{'blue':formData.privateContent==false,'violet':formData.privateContent==true}" >Premium</a>
+				</div>
+			</div>
+			<div class="smallSeparator"></div>
+			<div class="formGroup mb">
+				<div class="btn-group block">
+				  <a ng-click="formData.activeComent=true;update('activeComent')" type="button" class="fakeColorGreen btn active"  ng-class="{'green':formData.activeComent==true,'red':formData.activeComent==false}" style="border-right:0px">Commentaire actif</a>
+				  <a ng-click="formData.activeComent=false;update('activeComent')" type="button" class="fakeColorRed btn active" ng-class="{'green':formData.activeComent==true,'red':formData.activeComent==false}" >Commentaire inactif</a>
+				</div>
+			</div>
 			
 
 
@@ -107,8 +148,10 @@
 			<span class="label">Attachment</span>
 		</label>
 		<button onclick="return false;">Send</button> -->
-	</article>
-	<article class="widget widget__form addImages">
+	<!-- </article>
+	<article class="widget "> -->
+		<div class="widget__form addImages">
+			
 		<div class="col-md-12 form_col">
 			<div class="form_title">Ajouter des images 
 			<!-- <input type="file"  class="addImageBtn" onchange="angular.element(this).scope().changeImageUrl(this)">
@@ -303,6 +346,7 @@
 				<!-- ng-if  number of image > 4 -->
 				<!-- <div class="completor"></div> -->
 			</div>
+		</div>
 		</div>
 
 		

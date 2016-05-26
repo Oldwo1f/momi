@@ -13,15 +13,31 @@ module.exports = {
   /**
    * `TestController.toto()`
    */
-  toto: function (req, res) {
+  // toto: function (req, res) {
+  //   console.log('toto');
+  //   mail.sendEmail({
+  //            from: '"Fred Foo 👥" <foo@blurdybloop.com>', // sender address 
+  //            to: 'alexismomcilovic@gmail.com', // list of receivers 
+  //            subject: 'Hellos ✔', // Subject line 
+  //            text: 'Hello worldsssss', // plaintext body 
+  //            html: '<b>Hello world 🐴</b>' // html body 
+  //        }).then(function(data){
+  //           console.log('THEN IN TOTO');
+  //           console.log(data);
+  //        });
+  // },
+   toto: function (req, res) {
     console.log('toto');
     mail.sendEmail({
              from: '"Fred Foo 👥" <foo@blurdybloop.com>', // sender address 
-             to: 'contact@momcreation.fr', // list of receivers 
+             to: 'alexismomcilovic@gmail.com', // list of receivers 
              subject: 'Hellos ✔', // Subject line 
              text: 'Hello worldsssss', // plaintext body 
              html: '<b>Hello world 🐴</b>' // html body 
-         },'confirm');
+         },'newUser',{name:'alexis',firstname:'momcilovic'}).then(function(data){
+            console.log('THEN IN TOTO');
+            console.log(data);
+         });
   },
   saveDash: function (req, res) {
 

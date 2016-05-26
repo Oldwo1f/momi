@@ -39,9 +39,9 @@
 .lastarticleWidget.extralargeFont { font-size:1.5rem;}
 	
 
-.widget md-card {background: transparent;box-shadow:none;height: 270px;margin : 8px 0px;}
-.widget md-card md-card-title md-card-title-text{margin-right: 10px;}
-.widget md-card md-card-title md-card-title-media{align-self: center;}
+.lastarticleWidget .widget md-card {background: transparent;box-shadow:none;height: 270px;margin : 8px 0px;}
+.lastarticleWidget .widget md-card md-card-title md-card-title-text{margin-right: 10px;}
+.lastarticleWidget .widget md-card md-card-title md-card-title-media{align-self: center;}
 
 
 .lastarticleWidget.style0{background:rgba(255,0,0,0.4);}

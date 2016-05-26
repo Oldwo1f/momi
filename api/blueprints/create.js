@@ -19,6 +19,8 @@ var _ = require('lodash');
  */
 module.exports = function createRecord (req, res) {
 
+
+console.log('CREATE RECORD');
 	var Model = actionUtil.parseModel(req);
 
 	// Create data object (monolithic combination of all parameters)
@@ -30,7 +32,7 @@ module.exports = function createRecord (req, res) {
 	Model.create(data).exec(function created (err, newInstance) {
 
 
-
+		console.log('CREATEd');
 		// Differentiate between waterline-originated validation errors
 		// and serious underlying issues. Respond with badRequest if a
 		// validation error is encountered, w/ validation info.

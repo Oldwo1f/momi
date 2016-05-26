@@ -1,110 +1,100 @@
-<div class="fluid-container">
-	
-<article class="widget">
-	<header class="widget__header one-btn">
-		<div class="widget__title">
-			<i class="pe-7f-menu"></i><h3>Media Table</h3>
-		</div>
-		<div class="widget__config">
-			<a href="#"><i class="pe-7s-plus"></i></a>
-		</div>
-	</header>
-	
-	<div class="widget__content table-responsive">
-		
-		<table class="table table-striped media-table">
-	  	<thead>
-	  		<tr>
-	  			<th width="270">Post Description</th>
-	  			<th width="120">Date</th>
-	  			<th>Post Info</th>
-	  			<th>Del</th>
-	  		</tr>
-	  	</thead>
-	  	<tbody>
+<div class="my-container">
 
-	  	
-	  		<tr class="spacer"></tr>
-	  		<tr>
-	  			<td>
-	  				<div class="media">
-							<figure class="pull-left post__img">
-								<img class="media-object" src="img/post1.jpg" alt="user">
-							</figure>
+
+<div infinite-scroll="myPagingFunction()">
+	<article class="widget userspage">
+
+		<header class="pageHeader">
+
+			<a  class="rightBtn" ng-click="returnDashboardState()">
+				<span ><i class="fa fa-dashboard"></i></span>
+			</a>
+			<a  class="rightBtn" ng-click="returnPreviousState()">
+				<span  ><i class="fa fa-long-arrow-left"></i></span>
+			</a>
+			<div class="pageTitle">
+				<i class="pe-7f-users"></i><h3>Utilisateurs</h3>
+			</div>
+			<div class="searchBar">
+				<input class="" type="text" ng-blur="searchUser()" ng-keypress="blurOnEnter($event)" ng-model="searchSlug" placeholder="Recherche parmis les utilisateurs">
+				<span class="iconsearch"><i class="fa fa-search"></i></span>
+			</div>
+			<!-- <a class="leftBtn" ui-sref="categories">
+				<span  ><i class="pe-7s-way"></i></span>
+			</a> -->
+			<a class="leftBtn" ng-click="ModalAdd()">
+				<span  ><i class="pe-7s-plus"></i></span>
+			</a>
+		</header>
+		
+		<div class="widget__content table-responsive">
+			
+			<table class="table media-table">
+		  	<thead>
+		  		<tr>
+		  			<th width="80" ng-click="changeSort('createdAt');" >Date <i ng-if="!searchSlug" ng-show="sort=='createdAt DESC'" class="pe-7s-angle-down"></i>  <i ng-if="!searchSlug" ng-show="sort=='createdAt ASC'" class="pe-7s-angle-up"></th>
+		  			<th width="170" ng-click="changeSort('role');" >Role <i ng-if="!searchSlug" ng-show="sort=='role DESC'" class="pe-7s-angle-down"></i>  <i ng-if="!searchSlug" ng-show="sort=='role ASC'" class="pe-7s-angle-up"></th>
+		  			<th width="500" ng-click="changeSort('name');">Nom <i ng-if="!searchSlug" ng-show="sort=='name DESC'" class="pe-7s-angle-down "></i> <i ng-if="!searchSlug" ng-show="sort=='name ASC'" class="pe-7s-angle-up " />
+		  			</th>
+		  			<th width="80" ng-click="changeSort('email');">Email <i ng-if="!searchSlug" ng-show="sort=='email DESC'" class="pe-7s-angle-down "></i> <i ng-if="!searchSlug" ng-show="sort=='email ASC'" class="pe-7s-angle-up " />
+		  			</th>
+		  			<th style="text-align:left">Info</th>
+		  		</tr>
+		  	</thead>
+		  	<tbody>
+
+		  	
+		  		<tr class="tableRow" ng-repeat="user in usersList">
+
+		  			<td>
+		  				<p class="post__date">
+		  					
+		  					<span class="dddd">{{user.createdAt | amDateFormat:'dddd'}}</span>
+		  					<span class="DD">{{user.createdAt | amDateFormat:'DD'}}</span>
+		  					<span class="MM ">{{user.createdAt | amDateFormat:'MMM'}}</span>
+		  				</p>
+		  			</td>
+		  			<td>
+		  				<div class="btn-group block">
+						  <a ng-click="user.role='admin';update(user.id,'role','admin')" type="button" class="fakeColorGreen btn active"  ng-class="{'green':user.role=='admin','blue':user.role=='user','violet':user.role=='premium','bigger':user.role=='admin'}" style="border-bottom:0px">Admin</a>
+						  <a ng-click="user.role='user';update(user.id,'role','user')" type="button" class="fakeColorBlue btn active" ng-class="{'green':user.role=='admin','blue':user.role=='user','violet':user.role=='premium','bigger': user.role=='user'}" >User</a>
+						  <a ng-click="user.role='premium';update(user.id,'role','premium')" type="button" class="fakeColorViolet btn active" ng-class="{'green':user.role=='admin','blue':user.role=='user','violet':user.role=='premium','bigger':user.role=='premium'}"  style="border-top:0px">Premium</a>
+						</div>
+		  			</td>
+		  			<td colspan="2">
+		  				<div class="media">
+
+						
 							<div class="media-body post_desc">
-								<h3>Gravity Psd B-Cards</h3>
-								<p>A classic approach...</p>
-								<button class="btn blue btn-sm">Edit</button>
+								<img class="myprofiletableimage" width="50" height="50" ng-if="user.images.length" ng-src="image/resized/{{user.images[0].filename}}" height="200" width="200" alt="">
+								<ng-letter-avatar  ng-if="!user.images.length" charCount="1" data="{{user.firstname}} {{user.name}}" shape="round"></ng-letter-avatar>
+								<h3> {{user.firstname}} {{user.name}}</h3>
+								<p class="email">
+				  					{{user.email}}
+				  				</p>
 							</div>
 						</div>
-	  			</td>
-	  			<td>
-	  				<p class="post__date">26 Feb, 2014 <br>15:20</p>
-	  			</td>
-	  			<td class="not-padding">
-	  				<p class="post__info">A classic approach to our gravity series of psd business cards mockup which can be used for both vertical...</p>
-	  			</td>
-	  			<td>
-	  				<a href="#" onclick="return false;" class="post__del"><i class="pe-7f-close"></i></a>
-	  			</td>
-	  		</tr>
+		  			</td>
+		  			<td class="not-padding" style="text-align:left">
+		  				
+							<p class="post__info"  ng-bind-html="user.description"  content-html="user.description" html-ellipsis>
+		  			</td>
+		  			
+		  		</tr>
 
-	  		<tr class="spacer"></tr>
-	  		<tr>
-	  			<td>
-	  				<div class="media">
-							<figure class="pull-left post__img">
-								<img class="media-object" src="img/post2.jpg" alt="user">
-							</figure>
-							<div class="media-body post_desc">
-								<h3>Psd Foil Sticker</h3>
-								<p>A set of shiny psd foil...</p>
-								<button class="btn blue btn-sm">Edit</button>
-							</div>
-						</div>
-	  			</td>
-	  			<td>
-	  				<p class="post__date">20 Feb, 2014 <br>11:05</p>
-	  			</td>
-	  			<td class="not-padding">
-	  				<p class="post__info">A set of shiny psd foil stickers to decorate your designs. Easily change the color and content to create a nifty…</p>
-	  			</td>
-	  			<td>
-	  				<a href="#" onclick="return false;" class="post__del"><i class="pe-7f-close"></i></a>
-	  			</td>
-	  		</tr>
 
-	  		<tr class="spacer"></tr>
-	  		<tr>
-	  			<td>
-	  				<div class="media">
-							<figure class="pull-left post__img">
-								<img class="media-object" src="img/post3.jpg" alt="user">
-							</figure>
-							<div class="media-body post_desc">
-								<h3>Wood Burning Logo</h3>
-								<p>A fresh looking wood...</p>
-								<button class="btn blue btn-sm">Edit</button>
-							</div>
-						</div>
-	  			</td>
-	  			<td>
-	  				<p class="post__date">19 Jan, 2014 <br>19:53</p>
-	  			</td>
-	  			<td class="not-padding">
-	  				<p class="post__info">A fresh looking wood burning psd logo mockup with a pyrogravure art style to create burn marks of your design…</p>
-	  			</td>
-	  			<td>
-	  				<a href="#" onclick="return false;" class="post__del"><i class="pe-7f-close"></i></a>
-	  			</td>
-	  		</tr>
+		  	</tbody>
+			</table>
+			<div class="endInfinite">
+				
+				<span us-spinner="spinneropts"  spinner-key="userSpinner"></span>
+				<span ng-if="fin">Fin</span>
+			</div>
+			
 
-	  	</tbody>
-		</table>
-		
+			
+		</div> <!-- /widget__content -->
 
-		
-	</div> <!-- /widget__content -->
-
-</article>
+	</article>
+</div>
 </div>

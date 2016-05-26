@@ -1,26 +1,30 @@
 angular.module('core')
-.factory('articleService', ['$http', '$q','$sailsSocket', function ($http,$q,$sailsSocket) {
+.factory('articleService', ["$http", "$q", "$sailsSocket", "$state", "$auth", function ($http,$q,$sailsSocket,$state,$auth) {
     var service = {};
     service.items=[];  
 
     service.filter={slug:'',page:1,order:'createdAt DESC',perPage:10};
 
     service.fetch= function(sort,page,nbPerPage) {
+
+        console.log('FETCH');
         var deferred = $q.defer();
         sort = sort? sort : 'date DESC'
         nbPerPage = nbPerPage ? nbPerPage : 3
-        page = page ? page : 1
-        console.log('sort', sort);
-        console.log('nbPerPage', nbPerPage);
-        console.log('page', page);
-        // console.log(stateParams);
-        // console.log(service.filter);
-        $sailsSocket.get('/article?sort='+sort+'&limit='+nbPerPage+'&skip='+nbPerPage*(page-1)).success(function (data,status) {
+        page = page ? page : 1;
+
+        console.log('nbPerPage '+ nbPerPage);
+        console.log('page '+ page);
+        console.log('/article/'+sort+'/'+nbPerPage+'/'+nbPerPage*(page-1));
+        $sailsSocket.get('/article/'+sort+'/'+nbPerPage+'/'+nbPerPage*(page-1)).success(function (data,status) {
             console.log(data);
             service.items =data;
             deferred.resolve(data);
         }).error(function (data,status) {
-            deferred.reject('error perso');
+            // if(status == '401')
+            //     $state.go('login')
+
+            deferred.reject(status);
         })
 
         return deferred.promise;
@@ -28,11 +32,12 @@ angular.module('core')
     service.fetchLast= function() {
         var deferred = $q.defer();
 
-        $sailsSocket.get('/article?sort=date DESC&limit=1&where={"status":"actif"}').success(function (data,status) {
-            console.log(data);
+        $sailsSocket.get('/articleActif/date DESC/1/1').success(function (data,status) {
             deferred.resolve(data[0]);
         }).error(function (data,status) {
-            deferred.reject('error perso');
+            // if(status == '401')
+            //     $state.go('login')
+            deferred.reject(status);
         })
 
         return deferred.promise;
@@ -41,14 +46,13 @@ angular.module('core')
         var deferred = $q.defer();
         sort = sort? sort : 'date DESC'
        
-        // console.log(stateParams);
-        // console.log(service.filter);
         $sailsSocket.get('/article/search/'+sort+'/'+slug).success(function (data,status) {
-            console.log(data);
             service.items =data;
             deferred.resolve(data);
         }).error(function (data,status) {
-            deferred.reject('error perso');
+            // if(status == '401')
+            //     $state.go('login')
+            deferred.reject(status);
         })
 
         return deferred.promise;
@@ -113,17 +117,13 @@ angular.module('core')
 
     service.removeImage=function(id,imgID){
 
-        console.log('REMOVE Image Service');
         var deferred = $q.defer();
-        console.log(id);
-        console.log(imgID);
         if(imgID){
             $sailsSocket.delete('/article/'+id+'/images/'+imgID).success(function (data,status) {
-                console.log('SUCCESS');
-                console.log(data);
                 deferred.resolve(data);
             }).error(function (data,status) {
-                console.log(data);
+                if(status == '401')
+                    $state.go('login')
                 deferred.reject(data);
             })
         }
@@ -132,17 +132,13 @@ angular.module('core')
     }
     service.removeDocument=function(id,docID){
 
-        console.log('REMOVE DOCUMENT Service');
         var deferred = $q.defer();
-        console.log(id);
-        console.log(docID);
         if(docID){
             $sailsSocket.delete('/article/'+id+'/documents/'+docID).success(function (data,status) {
-                console.log('SUCCESS');
-                console.log(data);
                 deferred.resolve(data);
             }).error(function (data,status) {
-                console.log(data);
+                if(status == '401')
+                $state.go('login')
                 deferred.reject(data);
             })
         }
@@ -158,12 +154,16 @@ angular.module('core')
             $sailsSocket.post('/article/'+id+'/categories/'+newCategory.id).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
+                if(status == '401')
+                $state.go('login')
                 deferred.reject(data);
             })
         }else{
             $sailsSocket.post('/article/'+id+'/categories/',newCategory).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
+                if(status == '401')
+                $state.go('login')
                 deferred.reject(data);
             })
         }
@@ -172,19 +172,54 @@ angular.module('core')
 
     service.removeCategory=function(id,newCategory){
 
-        console.log('REMOVE TAG Service');
-        // var category = {text : newCategory};
         var deferred = $q.defer();
-        console.log(id);
-        console.log(newCategory);
         if(newCategory.id){
             // TAG dejà existant
             $sailsSocket.delete('/article/'+id+'/categories/'+newCategory.id).success(function (data,status) {
-                console.log('SUCCESS');
-                console.log(data);
                 deferred.resolve(data);
             }).error(function (data,status) {
-                console.log(data);
+                if(status == '401')
+                $state.go('login')
+                deferred.reject(data);
+            })
+        }
+        
+        return deferred.promise;      
+    }
+
+    service.addAuthor=function(id,newAuthor){
+
+        var deferred = $q.defer();
+        if(newAuthor.id){
+            $sailsSocket.post('/article/'+id+'/authors/'+newAuthor.id).success(function (data,status) {
+                deferred.resolve({data:data, addedAuthorId: newAuthor.id});
+            }).error(function (data,status) {
+                if(status == '401')
+                $state.go('login')
+                deferred.reject(data);
+            })
+        }else{
+            $sailsSocket.post('/article/'+id+'/authors/',newAuthor).success(function (data,status) {
+                deferred.resolve({data:data, addedAuthorId: newAuthor.id});
+            }).error(function (data,status) {
+                if(status == '401')
+                $state.go('login')
+                deferred.reject(data);
+            })
+        }
+        return deferred.promise;      
+    }
+
+    service.removeAuthor=function(id,newAuthor){
+
+        var deferred = $q.defer();
+        if(newAuthor.id){
+            // TAG dejà existant
+            $sailsSocket.delete('/article/'+id+'/authors/'+newAuthor.id).success(function (data,status) {
+                deferred.resolve({data:data, removedAuthorId: newAuthor.id});
+            }).error(function (data,status) {
+                if(status == '401')
+                $state.go('login')
                 deferred.reject(data);
             })
         }
@@ -200,6 +235,8 @@ angular.module('core')
             $sailsSocket.post('/article/'+id+'/tags/'+newTag.id).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
+                if(status == '401')
+                $state.go('login')
                 deferred.reject(data);
             })
         }else{
@@ -207,6 +244,8 @@ angular.module('core')
             $sailsSocket.post('/article/'+id+'/tags/',newTag).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
+                if(status == '401')
+                $state.go('login')
                 deferred.reject(data);
             })
         }
@@ -216,19 +255,15 @@ angular.module('core')
 
     service.removeTag=function(id,newTag){
 
-        console.log('REMOVE TAG Service');
         // var tag = {text : newTag};
         var deferred = $q.defer();
-        console.log(id);
-        console.log(newTag);
         if(newTag.id){
             // TAG dejà existant
             $sailsSocket.delete('/article/'+id+'/tags/'+newTag.id).success(function (data,status) {
-                console.log('SUCCESS');
-                console.log(data);
                 deferred.resolve(data);
             }).error(function (data,status) {
-                console.log(data);
+                if(status == '401')
+                $state.go('login')
                 deferred.reject(data);
             })
         }
@@ -238,68 +273,84 @@ angular.module('core')
 
     service.createBlank=function(article){
 
-        console.log('ADDNEW Service');
+        var authorId = $auth.getPayload().sub
+        console.log(authorId);
         article = {date : new Date(),status:'draft'};
         var deferred = $q.defer();
         $sailsSocket.post('/article',article).success(function (data,status) {
-            console.log('SUCCESS');
-            console.log(typeof(data.tags));
-            if(typeof(data.tags) != 'array')
-                data.tags=[];
-            console.log(data);
-            deferred.resolve(data);
+            
+
+            $sailsSocket.post('/article/'+data.id+'/authors/'+authorId).success(function (data2,status) {
+                console.log('HEHEHEHEHHEHEHEHEHE');
+                // console.log(data2);
+                // if(typeof(data2.tags) != 'array')
+                // data2.content='';
+                // data2.tags=[];
+                // deferred.resolve(data2);
+                 $sailsSocket.get('/article/'+data.id).success(function (data3,status) {
+                    console.log('HEHEHEHEHHEHEHEHEHE');
+                    console.log(data3);
+                    if(typeof(data3.tags) != 'array')
+                    // data2.content='';
+                    data3.tags=[];
+                    deferred.resolve(data3);
+
+
+                }).error(function (data,status) {
+                    if(status == '401')
+                    $state.go('login')
+                    deferred.reject(data);
+                })
+
+
+            }).error(function (data,status) {
+                if(status == '401')
+                $state.go('login')
+                deferred.reject(data);
+            })
+
+
+            // deferred.resolve(data);
         }).error(function (data,status) {
+            if(status == '401')
+                $state.go('login')
             deferred.reject(data);
         })
         return deferred.promise;      
     }
     service.fetchOne=function(id){
 
-        console.log('fetchOne Article');
-        console.log(id);
         // article = {date : new Date(),status:'draft'};
         var deferred = $q.defer();
         $sailsSocket.get('/article/'+id).success(function (data,status) {
-            console.log('SUCCESS');
-            console.log(data);
             deferred.resolve(data);
         }).error(function (data,status) {
-            console.log('ERROR');
-            console.log(data);
+            if(status == '401')
+                $state.go('login')
             deferred.reject(data);
         })
         return deferred.promise;      
     }
     service.update=function(id, values){
 
-        console.log('updateValue Service');
-        console.log(id);
-        console.log(values);
         var deferred = $q.defer();
         $sailsSocket.put('/article/'+id,values).success(function (data,status) {
-            console.log('SUCCESS');
-            console.log(data);
             deferred.resolve(data);
         }).error(function (data,status) {
-            console.log('serviceErr');
-            console.log(data);
+            // if(status == '401')
+            //     $state.go('login')
             deferred.reject(data);
         })
         return deferred.promise;      
     }
     service.remove=function(id){
 
-        console.log('remove Service');
-        console.log(id);
-        // console.log(values);
         var deferred = $q.defer();
         $sailsSocket.delete('/article/'+id).success(function (data,status) {
-            console.log('SUCCESS');
-            console.log(data);
             deferred.resolve(data);
         }).error(function (data,status) {
-            console.log('serviceErr');
-            console.log(data);
+            if(status == '401')
+                $state.go('login')
             deferred.reject(data);
         })
         return deferred.promise;      

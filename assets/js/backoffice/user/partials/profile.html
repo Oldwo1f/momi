@@ -1,0 +1,113 @@
+<div>
+	<div class="my-container">
+		
+	<header class="pageHeader">
+
+			<a  class="rightBtn" ng-click="returnDashboardState()">
+				<span ><i class="fa fa-dashboard"></i></span>
+			</a>
+			<!-- <a  class="rightBtn" ng-click="returnPreviousState()">
+				<span  ><i class="fa fa-long-arrow-left"></i></span>
+			</a> -->
+			<div class="pageTitle">
+				<i class="pe-7f-note"></i><h3>Mon profile {{formData.name}}</h3>
+			</div>
+			
+		</header>
+
+	<article class="widget widget__form profilepage">
+		<div class="col-md-6 form_col">
+			<div class="form_title">Article</div>
+<!-- title -->
+			<label for="input-1" class="stacked-label"><i class="pe-7s-mail"></i></label>
+			<input type="text" disabled class="stacked-input" ng-blur="update('email')" ng-model="profileInfos.email" id="input-1" placeholder="Email">
+			<label for="input-1" class="stacked-label"><i class="pe-7s-user"></i></label>
+			<input type="text" class="stacked-input half second" ng-blur="update('name')" ng-model="profileInfos.name" id="input-1" placeholder="Nom">
+			<!-- <label for="input-2" class="stacked-label"><i class="pe-7s-user"></i></label> -->
+			<input type="text" class="stacked-input half" ng-blur="update('firstname')" ng-model="profileInfos.firstname" id="input-2" placeholder="Prenom">
+
+<!-- content  -->
+
+			<label for="input-4" class="stacked-label mt"><i class="pe-7s-note"></i></label>
+			<textarea ui-tinymce="tinymceOption" ng-model="profileInfos.description"  ng-blur="update('description')" placeholder="Ma description"></textarea>
+
+		</div>
+		<div class="form_col_r addImages">
+			<div class="imageprofile">
+				
+				<figure ng-if="!profileInfos.images.length">
+					<ng-letter-avatar charCount="1" data="{{profileInfos.firstname}} {{profileInfos.name}}" fontsize="150" height="200" width="200" shape="round"></ng-letter-avatar>
+					
+				</figure>
+				<figure ng-if="profileInfos.images.length">
+					<img ng-src="image/resized/{{profileInfos.images[0].filename}}" height="200" width="200" alt="">
+					
+				</figure>
+				<div class="form_title">Changer votre image de profile 
+				<!-- <input type="file"  class="addImageBtn" onchange="angular.element(this).scope().changeImageUrl(this)">
+				<div class="addImageBtnFakeBtn" onclick="$(this).siblings('.addImageBtn').click();"> </div> -->
+					<div class="button btnADDIMG" ngf-select="addImgCrop($files)" ng-model="file" ngf-pattern="'image/*'"
+					    ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"> <i class="pe-7s-plus"></i></div>
+					<div ngf-drop="addImgCrop($files)" ngf-pattern="'image/*'"
+					    ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" ngf-drag-over-class="'dragover'" ng-model="file" class="drop-zone" >Déposer votre images ici</div>
+				</div>
+			</div>
+			
+
+			<div class="smallSeparator" ng-if="imgcrop.imgSrc"></div>
+			<div class="smallSeparator" ng-if="imgcrop.imgSrc"></div>
+			
+			
+			
+			<div class="imgrelativecontainer">
+				
+				<div image-crop 
+			    		aspect-ratio="imgcrop.aspectRatio" 
+			    		img-src="imgcrop.imgSrc" 
+			    		img-load="'imgLoader.gif'" 
+			    		display-height="imgcrop.displayHeight"
+			    		display-width = "imgcrop.displayWidth"
+			    		scaled-height="imgcrop.scaledHeight" 
+			    		scaled-width="imgcrop.scaledWidth" 
+			    		scaled-top="imgcrop.scaledTop" 
+			    		scaled-left="imgcrop.scaledLeft" 
+			    		container-width="imgcrop.containerWidth" 
+			    		container-height="imgcrop.containerHeight" 
+			    		style=" width: 100%; position:relative;" class="imageCropper" ng-class="{imageCropperH0: !imgcrop.imgSrc}">
+					</div>
+				<button ng-if="imgcrop.imgSrc" class="btn red" ng-click="removeImgCrop()">Annuler</button>
+				<button ng-if="imgcrop.scaledWidth && !imgcrop.imgEditId" class="btn blue" ng-click="uploadImage()">Ajouter cette image</button>
+				<button ng-if="imgcrop.scaledWidth && imgcrop.imgEditId" class="btn blue" ng-click="resizeOnly()">Redimentionner l'image</button>
+				<!-- <div class="landscapeportrait"  ng-if="imgcrop.scaledWidth">
+					<button class="btn blue" ng-click="changeOrientation()"><i class="fa fa-exchange"></i></button>
+				</div> -->
+				<!-- <button ng-if="scaledWidth" class="btn blue" ng-click="uploadImage()">Redimentionner votre image</button> -->
+				<p class="messageImage"  ng-if="imgcrop.imgSrc && !imgcrop.scaledWidth"><span>Vous devez redimentionner votre image avant de l'envoyer ver le server. <br> Faite un rectangle dessu le plus grand possible.</span></p>
+				<div class="clearfix"></div>
+				<div class="smallSeparator" ></div>
+				<div ng-repeat="uploadingImage in uploadingImages" class="uploadingDoc" ng-if="uploadingImage.status == 'progress'">
+					<span>{{uploadingImage.file.name}}</span>
+					<span>{{uploadingImage.text}}</span>
+					<md-progress-linear md-mode="determinate" value="{{uploadingImage.progressPercentage}}"></md-progress-linear>
+						
+				</div>
+
+			</div>
+			<div class="smallSeparator"></div>
+			
+
+
+		</div>
+
+		<!-- <label class="full-label">
+			<input type="file" id="file-att">
+			<i class="pe-7f-paperclip"></i>
+			<span class="label">Attachment</span>
+		</label>
+		<button onclick="return false;">Send</button> -->
+	</article>
+	
+
+	<div class="clearfix"></div>
+	</div>
+</div>

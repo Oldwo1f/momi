@@ -158,7 +158,7 @@ module.exports = function addToCollection (req, res) {
           })
 
         });
-
+ 
       }
 
     }],

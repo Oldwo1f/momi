@@ -1,10 +1,9 @@
 angular.module('core')
-  .directive('lastarticleWidget', function (widgetService,articleService){
+  .directive('lastarticleWidget', function (widgetService,articleService,$state){
 
     'use strict';
     var thisresize = function(item){
 
-        console.log(item);
 
         	var classToSet= 'style0' ,classFont='smallFont';
         	var x = item.sizeX, y = item.sizeY;
@@ -95,10 +94,7 @@ angular.module('core')
 	   //      	}
     //     	}
     
-    console.log(item.gridster);
-    console.log(item.getElementSizeX());
-    console.log(item.getElementSizeY());
-    $('.RESIZEHEIGHT').height(item.getElementSizeY()-94)
+    $('.lastarticleWidget .RESIZEHEIGHT').height(item.getElementSizeY()-94)
     $('.card-media ').height(item.getElementSizeY()-125)
     $('.card-media ').width(item.getElementSizeY()-125)
         	
@@ -114,39 +110,30 @@ angular.module('core')
       controller:function($scope,articleService,$state){
             $scope.editArticleState=function(id){
                 
-                console.log('editArticleState');
                 $state.go('dashboard/blog/edit',{id:id})
             }
-        console.log('dashTitle directive controller');
       },
       link:function(scope,element,attrs){
 
 
       		
-      	// console.log(scope.gridsterItem);
       	thisresize(scope.$parent.gridsterItem)
 
         articleService.fetchLast().then(function(data){
-          console.log(data);
           scope.lastArticle = data;
           scope.$applyAsync()
         }).catch(function(e){
-          console.log(e);
         })
 
 
       	scope.$parent.$on('gridster-item-resized', function(e,item) {
-      		console.log('Listen fore titleDash resize');
       		thisresize(item)
 
       		
 		    })
       	scope.$parent.$on('gridster-item-transition-end', function(e,item) {
-      		// console.log('Listen fore titleDash ---->initialized');
-// console.log(scope.widgetList);
 
       		// widgetService.changeDash(scope.widgetList);
-      		// console.log(item);
 		    // sizes[0] = width
 		    // sizes[1] = height
 		    // gridster.

@@ -450,6 +450,7 @@ angular.module('momi-categories')
 		                                $scope.uploadingImages[indexImage].status = 'success';
 		                            },2000)
 		                        })(indexImage)
+		                        
 		                        // $mdDialog.hide()
 
 		                    },function (evt) {

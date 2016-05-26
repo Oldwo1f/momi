@@ -1,0 +1,24 @@
+<div class="containerLogin">
+    <div class="center-form panel">
+      <div class="panel-body">
+        <h2 class="text-center">Première connexion</h2>
+        <small>Choisissez votre mot de passe</small>
+        <form method="post" ng-submit="login()" name="loginForm">
+          <div class="form-group " style="margin-bottom:0px">
+             <input id="password"
+           class="form-control input-lg"
+           type="password"
+           name="password"
+           placeholder="Entrez votre mot de passe"
+           tr-trustpass="{keepHeight:true, special: false, messageGuide: '',lowercaseLabel:'une minuscule',uppercaseLabel:'une MAJUSCULE', numberLabel:'1 chiffre ',minimumLabel:'caractères',messageDone:'Votre mot de passe est sécurisant'}"
+           ng-minlength="8"
+           ng-model="password">
+          </div>
+          
+          <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-lg  btn-block btn-success">Se connecter</button>
+         
+          
+        </form>
+      </div>
+    </div>
+</div>

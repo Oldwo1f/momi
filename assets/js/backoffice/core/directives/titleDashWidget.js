@@ -79,7 +79,6 @@ angular.module('core')
         	}
         	// item.$element.hasClass('expanded')
         	// if()
-        	// console.log(classToSet);
         	item.$element.removeClass('style0 style1 style2 style3 style4 style5 style6 style7 style8 style9 style10 style11 style12 style13 style14 style15 smallFont extralargeFont mediumFont  largeFont')
         	.addClass(classToSet+ ' ' + classFont)
         	.addClass('titleDashWidget')
@@ -90,13 +89,10 @@ angular.module('core')
       replace: true,
       templateUrl: 'js/backoffice/core/partials/titleDashWidget.html',
       link:function(scope,element,attrs){
-      	console.log('dashTitle directive');
       		
-      	// console.log(scope.gridsterItem);
       	thisresize(scope.$parent.gridsterItem)
 
       	scope.$parent.$on('gridster-item-resized', function(e,item) {
-      		console.log('Listen fore titleDash resize');
       		thisresize(item)
 
       		

@@ -9,6 +9,7 @@ angular.module('core').factory('widgetService',["$compile", "$http", function ($
 	lastarticleWidget : { enabled : true, required : false, widgetName :'lastarticleWidget',html: '<lastarticle-widget></lastarticle-widget>',sizeX: 8, sizeY: 1 , minSizeY:1,maxSizeY :12,minSizeX:1 , maxSizeX : 24, col:8 ,row: 8,noresize:false,transparent: false },
 	categorycloudWidget : { enabled : true, required : false, widgetName :'categorycloudWidget',html: '<categorycloud-widget></categorycloud-widget>',sizeX: 8, sizeY: 1 , minSizeY:1,maxSizeY :12,minSizeX:1 , maxSizeX : 24, col:8 ,row: 8,noresize:false,transparent: false},
 	tagcloudWidget : { enabled : true, required : false, widgetName :'tagcloudWidget',html: '<tagcloud-widget></tagcloud-widget>',sizeX: 8, sizeY: 1 , minSizeY:1,maxSizeY :12,minSizeX:1 , maxSizeX : 24, col:8 ,row: 8,noresize:false,transparent: false},
+	profileWidget : { enabled : true, required : true, widgetName :'profileWidget',html: '<profile-widget></profile-widget>',sizeX: 6, sizeY: 4 , minSizeY:1,maxSizeY :12,minSizeX:1 , maxSizeX : 24, col:8 ,row: 8,noresize:false,transparent: false},
 	};
 
 	
@@ -45,8 +46,6 @@ angular.module('core').factory('widgetService',["$compile", "$http", function ($
 		  url: '/restoreDash'
 		}).then(function successCallback(response) {
 
-			console.log('restore !');
-			console.log(response);
 
 
 			// if(response.data.length>0)

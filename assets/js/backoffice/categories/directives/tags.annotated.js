@@ -11,7 +11,6 @@ angular.module('momi-categories')
 		replace: true,
 		templateUrl: 'js/backoffice/categories/partials/tags.html',
 		controller:["$mdDialog", "$scope", "$rootScope", "tagService", "imageService", "documentService", "$sailsSocket", "$stateParams", "$state", "usSpinnerService", function($mdDialog,$scope,$rootScope,tagService,imageService,documentService,$sailsSocket,$stateParams,$state,usSpinnerService){
-			console.log($scope.tagsList);
 
 			$scope.returnParentState=function(){
 				// console.log('returnParentState BLOG');
@@ -53,13 +52,9 @@ angular.module('momi-categories')
 				$rootScope.startSpin();
 				var attrToUpdate = {};
 				attrToUpdate[attribute] = value;
-				console.log(attrToUpdate);
 				tagService.update(id,attrToUpdate).then(function(data){
-					console.log('----------------------------------------------------------');
-					console.log(data);
 
 					 	var index = _.findIndex($scope.tagsCloudtag, function(o) { return o.myid == data.id; });
-	                    console.log(index);
 	                    if( index !== -1) {
 
 	                        var dataUsable = {};
@@ -74,19 +69,16 @@ angular.module('momi-categories')
 	                        }
 	                        
 	                        dataUsable.html.class = 'CatInCloud'
-	                        console.log(dataUsable);
 	                        _.merge($scope.tagsCloudtag[index], dataUsable)
 	                        $('#cloudTags').jQCloud('update', $scope.tagsCloudtag);
 
 	                    }
 
 
-					// console.log($scope.$parent);
 					$rootScope.$broadcast('tagSelfChange',data);
 
         			$rootScope.stopSpin();
 				},function(d){
-					console.log('EROOR');
 				})
 			}
 			$scope.changeColor=function(color, id){
@@ -123,7 +115,6 @@ angular.module('momi-categories')
 			, position: 'relative' // Element positioning
 			};
 			$scope.startSpin = function(){
-				console.log('STARTSPIN');
             	usSpinnerService.spin('articleSpinner');
 	        }
 	        $scope.stopSpin = function(){
@@ -144,9 +135,7 @@ angular.module('momi-categories')
 				if(!$scope.searchSlug){
 					$scope.startSpin();
 					$scope.pagin++;
-					console.log('myPagingFunction');
 					tagService.fetch($scope.sort,$scope.pagin,10).then(function(data){
-						console.log(data);
 						if(data.length==0)
 						{
 							$scope.fin = true
@@ -183,9 +172,7 @@ angular.module('momi-categories')
 					break;
 				}
 				// $stateParams.sort = $scope.sort;
-				console.log($scope.sort);
 				$state.transitionTo('tags', { sort: $scope.sort,page:$scope.page,nbPerPage:$scope.nbPerPage}, {location:true});
-				// console.log('fetchArticles');
 				// $scope.fetchArticles()
 				
 			}	
@@ -197,7 +184,6 @@ angular.module('momi-categories')
 	            // colors:['#00CCFF','#03C3FE','#06BAFD','#09B1FD','#0CA8FC','#0FA0FC','#1297FB','#158EFB','#1885FA','#1C7DFA'],
 	            // removeOverflowing:false,
 	            afterCloudRender:function(){
-	                console.log('afterCloudRender2');
 	                $('.TagInCloud').hover(function(){
 	                	$('.tableRowTag[rel="'+$(this).attr('rel')+'"]').addClass('hovered')
 		            },function(){
@@ -210,36 +196,23 @@ angular.module('momi-categories')
 
 			$scope.blurSearch = 0;
 			$scope.searchTags=function(){
-				console.log('searchTags');
 				if($scope.searchSlug){
 					if($scope.blurSearch== 0){
-						console.log('$scope.searchSlug');
-						console.log($scope.searchSlug);
 						tagService.searchTags($scope.searchSlug,$scope.sort).then(function(data){
-							console.log(data);
 							$scope.tagsList = data;
 						}).catch(function(e){
-							console.log('err');
-							console.log(e);
 						})
 					}else if($scope.blurSearch== 1){
-						console.log('$scope.searchSlug');
-						console.log($scope.searchSlug);
 						tagService.searchTags($scope.searchSlug,$scope.sort).then(function(data){
-							console.log(data);
 							$scope.tagsList = data;
 							$scope.blurSearch = 2;
 						}).catch(function(e){
-							console.log('err');
-							console.log(e);
 						})
 					}else if($scope.blurSearch== 2){
-						console.log('$scope.searchSlug');
 						$scope.blurSearch = 0;
 					}
 				}else{
 					tagService.fetch($scope.sort,0,10).then(function(data){
-						console.log(data);
 						if(data.length==0)
 						{
 							$scope.fin = true
@@ -254,7 +227,6 @@ angular.module('momi-categories')
 		
 			$scope.blurOnEnter=function($event,$element) {
 				if($event.keyCode == 13){
-					console.log('ON ENTER');
 					$scope.blurSearch = 1;	
 					$scope.searchTags();
 				}else{
@@ -280,8 +252,6 @@ angular.module('momi-categories')
 
 
 			    $sailsSocket.subscribe('tag',function(data){
-			        console.log('ON tag');
-			        console.log(data);
 			        if(data.verb =='created'){
 
 			        	$scope.tagsList.unshift(data.data)
@@ -302,7 +272,6 @@ angular.module('momi-categories')
 			        }else
 			        if(data.verb =='updated'){
 			        	 var index = _.findIndex($scope.tagsCloudtag, function(o) { return o.myid == data.id; });
-	                    console.log(index);
 	                    if( index !== -1) {
 
 	                        var dataUsable = {};
@@ -317,7 +286,6 @@ angular.module('momi-categories')
 	                        }
 	                        
 	                        dataUsable.html.class = 'CatInCloud'
-	                        console.log(dataUsable);
 	                        _.merge($scope.tagsCloudtag[index], dataUsable)
 	                        $('#cloudTags').jQCloud('update', $scope.tagsCloudtag);
 
@@ -339,7 +307,6 @@ angular.module('momi-categories')
 
 			tagService.fetchAll().then(function(data){
 
-	            console.log(data);
 	           data = _.map(data,function(c){
 
 	            return {'text':c.text,'myid':c.id,'weight':c.total,
@@ -363,7 +330,6 @@ angular.module('momi-categories')
 	            
 	          // scope.$applyAsync()
 	        }).catch(function(e){
-	          console.log(e);
 	        })
 
 		}

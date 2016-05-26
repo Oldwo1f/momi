@@ -10,6 +10,118 @@ var sid = require('shortid');
 var easyimg = require('easyimage');
 var IsThere = require("is-there");
 module.exports = {
+		fetch:function(req,res,next){
+			
+			var articlesPromise = Article.find().sort(req.params.sort)
+		    .skip(req.params.page).limit(req.params.limit).populateAll();
+
+			articlesPromise
+		    .then(function(articles) {   
+		        var articlesWithAuthorsPromises = articles.map(function(article) {
+		            var authorsPromises = article.authors.map(function(author) {
+		                return User.findOne(author.id).populateAll();
+		            });
+
+		            return Promise.all(authorsPromises)
+		                  .then(function(fullfilledAuthors) {
+		                  	  article = article.toObject()
+		                      article.authors = fullfilledAuthors;
+		                      return article;
+		                   })
+		        })
+
+		        return Promise.all(articlesWithAuthorsPromises)
+		    })
+		   .then(function(fullData) {
+		   	var ids = _.map(fullData,'id')
+		   		Article.subscribe(req,ids)
+		   		Article.watch(req)
+		        res.send(fullData)
+		    })
+		    .catch(function(e){
+		    	console.log('ERRRRRRRRRRRRRRRRRRRRRRRRRROR');
+		    	console.log(e);
+		    })
+
+
+			
+		},
+		fetchActive:function(req,res,next){
+			
+			var articlesPromise = Article.find({status:'actif'}).sort(req.params.sort)
+		    .skip(req.params.page).limit(req.params.limit).populateAll();
+
+			articlesPromise
+		    .then(function(articles) {   
+		        var articlesWithAuthorsPromises = articles.map(function(article) {
+		            var authorsPromises = article.authors.map(function(author) {
+		                return User.findOne(author.id).populateAll();
+		            });
+
+		            return Promise.all(authorsPromises)
+		                  .then(function(fullfilledAuthors) {
+		                  	  article = article.toObject()
+		                      article.authors = fullfilledAuthors;
+		                      return article;
+		                   })
+		        })
+
+		        return Promise.all(articlesWithAuthorsPromises)
+		    })
+		   .then(function(fullData) {
+		        res.send(fullData)
+		        var ids = _.map(fullData,'id')
+		   		Article.subscribe(req,ids)
+		    })
+		    .catch(function(e){
+		    	console.log('ERRRRRRRRRRRRRRRRRRRRRRRRRROR');
+		    	console.log(e);
+		    })
+
+
+			
+		},
+		fetchOne:function(req,res,next){
+			
+			console.log('FETCH');
+			console.log(req.params);
+
+			Article.findOne(req.params.id).populateAll().then(function(article){
+				console.log('HERE');
+				console.log(article);
+				console.log(typeof(article.authors));
+				var art=_.cloneDeep(article);
+				return new Promise(function(resolve,reject){
+					
+						if(typeof(article.authors) != 'undefined'){
+
+							console.log('HERE2');
+							console.log('AUTHOR');
+
+							return Promise.map(article.authors,function(author){
+
+								return User.findOne(author.id).populateAll()
+								
+							}).then(function(t){
+								console.log('AFTERMAP');
+								console.log(t);
+								art.authors = t;
+								console.log(art);
+								resolve(art)
+							})
+							// 
+						}else
+						{
+							console.log('HERE3');
+							resolve(article)
+						}
+				}).then(function(hey){
+				// console.log(hey);
+				 Article.subscribe(req, hey);
+				res.send(hey)
+				})
+			})
+		},
 		uploadDocument:function(req,res,next) {
 			console.log(req.file);
 			console.log('-------------');
@@ -254,16 +366,30 @@ var cropOptions = req.body
 			new Promise.map(datasIds, function(id){
 				console.log('-------'+id);
 				// return id
-				return Article.findOne(id).populateAll().then(function(d){
-					console.log(d);
+				return Article.findOne(id).populateAll().then(function(article){
+					console.log(article);
 					Article.subscribe(req,id)
-					// res.send(d)
-					return d
+					var authorsPromises = article.authors.map(function(author) {
+		                return User.findOne(author.id).populateAll();
+		            });
+
+		            return Promise.all(authorsPromises)
+                  	.then(function(fullfilledAuthors) {
+                  	  article = article.toObject()
+                      article.authors = fullfilledAuthors;
+                      return article;
+                   	})
 				})
 			}).then(function(finaldata){
 				console.log(finaldata);
 				res.send(finaldata)
 				
+			
+
+
+
+
+
 			});
 
 			

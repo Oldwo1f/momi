@@ -13,7 +13,7 @@ module.exports = {
         nbProjects:{type:'int',defaultsTo:0},
   		total:{type:'int',defaultsTo:0},
         selfUpdate:function(options,cb){
-        console.log('SELF UPDATE');
+        console.log('SELF UPDATE TAG');
         console.log(options);
 
         if(options.parentType == 'article')
@@ -101,7 +101,7 @@ module.exports = {
                                 nbArticles : data.nbArticles,
                                 total : data.total
                             } )
-                            
+                            cb(null,result);
                         })
 
                     }
