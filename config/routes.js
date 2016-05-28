@@ -35,7 +35,8 @@ module.exports.routes = {
   // '/': {
   //   view: 'homepage'
   // },
-  '/':'adminController.serveApp',
+  '/admin':'adminController.serveApp',
+  'GET /': 'FrontController.home',
 
 
  
@@ -83,5 +84,33 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+
+
+  //FRONT
+
+
+  // 'GET /grimpes': 'frontController.portfolio',
+  // 'GET /avendre': 'frontController.avendre',
+  // 'GET /projet/:id/*':'frontController.projet',
+  // 'GET /blog': 'frontController.blog',
+  // 'GET /blog/:page': 'frontController.blog',
+  // 'GET /blog/category/:thiscat': 'frontController.category',
+  // 'GET /blog/category/:thiscat/:page': 'frontController.category',
+  // 'GET /blog/article/:id/*':'frontController.article',
+  'GET /contact':'frontController.contact',
+  'GET /presta':'frontController.presta',
+  
+  // 'POST /contactEmail':'frontController.contactEmail',
+  // 'POST /project/:itemid/addComment':'frontController.addCommentProj',
+  // 'POST /project/addReponse/:itemid/:projid':'frontController.addReponseProj',  
+  // 'POST /article/:itemid/addComment':'frontController.addCommentArticle',
+  // 'POST /article/addReponse/:itemid/:projid':'frontController.addReponseArticle',
+
+  // 'get /createNotif':'NotificationController.createNotif',
+  // 'get /createComment':'NotificationController.createComment',
+
+  // 'GET /file/image/:size/:name':'ImageController.serveImage',
+  // 'GET /file/document/:name':'DocumentController.serveDocument',
+  // 'GET /test':'FrontController.test',
 
 };

@@ -26,6 +26,7 @@
     "grunt-contrib-watch": "0.5.3",
     "grunt-sails-linker": "~0.10.1",
     "grunt-sync": "0.2.4",
+    "html-truncate": "1.2.1",
     "include-all": "~0.1.6",
     "is-there": "4.3.2",
     "jwt-simple": "0.5.0",
