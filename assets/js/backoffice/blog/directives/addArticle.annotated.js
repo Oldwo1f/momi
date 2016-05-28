@@ -411,25 +411,26 @@ angular.module('momi-blog')
 					newAuthor.color = 'darkgrey';
 					newAuthor.textColor = 'white';
 				}
-				console.log(newAuthor);
+				// console.log(newAuthor);
 				articleService.addAuthor($scope.formData.id,newAuthor).then(function(data){
 					$rootScope.$broadcast('articleSelfChangeAuthorAdd',data);
-					data = data.data;
+					// data = data.data;
+					// console.log('ttttttttttttttttttttttttttttttttttttttttt');
 					// console.log(data);
-					var tag_with_id =data.child;
-					var index = _.findIndex($scope.formData.authors, function(o) { return o.name == name || o.text == name; });
+					// var tag_with_id =data.child;
+					// var index = _.findIndex($scope.formData.authors, function(o) { return o.name == name || o.text == name; });
 					
-					// console.log('index='+index);
-					if( index != -1) {
-						// console.log('index different -1');
-						$scope.formData.authors.splice(index, 1, tag_with_id);
-					} else {
-						// console.log('---------------------------------------------------------');
-						// console.log(tag_with_id);
-						$scope.formData.authors.push(tag_with_id);
+					// // console.log('index='+index);
+					// if( index != -1) {
+					// 	// console.log('index different -1');
+					// 	$scope.formData.authors.splice(index, 1, tag_with_id);
+					// } else {
+					// 	// console.log('---------------------------------------------------------');
+					// 	// console.log(tag_with_id);
+					// 	$scope.formData.authors.push(tag_with_id);
 
 
-					}
+					// }
 					$scope.touched = true;
 
 					$rootScope.stopSpin();

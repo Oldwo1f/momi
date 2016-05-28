@@ -164,7 +164,7 @@ angular.module('momi-user')
 				$scope.imgcrop.aspectRatio = '1/1';
 				$scope.imgcrop.imgSrc = "";
 
-		        $sailsSocket.post('/image/resize/',$scope.dataToSend).success(function (data,status) {
+		        $sailsSocket.post('/image/resizeprofile/',$scope.dataToSend).success(function (data,status) {
 		            console.log('SUCCESS RESIZE');
 		            $rootScope.stopSpin();
 		            
@@ -227,11 +227,11 @@ angular.module('momi-user')
                     	console.log(data.data.child);
                     	
                     	// $scope.profileInfos.images.push(data.data.child)
-				            $rootScope.$broadcast('userSelfChangeImg',data.data.parent);
+				            // $rootScope.$broadcast('userSelfChangeImg',data.data.parent);
                     	$scope.dataToSend.imgid= data.data.child.id;
                     	$scope.dataToSend.filename= data.data.child.filename;
                     	$rootScope.startSpin();
-      					$sailsSocket.post('/image/resize/',$scope.dataToSend).success(function (d,status) {
+      					$sailsSocket.post('/image/resizeprofile/',$scope.dataToSend).success(function (d,status) {
 				            console.log('SUCCESS RESIZE');
 				            console.log(data.data.child);
 				            $scope.profileInfos.images[0]= data.data.child
@@ -243,7 +243,7 @@ angular.module('momi-user')
 				            console.log('errOR');
 				        })
 
-
+				        $rootScope.$broadcast('profileChange',$scope.profileInfos);
                         $scope.uploadingImages[indexImage].text='Envoi terminé';
                         (function(indexImage){
 

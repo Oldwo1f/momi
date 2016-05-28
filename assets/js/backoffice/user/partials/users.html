@@ -66,7 +66,7 @@
 
 						
 							<div class="media-body post_desc">
-								<img class="myprofiletableimage" width="50" height="50" ng-if="user.images.length" ng-src="image/resized/{{user.images[0].filename}}" height="200" width="200" alt="">
+								<img class="myprofiletableimage" width="50" height="50" ng-if="user.images.length" ng-src="image/profile/{{user.images[0].filename}}" height="200" width="200" alt="">
 								<ng-letter-avatar  ng-if="!user.images.length" charCount="1" data="{{user.firstname}} {{user.name}}" shape="round"></ng-letter-avatar>
 								<h3> {{user.firstname}} {{user.name}}</h3>
 								<p class="email">

@@ -2,6 +2,7 @@ angular.module('core')
 .factory('userService', function ($http,$q,$sailsSocket,$state,$auth) {
     var service = {};
     service.items=[];  
+    service.me={};  
 
     service.filter={slug:'',page:1,order:'createdAt DESC',perPage:10};
 
@@ -123,25 +124,26 @@ angular.module('core')
 
     service.selfProfile=function(){
 
-        console.log('SelfProfile');
         if($auth.isAuthenticated()){
+        console.log('isAuthenticated');
 
             id = $auth.getPayload().sub;
             // user = {date : new Date(),status:'draft'};
             var deferred = $q.defer();
             $sailsSocket.get('/user/'+id).success(function (data,status) {
-                console.log('SUCCESS');
-                setTimeout(function(){
+                // console.log('SUCCESS');
+                console.log(data);
+                // setTimeout(function(){
                     
                 service.me = data;
-                },2000)
-                console.log(data);
+                // },2000)
+                // console.log(data);
                 deferred.resolve(data);
             }).error(function (data,status) {
                 if(status == '401')
                     $state.go('login')
-                console.log('ERROR');
-                console.log(data);
+                // console.log('ERROR');
+                // console.log(data);
                 deferred.reject(data);
             })
             return deferred.promise;      
@@ -154,14 +156,14 @@ angular.module('core')
         // user = {date : new Date(),status:'draft'};
         var deferred = $q.defer();
         $sailsSocket.get('/user/'+id).success(function (data,status) {
-            console.log('SUCCESS');
-            console.log(data);
+            // console.log('SUCCESS');
+            // console.log(data);
             deferred.resolve(data);
         }).error(function (data,status) {
             if(status == '401')
                 $state.go('login')
-            console.log('ERROR');
-            console.log(data);
+            // console.log('ERROR');
+            // console.log(data);
             deferred.reject(data);
         })
         return deferred.promise;      
@@ -169,12 +171,12 @@ angular.module('core')
     service.update=function(id, values){
 
         console.log('updateValue Service');
-        console.log(id);
-        console.log(values);
+        // console.log(id);
+        // console.log(values);
         var deferred = $q.defer();
         $sailsSocket.put('/user/'+id,values).success(function (data,status) {
             console.log('SUCCESS');
-            console.log(data);
+            // console.log(data);
             deferred.resolve(data);
         }).error(function (data,status) {
             // if(status == '401')
@@ -188,12 +190,12 @@ angular.module('core')
     service.remove=function(id){
 
         console.log('remove Service');
-        console.log(id);
+        // console.log(id);
         // console.log(values);
         var deferred = $q.defer();
         $sailsSocket.delete('/user/'+id).success(function (data,status) {
-            console.log('SUCCESS');
-            console.log(data);
+            // console.log('SUCCESS');
+            // console.log(data);
             deferred.resolve(data);
         }).error(function (data,status) {
             if(status == '401')

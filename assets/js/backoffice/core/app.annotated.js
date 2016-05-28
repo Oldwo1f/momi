@@ -51,11 +51,13 @@ angular.module('core', ['angular-notification-icons','ngLetterAvatar','sails.io'
 
         views:{
             'dashboard':{
-                template:'<dashboard></dashboard>',
+                template:'<dashboard widgetlist="widgetlist"></dashboard>',
+                controller:["$scope", "widgetlist", function($scope, widgetlist){
+                    $scope.widgetlist = widgetlist;
+                }],
                 resolve:{
                     widgetlist:  ["widgetService", function(widgetService){
-                        var t = widgetService.restoreDash();
-                          return t
+                       return widgetService.restoreDash();
                     }],
                 },
 
@@ -101,12 +103,20 @@ angular.module('core', ['angular-notification-icons','ngLetterAvatar','sails.io'
 
 
 }]);
-angular.module('core').controller('appController',["$rootScope", "$auth", "$state", "$sailsSocket", "userService", function($rootScope,$auth,$state, $sailsSocket, userService){
+angular.module('core').controller('appController',["$scope", "$rootScope", "$auth", "$state", "$sailsSocket", "userService", function ($scope,$rootScope,$auth,$state, $sailsSocket, userService){
 
-
+    // $scope.currentTheme = 'bg1';
+    $scope.$on('changeTheme',function(e,theme){
+            console.log('THTHTHHTHTHTHTTHTHTHH');
+            console.log(theme);
+            $scope.currentTheme = theme;
+    })
   if($auth.getToken()){
     $sailsSocket.defaults.headers.common.Authorization = 'Bearer '+ $auth.getToken();
-    userService.selfProfile($auth.getPayload().sub).then(function(){
+    userService.selfProfile($auth.getPayload().sub).then(function(data){
+        console.log(data);
+        console.log(userService.me);
+        $scope.currentTheme = userService.me.theme;
       console.log('cool');
     })
   }
@@ -123,7 +133,7 @@ angular.module('core').controller('appController',["$rootScope", "$auth", "$stat
                 
             }
             else
-            if (!$auth.isAuthenticated() && toState.name != 'login') {
+            if (!$auth.isAuthenticated() && toState.name != 'login'  && toState.name != 'firstconnexion') {
                 e.preventDefault();
                 $state.go('login');
             }

@@ -135,11 +135,16 @@ angular.module('core')
 	   //      	}
     //     	}
     setTimeout(function(){
-       if(classToSet =="style7"){
-      $('.profileWidget .Myprofileimage').height($('.imgdiv').height());
-    }
-    else
-      $('.profileWidget .Myprofileimage').height('100%');
+        if(classToSet =="style7"){
+            var h = ($('.imgdiv').height() < 150) ? $('.imgdiv').height() : 150;
+            $('.profileWidget .Myprofileimage').height(h);
+            setTimeout(function(){
+                $('.profileWidget .Myprofileimage').height(h);
+                
+            },1000)
+        }
+        else
+          $('.profileWidget .Myprofileimage').height('100%');
     },100)
 
     $('.profileWidget .RESIZEHEIGHT').height(item.getElementSizeY() -20)
@@ -154,7 +159,12 @@ angular.module('core')
       scope: {},
       replace: true,
       templateUrl: 'js/backoffice/user/partials/profileWidget.html',
-      controller:function($scope,userService,$state){
+      controller:function($scope,userService,$state,$rootScope){
+        $rootScope.$on('profileChange',function(e,data){
+            console.log('profileChange');
+            $scope.user = data;
+            
+        })
             // $scope.editArticleState=function(id){
                 
             //     $state.go('dashboard/blog/edit',{id:id})
@@ -170,7 +180,6 @@ angular.module('core')
 
 
         console.log('LINK PROFILE');
-        console.log( userService.me );
         userService.selfProfile().then(function(data){
           scope.user = data;
           scope.$applyAsync()

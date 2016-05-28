@@ -67,6 +67,51 @@ module.exports = {
 
 		
 
+	},	
+	resizeImageProfile:function  (req,res,next) {
+
+		console.log('resize image profile');
+
+		easyimg.info('uploads/images/originalSize/'+req.body.filename).then(function(file) {
+
+		    	easyimg.rescrop({
+		    		 gravity:'NorthWest',
+				     src:'uploads/images/originalSize/'+req.body.filename, dst:'uploads/images/resized/'+req.body.filename,
+				     width:file.width, height:file.height,
+				     cropwidth:req.body.scaledWidth, cropheight:req.body.scaledHeight,
+				     x:req.body.scaledLeft, y:req.body.scaledTop
+				}).then(function(image) {
+					
+						console.log('ttttttttteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetttttttttttttttttttttttttttttttttttttttttttttttttt');
+						console.log(req.body.imageId);
+						easyimg.resize({
+				    		 gravity:'NorthWest',
+						     src:'uploads/images/resized/'+req.body.filename, dst:'uploads/images/profile/'+req.body.filename,
+						     width:150, height:150,
+						}).then(function(img){
+							
+							
+						})
+					if(req.body.imageId)
+					{
+						Image.publishUpdate(req.body.imageId,{'filename' : req.body.filename})
+						res.ok('resized')
+					}else{
+						res.ok('noresized2')
+					}
+					
+				},function (err) {
+				    console.log(err);
+				}
+				);
+		  	}, function (err) {
+		    	console.log(err);
+		  	}
+		);
+
+
+		
+
 	},
 };
 

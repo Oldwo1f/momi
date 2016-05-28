@@ -13,7 +13,7 @@
 
 
 
-
+.profileWidget .imgdiv figure .MyprofileImage{max-height:150px;min-width: 150px;}
 
 
 
@@ -24,7 +24,7 @@
 .profileWidget.extralargeFont { font-size:1.5rem;}
 	
 .profileWidget.style0{background:rgba(255,0,0,0.4);}
-/*.profileWidget.style0 .maincontent{display:none;}*/
+.profileWidget.style0 .maincontent{display:none;}
 
 .profileWidget.style1	{}
 .profileWidget.style1	.widget__content.filled{}

@@ -35,8 +35,19 @@ angular.module('core')
       scope: {},
       replace: true,
       templateUrl: 'js/backoffice/core/partials/dashboardconfigWidget.html',
+      controller:["$scope", "$rootScope", "userService", "$auth", function($scope,$rootScope,userService,$auth){
+            $scope.changeTheme =function(theme){
+              console.log(theme);
+                  $scope.currentTheme = theme;
+                  // $rootScope.startSpin()
+                 $rootScope.$broadcast('changeTheme',$scope.currentTheme);
+                 
+
+            }
+      }],
       link:function(scope,element,attrs){
       	// scope.currentTheme = 'bg3';
+        scope.currentTheme='bg1';
       	scope.editionMode = false;
       	scope.expanded = false;
         scope.widgetList = widgetService.list;
@@ -45,9 +56,10 @@ angular.module('core')
 
 
 
-        scope.$watch('currentTheme',function(){
-        	scope.$emit('changeTheme',scope.currentTheme);
-        })
+        // scope.$watch('currentTheme',function(){
+        // 	scope.$emit('changeTheme',scope.currentTheme);
+        // })
+
 
       	scope.$parent.$on('gridster-item-resized', function(e,item) {
       		thisresize(item,scope.expanded);
@@ -58,13 +70,12 @@ angular.module('core')
         	if(scope.expanded){
         		scope.expandWidget();
         		setTimeout(function(){
-          			widgetService.changeDash();
+          			widgetService.changeDash(scope.currentTheme);
 	          	},300);
         	}else{
-          		widgetService.changeDash();
+          		widgetService.changeDash(scope.currentTheme);
         		
         	}
-
         }
 
       	scope.toogleEditMode = function(){

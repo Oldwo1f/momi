@@ -46,7 +46,7 @@ angular.module('momi-login', ['ui.router','satellizer','trTrustpass'])
 
 }]);
 angular.module('momi-login')
-.controller('loginCtrl', ["$rootScope", "$scope", "$auth", "$state", "$sailsSocket", function ($rootScope,$scope,$auth,$state,$sailsSocket){
+.controller('loginCtrl', ["$rootScope", "$scope", "$auth", "$state", "$sailsSocket", "userService", function ($rootScope,$scope,$auth,$state,$sailsSocket,userService){
     
 	$scope.user={};
   $scope.errorlogin = '';
@@ -57,7 +57,10 @@ angular.module('momi-login')
         .then(function(data) {
           userService.selfProfile($auth.getPayload().sub).then(function(){
               $sailsSocket.defaults.headers.common.Authorization = 'Bearer '+ $auth.getToken();
+              setTimeout(function(){
+                
               $state.go('dashboard');
+              },2000)
           })
           
         })

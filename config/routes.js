@@ -36,8 +36,7 @@ module.exports.routes = {
   //   view: 'homepage'
   // },
   '/':'adminController.serveApp',
-  'POST /saveDash':'testController.saveDash',
-  '/restoreDash':'testController.restoreDash',
+
 
  
 
@@ -49,6 +48,7 @@ module.exports.routes = {
   'POST /category/:id/images':'categoryController.uploadImage',
   'GET /image/:size/:name':'ImageController.serveImage',
   'POST /image/resize':'ImageController.resizeImage',
+  'POST /image/resizeprofile':'ImageController.resizeImageProfile',
   'get /article/search/:sort/:slug':'articleController.search',
   'get /article/:sort/:limit/:page':'articleController.fetch',
   'get /articleActif/:sort/:limit/:page':'articleController.fetchActive',
@@ -62,7 +62,8 @@ module.exports.routes = {
   'POST /user/:id/images':'userController.uploadImage',
   'get /user/search/:sort/:slug':'userController.search',
   'GET /user/searchAutocomplete/:searchText':'userController.searchAutocomplete',
-
+  'POST /saveDash':'userController.saveDash',
+  'GET /restoreDash':'userController.restoreDash',
   
   // LOGIN
 

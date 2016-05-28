@@ -61,7 +61,7 @@
         	<script type="text/ng-template" id="myAuthorTemplate">
         		<div class="author-template" >
 
-			        	<img ng-if="data.images[0]" class="myprofiletableimage" width="50" height="50"  ng-src="image/resized/{{data.images[0].filename}}" alt="">
+			        	<img ng-if="data.images[0]" class="myprofiletableimage" width="50" height="50"  ng-src="image/profile/{{data.images[0].filename}}" alt="">
 		        		<ng-letter-avatar  ng-if="!data.images[0]" charCount="1" data="{{data.firstname}} {{data.name}}" fontsize="25" height="50" width="50" shape="round"></ng-letter-avatar>
 			          <span >{{data.name}} {{data.firstname}}</span>
 
@@ -71,7 +71,7 @@
 		 	<script type="text/ng-template" id="autocomplete-template">
 				<div class="autocomplete-template">
 				<div class="left-panel pull-left">
-				  <img ng-if="data.images[0]" width="50" height="50" ng-src="image/resized/{{data.images[0].filename}}" />
+				  <img ng-if="data.images[0]" width="50" height="50" ng-src="image/profile/{{data.images[0].filename}}" />
 				  <ng-letter-avatar  ng-if="!data.images[0]" charCount="1" data="{{data.firstname}} {{data.name}}" fontsize="15" height="50" width="50" shape="round"></ng-letter-avatar>
 				</div>
 				<div class="right-panel pull-left">

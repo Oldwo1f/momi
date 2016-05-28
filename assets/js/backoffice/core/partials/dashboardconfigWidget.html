@@ -25,13 +25,13 @@
 			<div>
 				<h4>Choix du thème</h4>
 				<div class="choosetheme">
-					<input type="radio" class="custom-radio bigradio " name="theme" ng-model="currentTheme" value="bg1" id="cr1">
+					<input type="radio" class="custom-radio bigradio " name="theme" ng-click="changeTheme('bg1')" ng-model="currentTheme" value="bg1" id="cr1">
 					<label for="cr1" class="blue"></label>
-					<input type="radio" class="custom-radio bigradio " name="theme" ng-model="currentTheme" value="bg2" id="cr2">
+					<input type="radio" class="custom-radio bigradio " name="theme" ng-click="changeTheme('bg2')" ng-model="currentTheme" value="bg2" id="cr2">
 					<label for="cr2" class="orange"></label>
-					<input type="radio" class="custom-radio bigradio " name="theme" ng-model="currentTheme" value="bg3" id="cr3" >
+					<input type="radio" class="custom-radio bigradio " name="theme" ng-click="changeTheme('bg3')" ng-model="currentTheme" value="bg3" id="cr3" >
 					<label for="cr3" class="red"></label>
-					<input type="radio" class="custom-radio bigradio " name="theme" ng-model="currentTheme" value="bg4" id="cr4" >
+					<input type="radio" class="custom-radio bigradio " name="theme" ng-click="changeTheme('bg4')" ng-model="currentTheme" value="bg4" id="cr4" >
 					<label for="cr4" class="green"></label>
 				</div>
 			</div>

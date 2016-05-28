@@ -37,7 +37,7 @@ angular.module('core')
     'use strict';
 
     return {
-      scope: false,
+      scope: {widgetlist:'='},
       replace: true,
       templateUrl: 'js/backoffice/core/partials/dashboard.html',
       controller:function($scope,$element,$attrs,$transclude,$rootScope,$state,usSpinnerService){
@@ -50,12 +50,18 @@ angular.module('core')
             usSpinnerService.stop('mainSpinner');
             },500)
         }
+        console.log('DASHBOARD');
 
-
-        $scope.widgetList = widgetService.list;
-        this.test ="yopaaa";
+        $scope.widgetList = $scope.widgetlist;
+        console.log($scope.widgetList);
+        // this.test ="yopaaa";
         $scope.columnwidth = 0;
         $scope.columnheight = 0;
+          
+        // $scope.testtest = function(t){
+        //     console.log('totototototootototototototo');
+        //     console.log(t);
+        // }
 
         $scope.initSwipe =function(to,from){
             // if(to.parent == 'dashboard' )
@@ -169,10 +175,7 @@ angular.module('core')
 
       },
       link:function(scope,element,attrs){
-          scope.currentTheme = 'bg1';
-          scope.$on('changeTheme',function(e,theme){
-            scope.currentTheme = theme;
-          })
+          
           scope.$on('restoreDefault',function(e,theme){
             scope.widgetList = widgetService.defaultList;
           })
