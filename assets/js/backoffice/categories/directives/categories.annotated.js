@@ -418,7 +418,7 @@ angular.module('momi-categories')
 							$('#imageCropSource').hide();
 
 		                    Upload.upload({
-		                        url: '/category/'+Cat.id+'/images',
+		                        url: '/api/category/'+Cat.id+'/images',
 		                        data: {file :$scope.fileToSend}
 		                      
 		                        
@@ -430,7 +430,7 @@ angular.module('momi-categories')
 		                    	$scope.dataToSend.imgid= data.data.child.id;
 		                    	$scope.dataToSend.filename= data.data.child.filename;
 		                    	$rootScope.startSpin();
-		      					$sailsSocket.post('/image/resize/',$scope.dataToSend).success(function (data,status) {
+		      					$sailsSocket.post('/api/image/resize/',$scope.dataToSend).success(function (data,status) {
 						            console.log('SUCCESS RESIZE ! !');
 
 						           
@@ -506,7 +506,7 @@ angular.module('momi-categories')
 						$scope.imgcrop.aspectRatio = '16/9';
 						$scope.imgcrop.imgSrc = "";
 
-				        $sailsSocket.post('/image/resize/',$scope.dataToSend).success(function (data,status) {
+				        $sailsSocket.post('/api/image/resize/',$scope.dataToSend).success(function (data,status) {
 				            console.log('SUCCESS RESIZE______');
 				     //         var tmp = $scope.Cat.images[0]
 				     //         console.log(tmp);

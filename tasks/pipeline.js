@@ -29,9 +29,14 @@ var cssFilesToInject = [
   'bower_components/angular-notification-icons/dist/angular-notification-icons.min.css',
 
   // 'bower_components/angular-material/angular-material.css',
-  'styles/**/*.css',
-  'styles/main.css',
-  'styles/importer.css'
+  'styles/image-crop.css',
+  'styles/font-pe.css',
+  'styles/tinymce.css',
+  'styles/socialicon.css',
+  'styles/material.css',
+  'styles/backoffice/**/*.css',
+  'styles/backoffice/main.css',
+  'styles/backoffice/importer.css'
 ];
 
 

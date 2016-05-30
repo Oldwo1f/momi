@@ -552,7 +552,7 @@ angular.module('momi-blog')
 		                    $scope.uploadsDocument[i].status='progress';
 		                    (function(i){
 			                    Upload.upload({
-			                        url: '/article/'+$scope.formData.id+'/documents',
+			                        url: '/api/article/'+$scope.formData.id+'/documents',
 			                        data: {files : $scope.uploadsDocument[i].file,filename:'tt',name:'t'}
 			                    }).then(function (data) {
 			                        // $scope.formData.documents = data.data.parent.documents
@@ -645,7 +645,7 @@ angular.module('momi-blog')
 				$scope.imgcrop.aspectRatio = '16/9';
 				$scope.imgcrop.imgSrc = "";
 
-		        $sailsSocket.post('/image/resize/',$scope.dataToSend).success(function (data,status) {
+		        $sailsSocket.post('/api/image/resize/',$scope.dataToSend).success(function (data,status) {
 		            console.log('SUCCESS RESIZE');
 		            $rootScope.stopSpin();
 		            
@@ -693,7 +693,7 @@ angular.module('momi-blog')
 					$('#imageCropSource').hide();
 
                     Upload.upload({
-                        url: '/article/'+$scope.formData.id+'/images',
+                        url: '/api/article/'+$scope.formData.id+'/images',
                         data: {file :$scope.fileToSend}
                         	// 'displayWidth':$scope.dataToSend.displayWidth,
                         	// 'scaledWidth':$scope.dataToSend.scaledWidth,
@@ -711,7 +711,7 @@ angular.module('momi-blog')
                     	$scope.dataToSend.imgid= data.data.child.id;
                     	$scope.dataToSend.filename= data.data.child.filename;
                     	$rootScope.startSpin();
-      					$sailsSocket.post('/image/resize/',$scope.dataToSend).success(function (data,status) {
+      					$sailsSocket.post('/api/image/resize/',$scope.dataToSend).success(function (data,status) {
 				            console.log('SUCCESS RESIZE');
 				            $rootScope.stopSpin();
 				          

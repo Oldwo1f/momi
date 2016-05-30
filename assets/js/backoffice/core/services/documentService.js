@@ -6,7 +6,7 @@ angular.module('core').factory('documentService',function ($compile,$sailsSocket
 
        
         var deferred = $q.defer();
-        $sailsSocket.get('/document/'+id).success(function (data,status) {
+        $sailsSocket.get('/api/document/'+id).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             

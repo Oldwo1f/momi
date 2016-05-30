@@ -71,8 +71,8 @@ input:active, input:focus {
 
 @font-face {
   font-family: 'Pe-icon-glazzed';
-  src: url("../fonts/Pe-icon-glazzed.eot?-othohl");
-  src: url("../fonts/Pe-icon-glazzed.eot?#iefix-othohl") format("embedded-opentype"), url("../fonts/Pe-icon-glazzed.woff?-othohl") format("woff"), url("../fonts/Pe-icon-glazzed.ttf?-othohl") format("truetype"), url("../fonts/Pe-icon-glazzed.svg?-othohl#Pe-icon-glazzed") format("svg");
+  src: url("../../fonts/Pe-icon-glazzed.eot?-othohl");
+  src: url("../../fonts/Pe-icon-glazzed.eot?#iefix-othohl") format("embedded-opentype"), url("../../fonts/Pe-icon-glazzed.woff?-othohl") format("woff"), url("../../fonts/Pe-icon-glazzed.ttf?-othohl") format("truetype"), url("../../fonts/Pe-icon-glazzed.svg?-othohl#Pe-icon-glazzed") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -336,26 +336,26 @@ input:active, input:focus {
 }
 
 body {
-  background: url(../images/img/bg.jpg);
+  background: url(../../images/img/bg.jpg);
   background-size: cover;
   font-family: 'Source Sans Pro', sans-serif;
   color: rgba(255, 255, 255, 0.9);
   font-weight: 300;
 }
 body.bg1 {
-  background: url(../images/img/bg.jpg);
+  background: url(../../images/img/bg.jpg);
   background-size: cover;
 }
 body.bg2 {
-  background: url(../images/img/bg2.jpg);
+  background: url(../../images/img/bg2.jpg);
   background-size: cover;
 }
 body.bg3 {
-  background: url(../images/img/bg3.jpg);
+  background: url(../../images/img/bg3.jpg);
   background-size: cover;
 }
 body.bg4 {
-  background: url(../images/img/bg4.jpg);
+  background: url(../../images/img/bg4.jpg);
   background-size: cover;
 }
 
@@ -1413,7 +1413,7 @@ input[type="checkbox"].btn-more-check:checked + label.c-btn--more:after {
 .error:nth-child(2) {
   margin-left: 1px;
   text-shadow: -1px 0 rgba(255, 0, 0, 0.4);
-  background: url(../images/img/bg.jpg);
+  background: url(../../images/img/bg.jpg);
   background-size: cover;
   background-position: fixed;
   overflow: hidden;
@@ -1425,7 +1425,7 @@ input[type="checkbox"].btn-more-check:checked + label.c-btn--more:after {
 .error:nth-child(3) {
   margin-left: -1px;
   text-shadow: -1px 0 rgba(0, 0, 255, 0.4);
-  background: url(../images/img/bg.jpg);
+  background: url(../../images/img/bg.jpg);
   background-size: cover;
   background-position: fixed;
   overflow: hidden;
@@ -3651,22 +3651,22 @@ input[name^="tab-radio"]:checked + label {
 *** Modal ***
 *************/
 .modal-content {
-  background: url(../images/img/bg.jpg);
+  background: url(../../images/img/bg.jpg);
   background-size: 700% 700%;
   border-radius: 0;
   border: 0;
 }
 .bg1 .modal-content {
-  background: url(../images/img/bg.jpg);
+  background: url(../../images/img/bg.jpg);
 }
 .bg2 .modal-content {
-  background: url(../images/img/bg2.jpg);
+  background: url(../../images/img/bg2.jpg);
 }
 .bg3 .modal-content {
-  background: url(../images/img/bg3.jpg);
+  background: url(../../images/img/bg3.jpg);
 }
 .bg4 .modal-content {
-  background: url(../images/img/bg4.jpg);
+  background: url(../../images/img/bg4.jpg);
 }
 .modal-content .close {
   color: white;
@@ -3948,20 +3948,20 @@ input[name^="tab-radio"]:checked + label {
     padding-bottom: 0;
     -webkit-transition: max-height .3s;
             transition: max-height .3s;
-    background: url(../images/img/bg.jpg);
+    background: url(../../images/img/bg.jpg);
     background-size: 700% 700%;
   }
   .bg1 .sidebar {
-    background: url(../images/img/bg.jpg);
+    background: url(../../images/img/bg.jpg);
   }
   .bg2 .sidebar {
-    background: url(../images/img/bg2.jpg);
+    background: url(../../images/img/bg2.jpg);
   }
   .bg3 .sidebar {
-    background: url(../images/img/bg3.jpg);
+    background: url(../../images/img/bg3.jpg);
   }
   .bg4 .sidebar {
-    background: url(../images/img/bg4.jpg);
+    background: url(../../images/img/bg4.jpg);
   }
   .sidebar.open {
     max-height: 1000px;
@@ -4397,7 +4397,7 @@ input::-webkit-input-placeholder {line-height:1.5rem;font-size: 1rem;}
 /*.dropdown2 button:hover{background: rgba(0,0,0,0.2)}*/
 .dropdown2 .btn span{font-size: 1rem}
 .dropdown2 .btn .caret{position: absolute;right: 70px;top: 18px;font-size: 20px; opacity:0.5;}
-.dropdown2 .dropdown-menu{position: absolute; background: url(../images/img/bg.jpg);
+.dropdown2 .dropdown-menu{position: absolute; background: url(../../images/img/bg.jpg);
     background-size: cover;border:none;}
 .dropdown2 .dropdown-menu>li>a:focus,.dropdown2 .dropdown-menu>li>a:hover{ background:rgba(255,255,255,0.8);}
 
@@ -4622,7 +4622,7 @@ a:focus, a:hover{text-decoration: none;}
 .containerLogin .center-form .panel-body input.stacked-input{font-size: 3em}
 
 
-.md-dialog-container .userAddContainer  { background: url(../images/img/bg.jpg) ;background-size: cover;max-width: 800px;}
+.md-dialog-container .userAddContainer  { background: url(../../images/img/bg.jpg) ;background-size: cover;max-width: 800px;}
 .md-dialog-container .userAddContainer  md-dialog-content{ background: transparent;}
 .md-dialog-container .userAddContainer  md-dialog-actions{background: rgba(0,0,0,0.25);padding:20px;padding-top: 0;}
 .md-dialog-container .userAddContainer  .stacked-input{     line-height: 20px;}

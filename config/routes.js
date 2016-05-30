@@ -42,34 +42,34 @@ module.exports.routes = {
  
 
   
-  'GET /tag/searchAutocomplete/:searchText':'tagController.searchAutocomplete',
-  'GET /category/searchAutocomplete/:searchText':'categoryController.searchAutocomplete',
-  'POST /article/:id/documents':'articleController.uploadDocument',
-  'POST /article/:id/images':'articleController.uploadImage',
-  'POST /category/:id/images':'categoryController.uploadImage',
+  'GET /api/tag/searchAutocomplete/:searchText':'tagController.searchAutocomplete',
+  'GET /api/category/searchAutocomplete/:searchText':'categoryController.searchAutocomplete',
+  'POST /api/article/:id/documents':'articleController.uploadDocument',
+  'POST /api/article/:id/images':'articleController.uploadImage',
+  'POST /api/category/:id/images':'categoryController.uploadImage',
   'GET /image/:size/:name':'ImageController.serveImage',
-  'POST /image/resize':'ImageController.resizeImage',
-  'POST /image/resizeprofile':'ImageController.resizeImageProfile',
-  'get /article/search/:sort/:slug':'articleController.search',
-  'get /article/:sort/:limit/:page':'articleController.fetch',
-  'get /articleActif/:sort/:limit/:page':'articleController.fetchActive',
-  'get /article/:id':'articleController.fetchOne',
+  'POST /api/image/resize':'ImageController.resizeImage',
+  'POST /api/image/resizeprofile':'ImageController.resizeImageProfile',
+  'get /api/article/search/:sort/:slug':'articleController.search',
+  'get /api/article/:sort/:limit/:page':'articleController.fetch',
+  'get /api/articleActif/:sort/:limit/:page':'articleController.fetchActive',
+  'get /api/article/:id':'articleController.fetchOne',
 
   //USER
   // 'POST /user':'UserController.create',
-  'GET /user/verifyUniqueEmail/:email':'UserController.verifyUniqueEmail',
+  'GET /api/user/verifyUniqueEmail/:email':'UserController.verifyUniqueEmail',
   'POST /user/firstConnexion':'UserController.firstConnexion',
   'POST /auth/login':'UserController.login',
-  'POST /user/:id/images':'userController.uploadImage',
-  'get /user/search/:sort/:slug':'userController.search',
-  'GET /user/searchAutocomplete/:searchText':'userController.searchAutocomplete',
-  'POST /saveDash':'userController.saveDash',
-  'GET /restoreDash':'userController.restoreDash',
+  'POST /api/user/:id/images':'userController.uploadImage',
+  'get /api/user/search/:sort/:slug':'userController.search',
+  'GET /api/user/searchAutocomplete/:searchText':'userController.searchAutocomplete',
+  'POST /api/saveDash':'userController.saveDash',
+  'GET /api/restoreDash':'userController.restoreDash',
   
   // LOGIN
 
   'get /toto' :'testController.toto',
-
+ 
 
   // 'POST /article/:id/tags/:pk':'ArticleController.addTag',
   // 'POST /article/:id/tags':'ArticleController.addTag',
@@ -92,11 +92,11 @@ module.exports.routes = {
   // 'GET /grimpes': 'frontController.portfolio',
   // 'GET /avendre': 'frontController.avendre',
   // 'GET /projet/:id/*':'frontController.projet',
-  // 'GET /blog': 'frontController.blog',
+  'GET /blog': 'frontController.blog',
   // 'GET /blog/:page': 'frontController.blog',
-  // 'GET /blog/category/:thiscat': 'frontController.category',
+  'GET /blog/category/:thiscat': 'frontController.categoryArticle',
   // 'GET /blog/category/:thiscat/:page': 'frontController.category',
-  // 'GET /blog/article/:id/*':'frontController.article',
+  'GET /blog/article/:id/*':'frontController.article',
   'GET /contact':'frontController.contact',
   'GET /presta':'frontController.presta',
   

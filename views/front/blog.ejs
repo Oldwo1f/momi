@@ -57,12 +57,12 @@
                     <%}%>    
                     <% for(var i in articles){ %> 
                         <div class="blog anim fadeInLeft">
-                            <% if(typeof(articles[i].img)!='undefined' && !articles[i].publishVideo){ %>
+                            <% if(typeof(articles[i].images)!='undefined' &&  articles[i].images.length >0 && !articles[i].publishVideo){ %>
                            
                                     <span class="image">
                                 
                                         <a href="blog/article/<%= articles[i].id %>/<%= articles[i].rewriteurl %>" id="desc" data-icon="fa-link">
-                                            <img src="file/image/originalsize/<%= articles[i].img.filename %>" alt="<%= articles[i].img.filename %>" />
+                                            <img src="image/resized/<%= articles[i].images[0].filename %>" alt="<%=  articles[i].images[0].filename %>" />
                                         </a>
                                     </span><!-- .image -->
 
@@ -96,9 +96,9 @@
                                 </ul><!-- .meta -->
                             </span><!-- .title-desc -->
                             
-                            <p>
-                                <%- articles[i].shortcontent %>
-                            </p>
+                            <div class="contentArticle">
+                                <%- articles[i].content %>
+                            </div>
                             
                             <a class="btn btn-sm btn-primary icon" data-wow-delay=".45s" role="button" href="blog/article/<%= articles[i].id %>/<%= articles[i].rewriteurl %>"><i class="fa fa-long-arrow-right"></i>Lire la suite</a>
                             
@@ -107,18 +107,9 @@
                         </div><!-- .blog -->
                     <% } %>    
                     
-                     <ul class="pagination anim fadeInLeft" data-wow-delay="0.2s">
-                        <li><a href="single.html">&laquo;</a></li>
-                        <% for(var i=1; i<= nbPage ; i++){ %>
-                          
-                                <li <%if(i == currentPage){ %> class="active" <% } %> ><a href="blog/<%= i %>"><%= i %></a></li>
-                        <% } %>
-                       
-                        <li><a href="single.html">&raquo;</a></li>
-                    </ul><!-- .pagination -->
+                   
                     
                 </div><!-- .col-lg-9 -->
-                
                 <div class="col-lg-3 sidebar">
                     
                     
@@ -126,8 +117,8 @@
                      
                         <div class="anim fadeInRight">
                             <ul class="posts" >
-                            <% for(var i in category){ %> 
-                                <a href="blog/category/<%= category[i].id %>"><li><h6><%= category[i].name %></h6></li></a>
+                            <% for(var i in categories){ %> 
+                                <a href="blog/category/<%= categories[i].id %>"><li><h6><%= categories[i].name %></h6></li></a>
                             <% } %> 
                             </ul>
                         </div><!-- .text -->
@@ -160,20 +151,24 @@
                     
                 </div><!-- .col-lg-4 .sidebar -->
                 
+                
             </div><!-- .row -->
         </div><!-- .container -->
     </section><!-- .content-section -->
     
 <script>
-    var category = <%- JSON.stringify(category) %>
-    console.log(category);
-    var mostseen = <%- JSON.stringify(mostseen) %>
-    console.log(mostseen);
+    
     var articles = <%- JSON.stringify(articles) %>
     console.log(articles);
+     var mostseen = <%- JSON.stringify(mostseen) %>
+    console.log(mostseen);
+     var categories = <%- JSON.stringify(categories) %>
+    console.log(categories);
     var thiscategory = <%- JSON.stringify(thiscategory) %>
     console.log(thiscategory);
 
+
+//              /api/articleActif/:sort/:limit/:page'
 </script><script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

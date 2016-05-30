@@ -7,7 +7,7 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
 
        
         var deferred = $q.defer();
-        $sailsSocket.get('/category/'+id).success(function (data,status) {
+        $sailsSocket.get('/api/category/'+id).success(function (data,status) {
             // service.list = data ;
             deferred.resolve(data);
         }).error(function (data,status) {
@@ -23,7 +23,7 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
         sort = sort? sort : 'date DESC'
         nbPerPage = nbPerPage ? nbPerPage : 10
         page = page ? page : 1
-        $sailsSocket.get('/category/?sort='+sort+'&limit='+nbPerPage+'&skip='+nbPerPage*(page-1)).success(function (data,status) {
+        $sailsSocket.get('/api/category/?sort='+sort+'&limit='+nbPerPage+'&skip='+nbPerPage*(page-1)).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             
@@ -33,7 +33,7 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
     }
     service.fetchAll= function(sort,page,nbPerPage) {
         var deferred = $q.defer();
-        $sailsSocket.get('/category?sort=createdAt DESC&limit=10000').success(function (data,status) {
+        $sailsSocket.get('/api/category?sort=createdAt DESC&limit=10000').success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             
@@ -46,7 +46,7 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
 
         var deferred = $q.defer();
         if(imgID){
-            $sailsSocket.delete('/category/'+id+'/images/'+imgID).success(function (data,status) {
+            $sailsSocket.delete('/api/category/'+id+'/images/'+imgID).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
             
@@ -58,7 +58,7 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
     }
 	// service.fetchCategories=function(orded){
  //        var deferred = $q.defer();
- //        $sailsSocket.get('/category/').success(function (data,status) {
+ //        $sailsSocket.get('/api/category/').success(function (data,status) {
  //            console.log('SUCCESS');
  //            console.log(data);
  //            deferred.resolve(data);
@@ -70,7 +70,7 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
  //    }
 	service.searchCategories=function(searchText){
         var deferred = $q.defer();
-        $sailsSocket.get('/category/searchAutocomplete/'+searchText).success(function (data,status) {
+        $sailsSocket.get('/api/category/searchAutocomplete/'+searchText).success(function (data,status) {
             var resultArray =[];
             if(data.hits.total > 0){
             	for(var i in data.hits.hits){
@@ -89,7 +89,7 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
      service.update=function(id, values){
 
         var deferred = $q.defer();
-        $sailsSocket.put('/category/'+id,values).success(function (data,status) {
+        $sailsSocket.put('/api/category/'+id,values).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             
@@ -100,7 +100,7 @@ angular.module('core').factory('categoryService',function ($compile,$sailsSocket
     service.remove=function(id){
 
         var deferred = $q.defer();
-        $sailsSocket.delete('/category/'+id).success(function (data,status) {
+        $sailsSocket.delete('/api/category/'+id).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             

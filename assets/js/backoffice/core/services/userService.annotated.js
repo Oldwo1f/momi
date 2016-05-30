@@ -16,7 +16,7 @@ angular.module('core')
         console.log('page', page);
         // console.log(stateParams);
         // console.log(service.filter);
-        $sailsSocket.get('/user?sort='+sort+'&limit='+nbPerPage+'&skip='+nbPerPage*(page-1)).success(function (data,status) {
+        $sailsSocket.get('/api/user?sort='+sort+'&limit='+nbPerPage+'&skip='+nbPerPage*(page-1)).success(function (data,status) {
             console.log(data);
             service.items =data;
             deferred.resolve(data);
@@ -33,7 +33,7 @@ angular.module('core')
     };
     service.searchUsers=function(searchText){
         var deferred = $q.defer();
-        $sailsSocket.get('/user/searchAutocomplete/'+searchText).success(function (data,status) {
+        $sailsSocket.get('/api/user/searchAutocomplete/'+searchText).success(function (data,status) {
             var resultArray =[];
             if(data.hits.total > 0){
                 for(var i in data.hits.hits){
@@ -54,7 +54,7 @@ angular.module('core')
         // user = {date : new Date(),status:'draft'};
         var deferred = $q.defer();
         user.password = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $sailsSocket.post('/user',user).success(function (data,status) {
+        $sailsSocket.post('/api/user',user).success(function (data,status) {
             console.log('SUCCESS');
             deferred.resolve(data);
         }).error(function (data,status) {
@@ -67,7 +67,7 @@ angular.module('core')
     service.fetchLast= function() {
         var deferred = $q.defer();
 
-        $sailsSocket.get('/user?sort=date DESC&limit=1&where={"status":"actif"}').success(function (data,status) {
+        $sailsSocket.get('/api/user?sort=date DESC&limit=1&where={"status":"actif"}').success(function (data,status) {
             console.log(data);
             deferred.resolve(data[0]);
         }).error(function (data,status) {
@@ -86,7 +86,7 @@ angular.module('core')
        
         // console.log(stateParams);
         // console.log(service.filter);
-        $sailsSocket.get('/user/search/'+sort+'/'+slug).success(function (data,status) {
+        $sailsSocket.get('/api/user/search/'+sort+'/'+slug).success(function (data,status) {
             console.log(data);
             service.items =data;
             deferred.resolve(data);
@@ -107,7 +107,7 @@ angular.module('core')
         console.log(id);
         console.log(imgID);
         if(imgID){
-            $sailsSocket.delete('/user/'+id+'/images/'+imgID).success(function (data,status) {
+            $sailsSocket.delete('/api/user/'+id+'/images/'+imgID).success(function (data,status) {
                 console.log('SUCCESS');
                 console.log(data);
                 deferred.resolve(data);
@@ -130,7 +130,7 @@ angular.module('core')
             id = $auth.getPayload().sub;
             // user = {date : new Date(),status:'draft'};
             var deferred = $q.defer();
-            $sailsSocket.get('/user/'+id).success(function (data,status) {
+            $sailsSocket.get('/api/user/'+id).success(function (data,status) {
                 // console.log('SUCCESS');
                 console.log(data);
                 // setTimeout(function(){
@@ -155,7 +155,7 @@ angular.module('core')
         console.log(id);
         // user = {date : new Date(),status:'draft'};
         var deferred = $q.defer();
-        $sailsSocket.get('/user/'+id).success(function (data,status) {
+        $sailsSocket.get('/api/user/'+id).success(function (data,status) {
             // console.log('SUCCESS');
             // console.log(data);
             deferred.resolve(data);
@@ -174,7 +174,7 @@ angular.module('core')
         // console.log(id);
         // console.log(values);
         var deferred = $q.defer();
-        $sailsSocket.put('/user/'+id,values).success(function (data,status) {
+        $sailsSocket.put('/api/user/'+id,values).success(function (data,status) {
             console.log('SUCCESS');
             // console.log(data);
             deferred.resolve(data);
@@ -193,7 +193,7 @@ angular.module('core')
         // console.log(id);
         // console.log(values);
         var deferred = $q.defer();
-        $sailsSocket.delete('/user/'+id).success(function (data,status) {
+        $sailsSocket.delete('/api/user/'+id).success(function (data,status) {
             // console.log('SUCCESS');
             // console.log(data);
             deferred.resolve(data);
@@ -212,7 +212,7 @@ angular.module('core')
         // console.log(id);
         // console.log(values);
         var deferred = $q.defer();
-        $sailsSocket.post('/user/firstConnexion',{idfirst:idfirst,password:password}).success(function (data,status) {
+        $sailsSocket.post('/api/user/firstConnexion',{idfirst:idfirst,password:password}).success(function (data,status) {
             console.log('SUCCESS');
             console.log(data);
             deferred.resolve(data);

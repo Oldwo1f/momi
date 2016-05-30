@@ -4174,3 +4174,4 @@ text-align: left;
   .footerpartenaire{padding-left:0px; text-align:center;}
   .footerpartenaire li { list-style:none;display:inline-block; margin: 0 10px;}
   .footerpartenaire li:hover {text-decoration: underline;}
+  .contentArticle ul {clear: both;}

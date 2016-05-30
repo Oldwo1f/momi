@@ -11,7 +11,7 @@ angular.module('core').factory('tagService',function ($compile,$sailsSocket,$q,$
 
        
         var deferred = $q.defer();
-        $sailsSocket.get('/tag/'+id).success(function (data,status) {
+        $sailsSocket.get('/api/tag/'+id).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             deferred.reject(data);
@@ -20,7 +20,7 @@ angular.module('core').factory('tagService',function ($compile,$sailsSocket,$q,$
     }
     service.fetchAll= function(sort,page,nbPerPage) {
         var deferred = $q.defer();
-        $sailsSocket.get('/tag?sort=createdAt DESC&limit=10000').success(function (data,status) {
+        $sailsSocket.get('/api/tag?sort=createdAt DESC&limit=10000').success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             deferred.reject(data);
@@ -32,7 +32,7 @@ angular.module('core').factory('tagService',function ($compile,$sailsSocket,$q,$
         sort = sort? sort : 'date DESC'
         nbPerPage = nbPerPage ? nbPerPage : 10
         page = page ? page : 1
-        $sailsSocket.get('/tag/?sort='+sort+'&limit='+nbPerPage+'&skip='+nbPerPage*(page-1)).success(function (data,status) {
+        $sailsSocket.get('/api/tag/?sort='+sort+'&limit='+nbPerPage+'&skip='+nbPerPage*(page-1)).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             
@@ -45,7 +45,7 @@ angular.module('core').factory('tagService',function ($compile,$sailsSocket,$q,$
 
        
         var deferred = $q.defer();
-        $sailsSocket.get('/tag/').success(function (data,status) {
+        $sailsSocket.get('/api/tag/').success(function (data,status) {
             // service.list = data ;
             deferred.resolve(data);
         }).error(function (data,status) {
@@ -56,7 +56,7 @@ angular.module('core').factory('tagService',function ($compile,$sailsSocket,$q,$
     }
 	service.searchTags=function(searchText){
         var deferred = $q.defer();
-        $sailsSocket.get('/tag/searchAutocomplete/'+searchText).success(function (data,status) {
+        $sailsSocket.get('/api/tag/searchAutocomplete/'+searchText).success(function (data,status) {
             var resultArray =[];
             if(data.hits.total > 0){
 
@@ -76,7 +76,7 @@ angular.module('core').factory('tagService',function ($compile,$sailsSocket,$q,$
      service.update=function(id, values){
 
         var deferred = $q.defer();
-        $sailsSocket.put('/tag/'+id,values).success(function (data,status) {
+        $sailsSocket.put('/api/tag/'+id,values).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             
@@ -87,7 +87,7 @@ angular.module('core').factory('tagService',function ($compile,$sailsSocket,$q,$
     service.remove=function(id){
 
         var deferred = $q.defer();
-        $sailsSocket.delete('/tag/'+id).success(function (data,status) {
+        $sailsSocket.delete('/api/tag/'+id).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             

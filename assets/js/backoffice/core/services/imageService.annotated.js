@@ -6,7 +6,7 @@ angular.module('core').factory('imageService',["$compile", "$sailsSocket", "$q",
 
        
         var deferred = $q.defer();
-        $sailsSocket.get('/image/'+id).success(function (data,status) {
+        $sailsSocket.get('/api/image/'+id).success(function (data,status) {
             // service.list = data ;
             deferred.resolve(data);
         }).error(function (data,status) {
@@ -73,7 +73,7 @@ angular.module('core').factory('imageService',["$compile", "$sailsSocket", "$q",
             console.log('i' + i);
             console.log(images[i].name);
 
-            promises.push($http.put('image/'+images[i].id,{ rank : i }))
+            promises.push($http.put('/api/image/'+images[i].id,{ rank : i }))
         }
         // var promises = images.map(function(image, i ) {
 
@@ -111,7 +111,7 @@ angular.module('core').factory('imageService',["$compile", "$sailsSocket", "$q",
         var deferred = $q.defer();
         var promises = [];
 
-        $sailsSocket.put('/image/'+id,values).success(function (data,status) {
+        $sailsSocket.put('/api/image/'+id,values).success(function (data,status) {
             console.log('SUCCESS');
             console.log(data);
             deferred.resolve(data);

@@ -16,7 +16,7 @@ angular.module('core')
         console.log('nbPerPage '+ nbPerPage);
         console.log('page '+ page);
         console.log('/article/'+sort+'/'+nbPerPage+'/'+nbPerPage*(page-1));
-        $sailsSocket.get('/article/'+sort+'/'+nbPerPage+'/'+nbPerPage*(page-1)).success(function (data,status) {
+        $sailsSocket.get('/api/article/'+sort+'/'+nbPerPage+'/'+nbPerPage*(page-1)).success(function (data,status) {
             console.log(data);
             service.items =data;
             deferred.resolve(data);
@@ -32,7 +32,7 @@ angular.module('core')
     service.fetchLast= function() {
         var deferred = $q.defer();
 
-        $sailsSocket.get('/articleActif/date DESC/1/1').success(function (data,status) {
+        $sailsSocket.get('/api/articleActif/date DESC/1/1').success(function (data,status) {
             deferred.resolve(data[0]);
         }).error(function (data,status) {
             // if(status == '401')
@@ -46,7 +46,7 @@ angular.module('core')
         var deferred = $q.defer();
         sort = sort? sort : 'date DESC'
        
-        $sailsSocket.get('/article/search/'+sort+'/'+slug).success(function (data,status) {
+        $sailsSocket.get('/api/article/search/'+sort+'/'+slug).success(function (data,status) {
             service.items =data;
             deferred.resolve(data);
         }).error(function (data,status) {
@@ -119,7 +119,7 @@ angular.module('core')
 
         var deferred = $q.defer();
         if(imgID){
-            $sailsSocket.delete('/article/'+id+'/images/'+imgID).success(function (data,status) {
+            $sailsSocket.delete('/api/article/'+id+'/images/'+imgID).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
                 if(status == '401')
@@ -134,7 +134,7 @@ angular.module('core')
 
         var deferred = $q.defer();
         if(docID){
-            $sailsSocket.delete('/article/'+id+'/documents/'+docID).success(function (data,status) {
+            $sailsSocket.delete('/api/article/'+id+'/documents/'+docID).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
                 if(status == '401')
@@ -151,7 +151,7 @@ angular.module('core')
 
         var deferred = $q.defer();
         if(newCategory.id){
-            $sailsSocket.post('/article/'+id+'/categories/'+newCategory.id).success(function (data,status) {
+            $sailsSocket.post('/api/article/'+id+'/categories/'+newCategory.id).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
                 if(status == '401')
@@ -159,7 +159,7 @@ angular.module('core')
                 deferred.reject(data);
             })
         }else{
-            $sailsSocket.post('/article/'+id+'/categories/',newCategory).success(function (data,status) {
+            $sailsSocket.post('/api/article/'+id+'/categories/',newCategory).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
                 if(status == '401')
@@ -175,7 +175,7 @@ angular.module('core')
         var deferred = $q.defer();
         if(newCategory.id){
             // TAG dejà existant
-            $sailsSocket.delete('/article/'+id+'/categories/'+newCategory.id).success(function (data,status) {
+            $sailsSocket.delete('/api/article/'+id+'/categories/'+newCategory.id).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
                 if(status == '401')
@@ -191,7 +191,7 @@ angular.module('core')
 
         var deferred = $q.defer();
         if(newAuthor.id){
-            $sailsSocket.post('/article/'+id+'/authors/'+newAuthor.id).success(function (data,status) {
+            $sailsSocket.post('/api/article/'+id+'/authors/'+newAuthor.id).success(function (data,status) {
                 deferred.resolve({data:data, addedAuthorId: newAuthor.id});
             }).error(function (data,status) {
                 if(status == '401')
@@ -199,7 +199,7 @@ angular.module('core')
                 deferred.reject(data);
             })
         }else{
-            $sailsSocket.post('/article/'+id+'/authors/',newAuthor).success(function (data,status) {
+            $sailsSocket.post('/api/article/'+id+'/authors/',newAuthor).success(function (data,status) {
                 deferred.resolve({data:data, addedAuthorId: newAuthor.id});
             }).error(function (data,status) {
                 if(status == '401')
@@ -215,7 +215,7 @@ angular.module('core')
         var deferred = $q.defer();
         if(newAuthor.id){
             // TAG dejà existant
-            $sailsSocket.delete('/article/'+id+'/authors/'+newAuthor.id).success(function (data,status) {
+            $sailsSocket.delete('/api/article/'+id+'/authors/'+newAuthor.id).success(function (data,status) {
                 deferred.resolve({data:data, removedAuthorId: newAuthor.id});
             }).error(function (data,status) {
                 if(status == '401')
@@ -232,7 +232,7 @@ angular.module('core')
         var deferred = $q.defer();
         if(newTag.id){
             // TAG dejà existant
-            $sailsSocket.post('/article/'+id+'/tags/'+newTag.id).success(function (data,status) {
+            $sailsSocket.post('/api/article/'+id+'/tags/'+newTag.id).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
                 if(status == '401')
@@ -241,7 +241,7 @@ angular.module('core')
             })
         }else{
             // TAG à créer
-            $sailsSocket.post('/article/'+id+'/tags/',newTag).success(function (data,status) {
+            $sailsSocket.post('/api/article/'+id+'/tags/',newTag).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
                 if(status == '401')
@@ -259,7 +259,7 @@ angular.module('core')
         var deferred = $q.defer();
         if(newTag.id){
             // TAG dejà existant
-            $sailsSocket.delete('/article/'+id+'/tags/'+newTag.id).success(function (data,status) {
+            $sailsSocket.delete('/api/article/'+id+'/tags/'+newTag.id).success(function (data,status) {
                 deferred.resolve(data);
             }).error(function (data,status) {
                 if(status == '401')
@@ -277,17 +277,17 @@ angular.module('core')
         console.log(authorId);
         article = {date : new Date(),status:'draft'};
         var deferred = $q.defer();
-        $sailsSocket.post('/article',article).success(function (data,status) {
+        $sailsSocket.post('/api/article',article).success(function (data,status) {
             
 
-            $sailsSocket.post('/article/'+data.id+'/authors/'+authorId).success(function (data2,status) {
+            $sailsSocket.post('/api/article/'+data.id+'/authors/'+authorId).success(function (data2,status) {
                 console.log('HEHEHEHEHHEHEHEHEHE');
                 // console.log(data2);
                 // if(typeof(data2.tags) != 'array')
                 // data2.content='';
                 // data2.tags=[];
                 // deferred.resolve(data2);
-                 $sailsSocket.get('/article/'+data.id).success(function (data3,status) {
+                 $sailsSocket.get('/api/article/'+data.id).success(function (data3,status) {
                     console.log('HEHEHEHEHHEHEHEHEHE');
                     console.log(data3);
                     if(typeof(data3.tags) != 'array')
@@ -322,7 +322,7 @@ angular.module('core')
 
         // article = {date : new Date(),status:'draft'};
         var deferred = $q.defer();
-        $sailsSocket.get('/article/'+id).success(function (data,status) {
+        $sailsSocket.get('/api/article/'+id).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             if(status == '401')
@@ -334,7 +334,7 @@ angular.module('core')
     service.update=function(id, values){
 
         var deferred = $q.defer();
-        $sailsSocket.put('/article/'+id,values).success(function (data,status) {
+        $sailsSocket.put('/api/article/'+id,values).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             // if(status == '401')
@@ -346,7 +346,7 @@ angular.module('core')
     service.remove=function(id){
 
         var deferred = $q.defer();
-        $sailsSocket.delete('/article/'+id).success(function (data,status) {
+        $sailsSocket.delete('/api/article/'+id).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             if(status == '401')
