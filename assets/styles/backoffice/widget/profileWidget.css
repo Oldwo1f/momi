@@ -60,7 +60,7 @@
 .profileWidget.style7   .imgdiv {flex-grow:5;position: relative;top:auto;right:auto;bottom:auto;display:flex;align-items:center;}
 .profileWidget.style7   .namediv {flex-grow:2;left : auto;font-size: 1.5em;margin:20px 0px;  position: relative;top:auto;right:auto;bottom:auto;height: auto;width: auto;}
 .profileWidget.style7   .namediv div{text-align: center;}
-.profileWidget.style7   .btndiv {flex-grow:3;left : auto;position: relative;top:auto;right:auto;bottom:auto;height: auto;width: auto;}
+.profileWidget.style7   .btndiv {flex-grow:2;left : auto;position: relative;top:auto;right:auto;bottom:auto;height: auto;width: auto;}
 /*.profileWidget.style7   .imgdiv figure{text-align: right;}*/
 /*.profileWidget .btndiv .btn-circle{font-size: 1.5em; width: 2em; height: 2em; padding:0px;	display:inline-flex; justify-content:center;align-items:center;}*/
 

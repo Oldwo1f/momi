@@ -12,6 +12,8 @@ module.exports = {
   		nbArticles:{type:'int',defaultsTo:0},
         nbProjects:{type:'int',defaultsTo:0},
   		total:{type:'int',defaultsTo:0},
+        articles:{collection:'article', via: 'tags'},
+        projects:{collection:'project', via: 'tags'},
         selfUpdate:function(options,cb){
         console.log('SELF UPDATE TAG');
         console.log(options);
@@ -46,40 +48,7 @@ module.exports = {
                     cb(err,null);
                 });
             }
-            // if(options.verb == 'create'){
-
-            //     Tag.findOne(this.id).then(function(data){
-            //         // console.log(data);
-            //         data.nbArticles= Number(data.nbArticles)+1;
-            //         data.total= Number(data.total)+1;
-            //         // console.log(data);
-            //         return Tag.update(data.id ,
-            //         {
-            //             nbArticles : data.nbArticles
-            //         }).then(function(result){
-
-            //             es.create('tag',result[0],options.parentId).then(function(e,d){
-            //                 console.log('ES tag stored');
-            //                 console.log(d);
-            //                 console.log(result[0]);
-            //                 return cb(null,result[0]);
-            //             }).catch(function(err){
-            //                    console.log(err);
-            //             })
-
-
-            //             // console.log('--------------');
-            //             // console.log(result[0]);
-            //             // cb(null,result[0]);
-                        
-            //         })
-                   
-            //     }).catch(function (err) {
-            //         console.log('ERRORORORORORORORO');
-            //         console.log(err);
-            //         cb(err,null);
-            //     });
-            // }
+        
             if(options.verb == 'remove'){
 
               Tag.findOne(this.id).then(function(data){
@@ -99,6 +68,68 @@ module.exports = {
                         }).then(function(result){
                             Tag.publishUpdate( data.id , {
                                 nbArticles : data.nbArticles,
+                                total : data.total
+                            } )
+                            cb(null,result);
+                        })
+
+                    }
+                   
+                }).catch(function (err) {
+                    cb(err,null);
+                });
+            }
+        }
+        if(options.parentType == 'project')
+        {
+            if(options.verb == 'add'){
+
+                Tag.findOne(this.id).then(function(data){
+                console.log(data);
+                console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<);");
+                    data.nbProjects= Number(data.nbProjects)+1;
+                    data.total= Number(data.total)+1;
+                    console.log(data);
+                    return Tag.update(data.id ,
+                    {
+                        nbProjects : data.nbProjects,
+                        total : data.total
+                    }).then(function(result){
+
+                        Tag.publishUpdate( data.id , {
+                                nbProjects : data.nbProjects,
+                                total : data.total
+                        } )
+                        console.log('--------------');
+                        console.log(result[0]);
+                        cb(null,result[0]);
+                        
+                    })
+                   
+                }).catch(function (err) {
+                    cb(err,null);
+                });
+            }
+        
+            if(options.verb == 'remove'){
+
+              Tag.findOne(this.id).then(function(data){
+                    data.nbProjects= Number(data.nbProjects) -1;
+                    data.total= Number(data.total) -1;
+                    if(data.total<=0){
+                     //&& data.nbProjects<=0 && data.nbProjects<=0 &&
+                        return Tag.destroy(data.id).then(function(result){
+                            cb(null,result[0]);
+                            Tag.publishDestroy( data.id )
+                        })
+                    }else{
+                        return Tag.update(data.id ,
+                        {
+                            nbProjects : data.nbProjects,
+                            total : data.total
+                        }).then(function(result){
+                            Tag.publishUpdate( data.id , {
+                                nbProjects : data.nbProjects,
                                 total : data.total
                             } )
                             cb(null,result);

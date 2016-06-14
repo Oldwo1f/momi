@@ -10,7 +10,7 @@
 				<span  ><i class="fa fa-long-arrow-left"></i></span>
 			</a>
 			<div class="pageTitle">
-				<i class="pe-7f-note"></i><h3>Mes articles</h3>
+				<i class="pe-7f-note"></i><h3>Articles : {{formData.title}}</h3>
 			</div>
 			<!-- <div class="searchBar">
 				<input class="" type="text" ng-blur="searchArticle()" ng-model="searchSlug" placeholder="Recherche dans les articles">
@@ -26,7 +26,7 @@
 
 	<article class="widget widget__form">
 		<div class="col-md-6 form_col">
-			<div class="form_title">Article</div>
+			<div class="form_title"><i class="pe-7s-note"></i>Article</div>
 <!-- title -->
 			<label for="input-1" class="stacked-label"><i class="pe-7s-flag"></i></label>
 			<input type="text" class="stacked-input" ng-blur="update('title')" ng-model="formData.title" id="input-1" placeholder="Titre">
@@ -52,7 +52,7 @@
 <!-- content  -->
 
 			<label for="input-4" class="stacked-label mt0"><i class="pe-7s-note"></i></label>
-			<textarea ui-tinymce="tinymceOption" ng-model="formData.content" ng-model="tinymceModel" ng-blur="update('content')" placeholder="Contenu de l'article"></textarea>
+			<textarea  class="tinymcetextarea" ui-tinymce="tinymceOption" ng-model="formData.content" ng-model="tinymceModel" ng-blur="update('content')" placeholder="Contenu de l'article"></textarea>
 <!-- category -->
 			<label for="input-5" class="stacked-label mt0"><i class="pe-7s-user"></i></label>
 			<tags-input add-from-autocomplete-only="true" class="mycategoriesinput inputtag  mb" ng-model="formData.authors" on-tag-removed="removeAuthor($tag)" on-tag-adding="addAuthor($tag)" add-on-enter="true"  ng-blur="unselectOnBlur()"  placeholder="Ajouter un auteur" display-property="name" template="myAuthorTemplate">
@@ -79,11 +79,11 @@
 				</div>
 				</div>
 			</script>
-								<!-- // <ng-letter-avatar  ng-if="!user.images.length" charCount="1" data="{{user.firstname}} {{user.name}}" shape="round"></ng-letter-avatar> -->
+								<!-- // <ng-letter-avatar  ng-if="!new.images.length" charCount="1" data="{{new.firstname}} {{new.name}}" shape="round"></ng-letter-avatar> -->
 
 		</div>
 		<div class="form_col_r">
-			<div class="form_title">Référencement</div>
+			<div class="form_title"><i class="pe-7s-global"></i>Référencement</div>
 			<div class="formGroup">
 			<label for="input-1" class="stacked-label"><i class="pe-7s-key"></i></label>
 			<input type="text" inputcount="255" class="stacked-input" ng-model="formData.keyword" id="input-1" placeholder="Mots Clefs" ng-blur="update('keyword')">
@@ -100,7 +100,7 @@
 				<auditref model="formData"></auditref>
 			</div>
 			<div class="groupSeparator"></div>
-			<div class="form_title">Options de publication </div>
+			<div class="form_title"><i class="pe-7s-config"></i>Options de publication </div>
 			<div class="formGroup mb  fullwidthgroup">
 				<div class="btn-group block">
 				  <a ng-click="formData.status='actif';update('status')" type="button" class="fakeColorGreen btn active"  ng-class="{'green':formData.status=='actif','orange':formData.status=='draft','red':formData.status=='inactif'}" style="border-right:0px">Actif</a>
@@ -115,10 +115,10 @@
 				<!-- <input ng-model="formData.description" datetimepicker type="text" class="stacked-input" id="input-2" placeholder="Date de publication"> -->
 				<!-- <datetimepicker data-ng-model="formData.date"></datetimepicker> -->
 				<div class="dropdown">
-				  <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+				  <a class="dropdown-toggle" id="dropdown2" status="button" data-toggle="dropdown" data-target="#" href="#">
 				    <input type="text" class="stacked-input" value="{{formData.date | amDateFormat:'dddd DD MMMM YYYY à HH:mm'}}" placeholder="Date de publication">
 				  </a>
-				  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				  <ul class="dropdown-menu" status="menu" aria-labelledby="dLabel">
 				    <datetimepicker data-ng-model="formData.date" data-on-set-time="closeDatePicker(d,dd); update('date')"/>
 				  </ul>
 				</div>
@@ -153,7 +153,7 @@
 		<div class="widget__form addImages">
 			
 		<div class="col-md-12 form_col">
-			<div class="form_title">Ajouter des images 
+			<div class="form_title formTitleSpecial"><i class="pe-7s-photo-gallery"></i>Ajouter des images 
 			<!-- <input type="file"  class="addImageBtn" onchange="angular.element(this).scope().changeImageUrl(this)">
 			<div class="addImageBtnFakeBtn" onclick="$(this).siblings('.addImageBtn').click();"> </div> -->
 				<div class="button btnADDIMG" ngf-select="addImgCrop($files)" ng-model="file" ngf-pattern="'image/*'"
@@ -202,10 +202,10 @@
 					
 			</div> 
 
-			<div class="smallSeparator" ng-if="formData.images.length"></div>
-			<div class="imageList" ui-sortable="sortOption" ng-model="formData.images" ng-if="formData.images.length">
+			<div class="smallSeparator"></div>
+			<div class="imageList" ui-sortable="sortOption" ng-model="formData.images">
 				<figure class="pull-left post__img" ng-repeat="img in formData.images">
-					<img class="media-object" ng-src="image/adminThumbs/{{img.filename}}" alt="user">
+					<img class="media-object" ng-src="image/adminThumbs/{{img.filename}}" alt="new">
 					<div class="btnreresize" ng-click="resizeagain(img)"><i class="fa fa-crop"></i></div>
 					<removeremove class="removeremove" action="removeImg" itemid="img.id"></removeremove>
 				</figure>
@@ -213,9 +213,12 @@
 				<!-- ng-if  number of image > 4 -->
 				<div class="completor"></div>
 			</div>
+
+
+
 		</div>
 		<div class="col-md-12 form_col_r">
-			<div class="form_title">Ajouter une Video 
+			<div class="form_title"><i class="pe-7s-play"></i>Ajouter une Video 
 			<!-- <input type="file"  class="addImageBtn" onchange="angular.element(this).scope().changeImageUrl(this)"> -->
 			<!-- <div class="addImageBtnFakeBtn" onclick="$(this).siblings('.addImageBtn').click();"> <i class="pe-7s-plus"></i></div> -->
 			</div>
@@ -238,7 +241,7 @@
 			<input ng-blur="update('videoUrl')" type="text" class="stacked-input " ng-model="formData.videoUrl" id="input-1" placeholder="Url de la video">
 		</div>
 		<div class="col-md-12 form_col_r">
-			<div class="form_title">Ajouter des pièces jointes
+			<div class="form_title formTitleSpecial"><i class="pe-7s-copy-file"></i>Ajouter des pièces jointes
 				<div class="button btnADDIMG" ngf-select="uploadDocument($files)" ng-model="document"  ngf-max-size="700MB"> <i class="pe-7s-plus"></i></div>
 				<div ngf-drop="uploadDocument($files)"  ngf-max-size="20MB"  ngf-drag-over-class="'dragover'" ng-model="document" class="drop-zone" >Déposer vos fichiers ici</div>
 			</div>
@@ -311,42 +314,79 @@
 					<span class="documentTitle"> {{ doc.name}}</span>
 					<removeremove class="removeremove" action="removeDocument" itemid="doc.id"></removeremove>
 				</div>
-				<!-- <div class="document">
-					<span><i class="fa fa-file"></i></span>
-					<span class="documentTitle"> TITOTITITOTI.HTML</span>
-					<removeremove class="removeremove" action="remove" itemid="item.id"></removeremove>
-				</div>
-				<div class="document">
-					<span><i class="fa fa-file-pdf-o"></i></span>
-					<span class="documentTitle">Mon édtude.pdf</span>
-					<removeremove class="removeremove" action="remove" itemid="item.id"></removeremove>
-				</div> -->
-				<!-- <figure class="pull-left post__img">
-					<img class="media-object" src="images/img/post2.jpg" alt="user">
-				</figure>
-				<figure class="pull-left post__img">
-					<img class="media-object" src="images/img/post1.jpg" alt="user">
-					<removeremove class="removeremove" action="remove" itemid="item.id"></removeremove>
-				</figure>
-				<figure class="pull-left post__img">
-					<img class="media-object" src="images/img/post3.jpg" alt="user">
-				</figure>
-				<figure class="pull-left post__img">
-					<img class="media-object" src="images/img/post2.jpg" alt="user">
-					<removeremove class="removeremove" action="remove" itemid="item.id"></removeremove>
-				</figure>
-				<figure class="pull-left post__img">
-					<img class="media-object" src="images/img/post1.jpg" alt="user">
-					<removeremove class="removeremove" action="remove" itemid="item.id"></removeremove>
-				</figure>
-				<figure class="pull-left post__img">
-					<img class="media-object" src="images/img/post3.jpg" alt="user">
-					<removeremove class="removeremove" action="remove" itemid="item.id"></removeremove>
-				</figure> -->
-				<!-- ng-if  number of image > 4 -->
-				<!-- <div class="completor"></div> -->
+				
 			</div>
 		</div>
+		
+		<div class="form_col">
+			<div class="form_title"><i class="pe-7s-chat"></i>Commentaires ( {{formData.comments.length}} )</div>
+
+			
+			<div class="commentaires" ng-repeat="comment in formData.comments | orderBy :'createdAt':true ">
+				
+		  		<!-- <div class="comDate">
+					<span class="dddd">{{comment.createdAt | amDateFormat:'dddd'}}</span>
+  					<span class="DD">{{comment.createdAt | amDateFormat:'DD'}}</span>
+  					<span class="MM ">{{comment.createdAt | amDateFormat:'MMM'}}</span>
+  					<span class="HH ">{{comment.createdAt | amDateFormat:'H:mm'}}</span>
+		  		</div> -->
+				<div class="comAuthor">
+					<span>{{comment.authorName }}</span> <small>{{ comment.email }}</small>
+					<div class="comDate" am-time-ago="comment.createdAt">
+			  		</div>
+				</div>
+				<div class="btnBlockComment">
+					<div class="btn-group block">
+						  <a ng-click="comment.status='actif';updateComment(comment.id,'status','actif')" type="button" class="fakeColorGreen btn active"  ng-class="{'green':comment.status=='actif','orange':comment.status=='new','red':comment.status=='innactif','bigger':comment.status=='actif'}" style="border-bottom:0px">Actif</a>
+						  <a ng-click="comment.status='new';updateComment(comment.id,'status','new')" type="button" class="fakeColorOrange btn active" ng-class="{'green':comment.status=='actif','orange':comment.status=='new','red':comment.status=='innactif','bigger': comment.status=='new'}" >New</a>
+						  <a ng-click="comment.status='innactif';updateComment(comment.id,'status','innactif')" type="button" class="fakeColorRed btn active" ng-class="{'green':comment.status=='actif','orange':comment.status=='new','red':comment.status=='innactif','bigger':comment.status=='innactif'}"  style="border-top:0px">Innactif</a>
+					</div>
+					
+				</div>
+				<div class="btnSmallBar">
+						<removeremove class="removeremove2" action="deleteComment" itemid="comment.id"></removeremove>
+						<div class="replyBtn" ng-click="comment.addReponseFlag= !comment.addReponseFlag"><i class="fa fa-reply"></i></div>
+				</div>
+				<div class="comContent">{{comment.content }}</div>
+				<div class="clearfix"></div>
+				<div class="reponses" ng-repeat="reponse in comment.responses">
+			  		<div class="comDate">
+						<!-- <span class="dddd">{{reponse.createdAt | amDateFormat:'dddd'}}</span> -->
+	  					<!-- <span class="DD">{{reponse.createdAt | amDateFormat:'DD'}}</span>
+	  					<span class="MM ">{{reponse.createdAt | amDateFormat:'MMM'}}</span>
+	  					<span class="HH ">{{reponse.createdAt | amDateFormat:'H:mm'}}</span> -->
+			  		</div>
+					<div class="comAuthor">
+						<span>{{reponse.authorName }}</span> <small ng-if="!reponse.admin">{{ reponse.email }}</small><small ng-if="reponse.admin">admin</small>
+						<div class="comDate" am-time-ago="reponse.createdAt">
+				  		</div>
+					</div>
+					<div class="btnBlockComment">
+						<div class="btn-group block">
+							  <a ng-click="reponse.status='actif';updateComment(reponse.id,'status','actif')" type="button" class="fakeColorGreen btn active"  ng-class="{'green':reponse.status=='actif','orange':reponse.status=='new','red':reponse.status=='innactif','bigger':reponse.status=='actif'}" style="border-bottom:0px">Actif</a>
+							  <a ng-click="reponse.status='new';updateComment(reponse.id,'status','new')" type="button" class="fakeColorOrange btn active" ng-class="{'green':reponse.status=='actif','orange':reponse.status=='new','red':reponse.status=='innactif','bigger': reponse.status=='new'}" >New</a>
+							  <a ng-click="reponse.status='innactif';updateComment(reponse.id,'status','innactif')" type="button" class="fakeColorRed btn active" ng-class="{'green':reponse.status=='actif','orange':reponse.status=='new','red':reponse.status=='innactif','bigger':reponse.status=='innactif'}"  style="border-top:0px">Innactif</a>
+						</div>
+						
+					</div>
+					<div class="btnSmallBar">
+							<removeremove class="removeremove2" action="deleteComment" itemid="reponse.id"></removeremove>
+							<!-- <div class="replyBtn"><i class="fa fa-reply"></i></div> -->
+					</div>
+					<div class="comContent">{{reponse.content}}</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="formResponse" ng-if="comment.addReponseFlag">
+					<input type="text" class="stacked-input" placeholder="Votre texte ici" ng-model="comment.tmpRep">
+					<div class="submit" ng-click="comment.addReponseFlag= !comment.addReponseFlag; AddReponse(comment.id,comment.tmpRep)"><i class="fa fa-reply"></i></div>
+				</div>
+			</div>
+			
+
+
+		</div>
+		
+		
 		</div>
 
 		

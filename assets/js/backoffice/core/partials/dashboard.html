@@ -1,4 +1,9 @@
 <div >
+	<!-- <a href="workshop/" genie-wish wish-i-icon="fa-cogs" wish-context="{{demoContext}}">Genie Workshop</a> -->
+	<div ux-lamp rub-class="visible" lamp-visible="genieVisible" rub-shortcut="32"
+  wish-callback="wishMade(wish)"></div>
+
+
 	<div class="pageDash pageVisible">
 		
 
@@ -17,9 +22,13 @@
 		        <div gridster-item="widgetList['dashboardconfigWidget']" ng-class="{'no-resize': widgetList['dashboardconfigWidget'].noresize }" ng-show="widgetList['dashboardconfigWidget'].enabled">
 		        	<dashboardconfig-widget></dashboardconfig-widget>
 		        </div>
-		    <!-- lasArticle WIDGET -->
+		    <!-- lastArticle WIDGET -->
 		        <div gridster-item="widgetList['lastarticleWidget']" ng-class="{'no-resize': widgetList['lastarticleWidget'].noresize }" ng-show="widgetList['lastarticleWidget'].enabled">
 		        	<lastarticle-widget></lastarticle-widget>
+		        </div>
+		    <!-- lastProject WIDGET -->
+		        <div gridster-item="widgetList['lastprojectWidget']" ng-class="{'no-resize': widgetList['lastprojectWidget'].noresize }" ng-show="widgetList['lastprojectWidget'].enabled">
+		        	<lastproject-widget></lastproject-widget>
 		        </div>
 		    <!-- categorycloudWidget WIDGET -->
 		        <div gridster-item="widgetList['categorycloudWidget']" ng-class="{'no-resize': widgetList['categorycloudWidget'].noresize }" ng-show="widgetList['categorycloudWidget'].enabled">
@@ -32,6 +41,10 @@
 		    <!-- tagcloudWidget WIDGET -->
 		        <div gridster-item="widgetList['tagcloudWidget']" ng-class="{'no-resize': widgetList['tagcloudWidget'].noresize }" ng-show="widgetList['tagcloudWidget'].enabled">
 		        	<tagcloud-widget></tagcloud-widget>
+		        </div>
+		    <!-- notificationWidget WIDGET -->
+		        <div gridster-item="widgetList['notificationWidget']" class="notificationWidget" ng-class="{'no-resize': widgetList['notificationWidget'].noresize }" ng-show="widgetList['notificationWidget'].enabled" >
+		        	<notification-widget></notification-widget>
 		        </div>
 		</div>
 	</div>

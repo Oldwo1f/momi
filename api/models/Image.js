@@ -15,6 +15,9 @@ module.exports = {
   		alt:{type:'text',defaultsTo:''},
   		rank:{type:'int'},
   		size:{type:'int'},
+  		width:{type:'int'},
+  		height:{type:'int'},
+  		paysage:{type:'boolean',defaultsTo:true},
   		type:{type:'string'},
         selfUpdate:function(options,cb,res){
         console.log('SELF UPDATE');
@@ -26,23 +29,23 @@ module.exports = {
         	//find article
         	Article.findOne(options.parentId).populate('images').then(function(article){
         		
-        		console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
-        		console.log(article);
+        		// console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
+        		// console.log(article);
 
 
         		if(options.verb == 'add'){
-            		console.log('IMG ADD');
-            		console.log(this.id);
+            		// console.log('IMG ADD');
+            		// console.log(this.id);
 
 	               Image.findOne(childID).then(function(data){
-	               	console.log(data);
+	               	// console.log(data);
 	                    
 	                    return Image.update(data.id ,
 	                    {
 	                        // nbArticles : data.nbArticles,
 	                        rank : article.images.length
 	                    }).then(function(result){
-	                        console.log(result[0]);
+	                        // console.log(result[0]);
 	                        cb(null,data);
 	                        
 	                    })
@@ -53,7 +56,7 @@ module.exports = {
 	            }
 	  
 	            if(options.verb == 'remove'){
-	            	console.log('IMG REMOVE');
+	            	// console.log('IMG REMOVE');
 
 	            	return Promise.bind({})
 	            	.then(function(){
@@ -64,7 +67,99 @@ module.exports = {
 	                    return Promise.map(article.images,function(img){
 	                    	if(img.rank > data.rank)
 	                    	{
-	                    		console.log('IFFFFFF');
+	                    		// console.log('IFFFFFF');
+	                    		Image.findOne(img.id).then(function(data1){
+				                    return Image.update(data1.id ,
+				                    {
+				                        rank : data1.rank-1
+				                    }).then(function(result){
+				                        // cb(null,data);
+				                        return
+				                    })
+				                   
+				                })
+
+	                    	}
+	                    	else{
+	                    		return;
+	                    	} 
+	                    		
+	                    })
+	                   
+	                }).then(function(){
+	                	// console.log('imgToREmove');
+	                	
+	                	// if()
+	                	return Image.destroy(this.imgToremove.id).then(function(data){
+                            cb(null,data);
+		                })
+
+
+	                	// return data.images.map
+	                }).catch(function (err) {
+	                    cb(err,null);
+	                });
+
+	            }	
+
+
+
+
+
+
+
+
+
+
+        	}).catch(function(err){
+        		console.log(err);
+        	})
+        }
+        if(options.parentType == 'project')
+        {
+
+        	//find project
+        	Project.findOne(options.parentId).populate('images').then(function(project){
+        		
+        		// console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
+        		// console.log(project);
+
+
+        		if(options.verb == 'add'){
+            		// console.log('IMG ADD');
+            		// console.log(this.id);
+
+	               Image.findOne(childID).then(function(data){
+	               	// console.log(data);
+	                    
+	                    return Image.update(data.id ,
+	                    {
+	                        // nbProjects : data.nbProjects,
+	                        rank : project.images.length
+	                    }).then(function(result){
+	                        // console.log(result[0]);
+	                        cb(null,data);
+	                        
+	                    })
+	                   
+	                }).catch(function (err) {
+	                    cb(err,null);
+	                });
+	            }
+	  
+	            if(options.verb == 'remove'){
+	            	// console.log('IMG REMOVE');
+
+	            	return Promise.bind({})
+	            	.then(function(){
+	            		return Image.findOne(childID)
+	            	})
+	            	.then(function(data){
+	            		this.imgToremove = data
+	                    return Promise.map(project.images,function(img){
+	                    	if(img.rank > data.rank)
+	                    	{
+	                    		// console.log('IFFFFFF');
 	                    		Image.findOne(img.id).then(function(data1){
 				                    return Image.update(data1.id ,
 				                    {
@@ -115,16 +210,16 @@ module.exports = {
         if(options.parentType == 'category')
         {
 
-        		console.log('$$$$$$$$$$$$$$$$$ cat $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
+        		// console.log('$$$$$$$$$$$$$$$$$ cat $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
         	//find article
         	Category.findOne(options.parentId).populate('images').then(function(category){
         		
-        		console.log(category);
+        		// console.log(category);
 
 
         		if(options.verb == 'add'){
-            		console.log('IMG ADD');
-            		console.log(this.id);
+            		// console.log('IMG ADD');
+            		// console.log(this.id);
 
 	               Image.findOne(childID).then(function(data){
 	               	// console.log(data);
@@ -333,6 +428,10 @@ module.exports = {
 
 	    }try{
 	        fs.unlink('uploads/images/resized/'+value[0].filename)
+	    }catch(e){
+
+	    }try{
+	        fs.unlink('uploads/images/resized2/'+value[0].filename)
 	    }catch(e){
 
 	    }

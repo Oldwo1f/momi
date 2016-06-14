@@ -1,0 +1,83 @@
+
+
+.lastprojectWidget .widget__header {position: relative;width: 100%;overflow: hidden;/*background:blue;*/}
+.lastprojectWidget .widget__title {white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+
+
+.lastprojectWidget .savedash{position:relative;cursor:pointer}
+.lastprojectWidget .widget__title > span:first-child{ flex-grow:3;font-size:1.2rem;}
+.lastprojectWidget .widget__title > span.nbViewsTitle{ flex-grow:1;font-size:1.2rem;}
+.lastprojectWidget .dateInTitle{display:flex;height: 50px;}
+.lastprojectWidget .dateInTitle span{margin-left: 5px;}
+.lastprojectWidget .maincontent{width: 100%; height: 100%; display:block;}
+/*.lastprojectWidget .maincontent figure img{width:200px;}*/
+.lastprojectWidget .widget {height: auto;}
+.lastprojectWidget .widget__header{height: 64px;display:flex;flex-direction:row; align-content:center; justify-content:flex-start; align-items:center;font-size: 1.5em;}
+.lastprojectWidget .widget__title{display:flex; height: 100%;flex-direction: row;justify-content: flex-start; padding-left:5px; flex-grow:3; background-color: rgba(0, 0, 0, 0.3);}
+.lastprojectWidget .widget__icon{display:flex;  height: 100%;flex-direction: column;justify-content: center; padding-left:15px;background-color: rgba(0, 0, 0, 0.3);}
+.lastprojectWidget .btn-header{ cursor:pointer;display: flex;  height: 100%;flex-direction: column;justify-content: center;font-size: 1em;padding:0 15px; margin-left:1px; background-color: rgba(0, 0, 0, 0.3);}
+.lastprojectWidget .widget__content.filled{ min-height:500px; background:rgba(0,0,0,0.4);padding: 10px;}
+.lastprojectWidget .widget__content.filled h4{font-size:2em; display:inline-block;margin-right: 10px;}
+.lastprojectWidget .widget__content.filled .choosetheme{font-size:1.5em; display:inline-block;margin-right: 10px;padding-top: 3px;}
+.lastprojectWidget .widget__content.filled .listConfigItem{display:flex;margin-top: 10px;}
+.lastprojectWidget .widget__content.filled .listConfigItem .switch{margin:0px;margin-right: 15px;}
+.lastprojectWidget .widget__content.filled .listConfigItem h4{font-size:1.5em; display:inline-block;margin-right: 10px;height : 30px;line-height: 30px;}
+.lastprojectWidget .videoIcon{border:1px solid rgba(255,255,255,0.25);font-size:13em;display:flex;align-items:center;justify-content:center;width: 100%;height: 100%;}
+.lastprojectWidget .videoIcon .socicon-youtube{display:flex;align-items:center;justify-content:center;width: 100%;height: 100%;}
+.lastprojectWidget md-card md-card-title md-card-title-text {display:block;}
+.lastprojectWidget md-card-actions{display:flex; width:100%;overflow:hidden;margin: 0px;margin-top: 10px;margin-bottom:0;}
+.lastprojectWidget md-card-actions .tabletag{line-height: 16px; margin-right:5px;color:white;background:transparent;border-radius:16px;padding:3px 13px;height: auto;border:1px solid #1c7dfa;}
+.lastprojectWidget md-card-actions .tablecat{line-height: 16px; margin-right:5px;color:white;background:transparent;border-radius:3px;padding:3px 13px;height: auto;border:1px solid #1c7dfa;white-space: nowrap;}
+.lastprojectWidget md-card md-card-title md-card-title-text:not(:only-child) .md-subhead{height: auto;overflow:hidden;text-overflow:ellipsis;text-wrap:nowrap;color:rgba(255,255,255,0.5);}
+
+#noLastAticleElment{text-align: center;display:flex;justify-content:center;align-items:center;}
+
+.nbViewsTitle i{font-size: 18px;height: auto;width: auto; vertical-align:baseline; margin-left: 0px;margin-right: 10px;}
+.nbViewsTitle:before{content:' ';margin-right: 7px}
+.nbViewsTitle:after{content:' ';margin-left: 7px}
+
+.lastprojectWidget.smallFont { font-size:0.8rem;}
+.lastprojectWidget.mediumFont { font-size:1rem;}
+.lastprojectWidget.largeFont { font-size:1.2rem;}
+.lastprojectWidget.saveLargeFont { font-size:1.2rem;}
+.lastprojectWidget.extralargeFont { font-size:1.5rem;}
+	
+
+.lastprojectWidget .widget md-card {background: transparent;box-shadow:none;height: 270px;margin : 8px 0px;}
+.lastprojectWidget .widget md-card md-card-title md-card-title-text{margin-right: 10px;}
+.lastprojectWidget .widget md-card md-card-title md-card-title-media{align-self: center;}
+
+
+.lastprojectWidget.style0{background:rgba(255,0,0,0.4);}
+.lastprojectWidget.style0 .maincontent{display:none;}
+
+.lastprojectWidget md-card > img, .lastprojectWidget md-card > :not(md-card-content) img{width:auto;height: 100%;}
+.lastprojectWidget md-card > figure, .lastprojectWidget md-card > :not(md-card-content) figure{height: 100%;}
+.lastprojectWidget	md-card md-card-title{padding: 0;}
+
+
+.lastprojectWidget.style1	md-card md-card-title md-card-title-media .md-media-sm{width: 120px;}
+.lastprojectWidget.style1	.widget__content.filled{}
+
+.lastprojectWidget.style2	.widget__content.filled{}
+.lastprojectWidget.style2	md-card-actions{display:none;}
+.lastprojectWidget.style2	.md-subhead{display:none;}
+.lastprojectWidget.style2	.widget md-card md-card-title md-card-title-text{align-self: center;}
+
+/*.lastprojectWidget.style1	.widget__content.filled >div{height: 100%; display:flex;}
+.lastprojectWidget.style1	.widget__content.filled .post__info{display:none;}
+.lastprojectWidget.style1	.widget__content.filled .infosinfos{display:none;}
+.lastprojectWidget.style1	.maincontent figure {height :calc(100% - 20px); height :100%; border-radius:5px;}
+.lastprojectWidget.style1	.maincontent figure img{width:auto;height:100%;}
+.lastprojectWidget.style1	.widget__content.filled h4{ width: calc(100% - 58px);line-height: 3rem;padding-right: 0px;flex-grow:2;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;}
+*/
+	
+/*.lastprojectWidget.style2	.widget__content.filled{background:teal;min-height: auto;overflow: hidden;height:calc(100% - 64px)}
+.lastprojectWidget.style2	.widget__content.filled >div{height: 100%; display:block;}
+.lastprojectWidget.style2	.widget__content.filled .post__info{display:none;}
+.lastprojectWidget.style2	.widget__content.filled .infosinfos{display:flex;position: absolute;bottom:10px;left:10px;overflow:hidden;width: calc(100% - 150px);text-overflow: ellipsis;white-space: nowrap;}
+.lastprojectWidget.style2	.maincontent figure {height :calc(100% - 20px); border-radius:5px; position: absolute; top:10px;right:10px;}
+.lastprojectWidget.style2	.maincontent figure img{width:auto;height:100%;}
+.lastprojectWidget.style2	.widget__content.filled h4{height:calc(100% - 30px); width: calc(100% - 130px); line-height: 2rem;padding-right: 0px;flex-grow:2;overflow:hidden;}
+
+	*/

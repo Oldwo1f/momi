@@ -49,6 +49,24 @@ module.exports = {
 
 	    })
 	},
+	addFirstAdmin:function(req,res,next){
+		var user = {};
+		user.name = 'Momcilovic';
+		user.firstname = 'Alexis';
+		user.password ='a';
+		user.email ='alexismomcilovic@gmail.com';
+
+		User.create(user, function(err, user) {
+
+			if (!user) {
+				return res.status(401).send({ message: 'Invalid email and/or password' });
+			}
+			else{
+				res.send(user);
+			}
+
+		});
+	},
 	login:function(req,res,next){
 		console.log('LOGIN!');
 		function createJWT(user) {

@@ -16,7 +16,8 @@ module.exports = {
         nbProjects:{type:'int',defaultsTo:0},
   		total:{type:'int',defaultsTo:0},
         images:{collection:'image',defaultsTo:[]},
-        
+        articles:{collection:'article', via: 'categories'},
+        projects:{collection:'project', via: 'categories'},
   		selfUpdate:function(options,cb){
         console.log('SELF UPDATE');
         console.log(options);
@@ -69,6 +70,65 @@ module.exports = {
                             cb(null,result[0]);
                             Category.publishUpdate( data.id , {
                                 nbArticles : data.nbArticles,
+                                total : data.total
+                            } )
+                        })
+
+                    }
+                   
+                }).catch(function (err) {
+                    cb(err,null);
+                });
+            }
+        }
+        if(options.parentType == 'project')
+        {
+            if(options.verb == 'add'){
+
+                Category.findOne(this.id).then(function(data){
+                console.log(data);
+                console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<);");
+                    data.nbProjects= Number(data.nbProjects)+1;
+                    data.total= Number(data.total)+1;
+                    console.log(data);
+                    return Category.update(data.id ,
+                    {
+                        nbProjects : data.nbProjects,
+                        total : data.total
+                    }).then(function(result){
+                        console.log(result[0]);
+                        cb(null,result[0]);
+                        Category.publishUpdate( data.id , {
+                                nbProjects : data.nbProjects,
+                                total : data.total
+                        } )
+                    })
+                   
+                }).catch(function (err) {
+                    cb(err,null);
+                });
+            }
+  
+            if(options.verb == 'remove'){
+
+              Category.findOne(this.id).then(function(data){
+                    data.nbProjects= Number(data.nbProjects) -1;
+                    data.total= Number(data.total) -1;
+                    if(data.total<=0){
+                     //&& data.nbProjects<=0 && data.nbProjects<=0 &&
+                        return Category.destroy(data.id).then(function(result){
+                            cb(null,result[0]);
+                            Category.publishDestroy( data.id )
+                        })  
+                    }else{
+                        return Category.update(data.id ,
+                        {
+                            nbProjects : data.nbProjects,
+                            total : data.total
+                        }).then(function(result){
+                            cb(null,result[0]);
+                            Category.publishUpdate( data.id , {
+                                nbProjects : data.nbProjects,
                                 total : data.total
                             } )
                         })

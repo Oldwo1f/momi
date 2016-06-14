@@ -5,7 +5,7 @@ angular.module('core')
     var thisresize = function(item){
 
 
-        	var classToSet= 'style0' ,classFont='smallFont';
+        	var classToSet= 'style0' ,classFont='mediumFont';
         	var x = item.sizeX, y = item.sizeY;
 
             if(y < 2){
@@ -95,6 +95,11 @@ angular.module('core')
     //     	}
     
     $('.lastarticleWidget .RESIZEHEIGHT').height(item.getElementSizeY()-94)
+    setTimeout(function(){
+      
+      $('.lastarticleWidget .RESIZEHEIGHT md-card-title-text').getNiceScroll().resize();
+    },1)
+    $('#noLastAticleElment').css('height' , item.getElementSizeY()-94 +'px')
     $('.card-media ').height(item.getElementSizeY()-125)
     $('.card-media ').width(item.getElementSizeY()-125)
         	
@@ -111,6 +116,13 @@ angular.module('core')
             $scope.editArticleState=function(id){
                 
                 $state.go('dashboard/blog/edit',{id:id})
+            }
+             $scope.optionScroll = {
+              cursorcolor:'#FFFFFF',
+              cursoropacitymin: 0, // change opacity when cursor is inactive (scrollabar "hidden" state), range from 1 to 0
+              cursoropacitymax: 0.3,
+              cursorborder:'none',
+              railoffset: {left:8}
             }
       },
       link:function(scope,element,attrs){

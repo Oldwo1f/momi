@@ -40,7 +40,7 @@ angular.module('core')
       scope: {widgetlist:'='},
       replace: true,
       templateUrl: 'js/backoffice/core/partials/dashboard.html',
-      controller:function($scope,$element,$attrs,$transclude,$rootScope,$state,usSpinnerService){
+      controller:function($scope,$element,$attrs,$transclude,$rootScope,$state,usSpinnerService,genie){
         $rootScope.startSpin = function(){
             usSpinnerService.spin('mainSpinner');
         }
@@ -171,7 +171,299 @@ angular.module('core')
           
           
         // });
-        
+        $scope.demoContext = 'genie-demo';
+        $scope.iconPrefix = 'fa fa-';
+        genie.context($scope.demoContext);
+        var magicWords ='';
+        var datatest ={icon:'home'};
+        // genie({
+        //     magicWords: ['Ajouter un utilisateur','add user','add utilisateur'],
+        //     action: function(wish) {
+        //       alert('Your "' + wish.magicWords[0] + '" wish is my command!');
+        //     },
+        //     context: $scope.demoContext,
+        //     data: {
+        //       uxGenie: {
+        //         iIcon: 'fa fa-user'
+        //       }
+        //     }
+        // });
+genie.context('global')
+        genie({
+            magicWords: ['Utilisateurs','liste des utilisateurs'],
+            action: function(wish) {
+              $state.go('users')
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'fa fa-users'
+              }
+            }
+        });
+        genie({
+            magicWords: ['Ajouter un utilisateur','add user','add utilisateur'],
+            action: function(wish) {
+                $state.go('users',{'pseudostate':'add'})
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'fa fa-user-plus',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Categories','liste des categories'],
+            action: function(wish) {
+                $state.go('categories')
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'pe-7f-way',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Tags','liste des tags'],
+            action: function(wish) {
+                $state.go('tags')
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'fa fa-tags',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Entrer/Sortir du mode edition','edit dashboard','edition du dashboard','mode edition','widget'],
+            action: function(wish) {
+                
+                $scope.$broadcast('EnterEditMode','true');
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'pe-7f-tools',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Enregistrer le dashboard','save dashboard','Sauvegarder le dashboard','widget'],
+            action: function(wish) {
+                
+                $scope.$broadcast('saveDashBoard','true');
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'pe-7f-diskette',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Articles','liste article'],
+            action: function(wish) {
+                
+                $state.go('blog')
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'pe-7f-note',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Ajouter un article','add article'],
+            action: function(wish) {
+                
+                 $state.go('blog.add')
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'pe-7f-note',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Projets','liste projets','grimpe'],
+            action: function(wish) {
+                
+                $state.go('projects')
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'pe-7f-note',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Ajouter un projet','add project','add grimpe'],
+            action: function(wish) {
+                
+                 $state.go('projects.add')
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'pe-7f-display2',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Mon profile','modifier profile','edit profile'],
+            action: function(wish) {
+                
+                 $state.go('profile')
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'pe-7f-tools',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Déconnexion','deconnexion','lot out','logout'],
+            action: function(wish) {
+                
+                 $state.go('logout')
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                iIcon: 'pe-7f-power',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Changer de thème','Theme','change theme'],
+            // action: function(wish) {
+                
+            //      // $rootScope.$broadcast('changeTheme',$scope.currentTheme);
+            // },
+            context: 'global',
+            data: {
+              uxGenie: {
+                subContext: ['theme'],
+                iIcon: 'pe-7f-tools',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Normal','Default','Bleu','1'],
+            action: function(wish) {
+                
+                 $scope.$broadcast('geniechangeTheme','bg1');
+                 // $rootScope.$broadcast('changeTheme','bg1');
+            },
+            context: 'theme',
+            data: {
+              uxGenie: {
+                // iIcon: 'pe-7f-power',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Rouge','red','rose','3'],
+            action: function(wish) {
+                
+                 $scope.$broadcast('geniechangeTheme','bg3');
+                 // $rootScope.$broadcast('changeTheme','bg3');
+            },
+            context: 'theme',
+            data: {
+              uxGenie: {
+                // iIcon: 'pe-7f-power',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Orange / Violet','violet','orange','2'],
+            action: function(wish) {
+                
+                 $scope.$broadcast('geniechangeTheme','bg2');
+                 // $rootScope.$broadcast('changeTheme','bg3');
+            },
+            context: 'theme',
+            data: {
+              uxGenie: {
+                // iIcon: 'pe-7f-power',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Vert','green','nature','4'],
+            action: function(wish) {
+                
+                 $scope.$broadcast('geniechangeTheme','bg4');
+                 // $rootScope.$broadcast('changeTheme','bg3');
+            },
+            context: 'theme',
+            data: {
+              uxGenie: {
+                // iIcon: 'pe-7f-power',
+              }
+            }
+        });
+
+        genie({
+            magicWords: ['Afficher un widget','show widget'],
+            action: function(wish) {
+                
+                 // $scope.$broadcast('geniechangeTheme','bg4');
+                 // $rootScope.$broadcast('changeTheme','bg3');
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                subContext: ['showwidget'],
+                iIcon: 'pe-7f-tools',
+              }
+            }
+        });
+        genie({
+            magicWords: ['Masquer un widget','hide widget','cacher un widget'],
+            action: function(wish) {
+            },
+            context: 'global',
+            data: {
+              uxGenie: {
+                subContext: ['hidewidget'],
+                iIcon: 'pe-7f-tools',
+              }
+            }
+        });
+        for(var i in widgetService.list){
+            if(!widgetService.list[i].required){
+                genie({
+                    magicWords: [widgetService.list[i].publicName],
+                    action: function(wish) {
+                         widgetService.list[wish.data.indexOf].enabled = false
+                    },
+                    context: 'hidewidget',
+                    data:{
+                        indexOf: i 
+                    }
+                });
+                genie({
+                    magicWords: [widgetService.list[i].publicName],
+                    action: function(wish) {
+                         widgetService.list[wish.data.indexOf].enabled = true
+                    },
+                    context: 'showwidget',
+                    data:{
+                        indexOf: i 
+                    }
+                });
+            }
+        }
+
 
       },
       link:function(scope,element,attrs){

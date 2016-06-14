@@ -4345,7 +4345,7 @@ input[name^="tab-radio"]:checked + label {
 
 .form_col{position:relative;width: 60%;float:left;padding:0;border: 20px rgba(0,0,0,0.25) solid;}
 
-.form_col_r{position:relative;width: -webkit-calc(40% - 1px);float:left;padding:0;margin-left:1px; border: 20px rgba(0,0,0,0.25) solid;}
+.form_col_r{position:relative;width: -webkit-calc(40% - 1px);float:right;padding:0;margin-left:1px; border: 20px rgba(0,0,0,0.25) solid;}
 /*.my-container .form_col textarea{;}*/
 .stacked-labelFullHeight {min-height:300px;}
 
@@ -4414,7 +4414,7 @@ input::-webkit-input-placeholder {line-height:1.5rem;font-size: 1rem;}
 .btn.fakeColorBlack:active{background: #000 !important}
 
 
-.addImages .form_col{margin-top: 1px; margin-bottom:100px;}
+.addImages .form_col{margin-top: 1px;}
 .addImages .form_col_r{margin-top: 1px;}
 .addImages .form_col_r:last-child{ margin-bottom:100px;}
 .addImages .imageList {display:flex;flex-wrap:no-wrap;justify-content: flex-start; align-content:stretch;}
@@ -4674,3 +4674,63 @@ a:focus, a:hover{text-decoration: none;}
 .author-template{display: flex; align-items: center;margin-right: 15px;}
 .author-template span{padding-left: 10px;font-size: 1.2em;}  
 
+.commentaires { background: rgba(0,0,0,0.25);margin:1px;margin-bottom: 0px;padding: 30px;padding-bottom: 40px;position: relative;}
+.commentaires:last-child {margin-bottom: 1px}
+/*.commentaires .comDate {display:inline-flex;margin-right: 10px;height: 100px;width: 50px;flex-direction:column; justify-content:center;align-items:center;}*/
+.commentaires .comDate {display:inline-block;float:right;}
+.commentaires .comAuthor {display:inline-block;width:100%;}
+.commentaires .comAuthor span{display:inline-block;font-weight: bold;font-size: 1.2em;margin-right: 5px;}
+.commentaires .comContent {margin-top: 15px;display: inline-block;width: calc(100% - 130px);}
+.commentaires .btn-group.block { display:flex;flex-direction:column;width : 100px;}
+.commentaires .btn-group.block .btn{ padding-top: 0; padding-bottom: 0;width: 100%;}
+.commentaires .btn-group.block .bigger{ font-size:1.2rem;}
+.commentaires .btn-group>.btn:first-child {margin-left: 1px;}
+.commentaires .btnBlockComment {float:right;margin-top: 10px;}
+.form_col .commentaires .btnSmallBar {position: absolute;right: 30px;bottom: 10px;display:flex;margin-top: 10px;align-items:center;justify-content:flex-end;}
+.form_col .commentaires .removeremove2 {display:inline-block;position: relative;margin-right: 10px;}
+.form_col .commentaires .removeremove2 .btn{ width: auto; height:auto;background:rgba(255,0,0,0.25);border:none; padding: 4px 6px 2px 6px;}
+.form_col .commentaires .removeremove2 .btn:hover{background:rgba(255,0,0,0.35);}
+.commentaires .replyBtn {display:inline-block;}
+.reponses{position: relative;width: calc(100% - 130px);padding-left:30px;border-left:1px solid rgba(255,255,255,0.05);padding-bottom:50px;}
+.formResponse{margin-top: 10px;position: relative;width: calc(100% - 130px);padding-left:5px;border-left:1px solid rgba(255,255,255,0.05);}
+.formResponse input.stacked-input{margin-top: 0px;margin-bottom: 0px;}
+.formResponse .submit{display:flex;justify-content:center;align-items:center;width: 66px;background:rgba(0,0,255,0.25);position: absolute;top:0px;right:0px;height: 100%;border:none;}
+.formResponse .submit:hover{background:rgba(0,0,255,0.15)}
+.form_col .reponses .btnSmallBar{right:0px;}
+.form_title i{margin-right: 10px;}
+.tinymcetextarea{width:calc(100% - 67px);height: 63px;border:0px;background:rgba(0,0,0,0.25);opacity:0px;}
+
+.my-container .imageprofile .form_title{display:block;}
+.pageAddProject .mce-tinymce.mce-panel {margin-top: 130px;}
+.imageList{min-height : 50px;}
+.addImages .imgrelativecontainer .landscapeportrait .btn{width: auto;}
+/*.dashboardconfigWidget #resheight{height: calc(100% - 56px);}*/
+
+
+.fast .genie-lamp-container {
+  transition: all .2s ease-in-out;
+}
+
+
+.genie-lamp-container.visible {
+  opacity: 1;
+  z-index: 1050;
+}
+
+/* ng-genie default styles */
+.genie-lamp-container {
+  opacity: 0;
+  position: fixed;
+  width:50%;
+  top: 30%;
+  left: 25%;
+  z-index: -1;
+  -mos-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.form-control.lamp-input{ height: auto;font-size:2em;}
+.lamp-wish{ height: auto;font-size:24px; height:40px;line-height: 40px;}
+.lamp-wish.focused{background:rgba(255,255,255,0.5);color:black;}
+.lamp-wishes-container{max-height:310px; background:rgba(0,0,0,0.5);overflow-y:auto;}
+.wish-i-icon{width: 30px;margin-left: 20px;margin-right: 20px;}

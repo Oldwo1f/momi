@@ -22,11 +22,15 @@
 .lastarticleWidget .widget__content.filled .listConfigItem{display:flex;margin-top: 10px;}
 .lastarticleWidget .widget__content.filled .listConfigItem .switch{margin:0px;margin-right: 15px;}
 .lastarticleWidget .widget__content.filled .listConfigItem h4{font-size:1.5em; display:inline-block;margin-right: 10px;height : 30px;line-height: 30px;}
-
+.lastarticleWidget .videoIcon{border:1px solid rgba(255,255,255,0.25);font-size:13em;display:flex;align-items:center;justify-content:center;width: 100%;height: 100%;}
+.lastarticleWidget .videoIcon .socicon-youtube{display:flex;align-items:center;justify-content:center;width: 100%;height: 100%;}
+.lastarticleWidget md-card md-card-title md-card-title-text {display:block;}
 .lastarticleWidget md-card-actions{display:flex; width:100%;overflow:hidden;margin: 0px;margin-top: 10px;margin-bottom:0;}
 .lastarticleWidget md-card-actions .tabletag{line-height: 16px; margin-right:5px;color:white;background:transparent;border-radius:16px;padding:3px 13px;height: auto;border:1px solid #1c7dfa;}
 .lastarticleWidget md-card-actions .tablecat{line-height: 16px; margin-right:5px;color:white;background:transparent;border-radius:3px;padding:3px 13px;height: auto;border:1px solid #1c7dfa;white-space: nowrap;}
-.lastarticleWidget md-card md-card-title md-card-title-text:not(:only-child) .md-subhead{height: 100%;overflow:hidden;text-overflow:ellipsis;text-wrap:nowrap;color:rgba(255,255,255,0.5);}
+.lastarticleWidget md-card md-card-title md-card-title-text:not(:only-child) .md-subhead{height: auto;overflow:hidden;text-overflow:ellipsis;text-wrap:nowrap;color:rgba(255,255,255,0.5);}
+
+#noLastAticleElment{text-align: center;display:flex;justify-content:center;align-items:center;}
 
 .nbViewsTitle i{font-size: 18px;height: auto;width: auto; vertical-align:baseline; margin-left: 0px;margin-right: 10px;}
 .nbViewsTitle:before{content:' ';margin-right: 7px}

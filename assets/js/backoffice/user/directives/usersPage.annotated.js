@@ -334,6 +334,8 @@ angular.module('momi-user')
 						}
 			    })
 				
+			
+
 
 			$scope.ModalAdd=function(Cat){
 				
@@ -398,6 +400,11 @@ angular.module('momi-user')
 
 
 
+			}
+			if($stateParams.pseudostate == 'add')
+			{
+				console.log('NOW IT OK');
+				$scope.ModalAdd()
 			}
 		}],
 		link:function(scope,element,attrs){

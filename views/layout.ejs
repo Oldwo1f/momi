@@ -12,6 +12,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="styles/front/bootstrap.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="bower_components/jqcloud2/dist/jqcloud.min.css">
     <!-- Primary CSS styles -->
     <link href="styles/front/style.css" rel="stylesheet" />
     <!-- Masterslider CSS styles -->
@@ -31,7 +33,6 @@
     <link href="styles/front/owl.transitions.css" rel="stylesheet" />
     <!-- Lightbox CSS Styles -->
     <link href="styles/front/lightbox.css" rel="stylesheet" />
-
         <!-- ****** favicons générés par faviconit.com ****** -->
     <link rel="shortcut icon" href="/favicon/favicon.ico">
     <link rel="icon" sizes="16x16 32x32 64x64" href="/favicon/favicon.ico">
@@ -123,6 +124,7 @@
     <script language="javascript" src="js/front/bootstrap.min.js"></script>
     <!-- Master slider core JavaScript -->
     <script language="javascript" src="js/front/masterslider.min.js"></script>
+    // <script src="bower_components/jqcloud2/dist/jqcloud.min.js"></script>
     <!-- Master slider staff core JavaScript -->
     <script language="javascript" src="js/front/masterslider.staff.carousel.dev.js"></script>
     <!-- WOW core JavaScript -->
@@ -151,6 +153,8 @@
     <script language="javascript" src="js/front/video.js"></script>
     <!-- OWL Carousel core JavaScript -->
     <script language="javascript" src="js/front/owl.carousel.min.js"></script>
+
+    <script src="js/front/lodash.js"></script>
     <!-- twitterfeed core JavaScript -->
     <!-- // <script language="javascript" src="js/front/jquery.twitterfeed.js"></script> -->
     <!-- Lightbox core JavaScript -->
@@ -159,68 +163,11 @@
     <script language="javascript" src="js/front/waitForImages.js"></script>
     <!-- Everything else -->
     <script language="javascript" src="js/front/custom.js"></script>
+    <script language="javascript" src="js/front/<%- scripturl %>"></script>
 
     <script type="text/javascript" language="javascript">
     <!--
-    jQuery(document).ready(function($) {
-        
-        /************************
-        ****** MasterSlider *****
-        *************************/
-        // Calibrate slider's height
-        var sliderHeight = 0; // Smallest hieght allowed (default height)
-        var sliderwidth = 1024; // Smallest hieght allowed (default height)
-        if ( $('#masterslider').data('height') == 'fullscreen' ) {
-            var winHeight = $(window).height();
-            console.log(winHeight);
-            sliderHeight = winHeight > sliderHeight ? winHeight : sliderHeight;
-        }
-        var winWidth = $(window).width();
-            console.log(winWidth);
-        sliderwidth = winWidth < sliderwidth ? winWidth : sliderwidth;
-        console.log(sliderwidth);
-        // Initialize the main slider
-        var slider = new MasterSlider();
-        slider.setup('masterslider', {
-            space:0,
-            fullwidth:true,
-            autoplay:false,
-            // centerControls:false,
-            // overVideo:false,
-            overPause:false,
-            width:sliderwidth,
-            height:sliderHeight,
-            view:"fade",
-            // view:"mask",
-            // height:300,
-            // autoHeight:true,
-            heightLimit:true
-        });
-        // adds Arrows navigation control to the slider.
-        slider.control('bullets',{autohide:false, dir:"h"});
-        slider.control('thumblist',{autohide:true});
-        
-        var teamslider = new MasterSlider();
-        teamslider.setup('teamslider' , {
-            loop:true,
-            width:300,
-            height:290,
-            speed:20,
-            view:'stffade',
-            grabCursor:false,
-            preload:0,
-            space:29
-        });
-        teamslider.control('slideinfo',{insertTo:'#staff-info'});
-        
-        $(".team .ms-nav-next").click(function() {
-            teamslider.api.next();  
-        });
-        
-        $(".team .ms-nav-prev").click(function() {
-            teamslider.api.previous();  
-        });
-    });
+    
     
     
     // -->

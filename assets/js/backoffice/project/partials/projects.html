@@ -1,0 +1,127 @@
+<div class="my-container">
+
+
+<div infinite-scroll="myPagingFunction()">
+	<project class="widget">
+		<header class="pageHeader">
+
+			<a  class="rightBtn" ng-click="returnDashboardState()">
+				<span ><i class="fa fa-dashboard"></i></span>
+			</a>
+			<a  class="rightBtn" ng-click="returnPreviousState()">
+				<span  ><i class="fa fa-long-arrow-left"></i></span>
+			</a>
+			<div class="pageTitle">
+				<i class="pe-7f-note"></i><h3>Mes projets</h3>
+			</div>
+			<div class="searchBar">
+				<input class="" type="text" ng-blur="searchProject()" ng-keypress="blurOnEnter($event)" ng-model="searchSlug" placeholder="Recherche dans les projets">
+				<span class="iconsearch"><i class="fa fa-search"></i></span>
+			</div>
+			<a class="leftBtn" ui-sref="categories">
+				<span  ><i class="pe-7s-way"></i></span>
+			</a>
+			<a class="leftBtn" ui-sref="projects.add">
+				<span  ><i class="pe-7s-plus"></i></span>
+			</a>
+		</header>
+		
+		<div class="widget__content table-responsive">
+			
+			<table class="table media-table">
+		  	<thead>
+		  		<tr>
+		  			<th width="80" ng-click="changeSort('date');" >Date <i ng-if="!searchSlug" ng-show="sort=='date DESC'" class="pe-7s-angle-down"></i>  <i ng-if="!searchSlug" ng-show="sort=='date ASC'" class="pe-7s-angle-up"></th>
+		  			<th width="500" ng-click="changeSort('status');">Titre <i ng-if="!searchSlug" ng-show="sort=='status DESC'" class="pe-7s-angle-down pull-right"></i> <i ng-if="!searchSlug" ng-show="sort=='status ASC'" class="pe-7s-angle-up pull-right" />
+		  			<span class="pull-right">Status</span>
+		  			</th>
+		  			<th>Post Info</th>
+		  			<th style="width: 75px;">Auteurs</th>
+		  				
+		  			<th style="width: 75px;" ng-click="changeSort('nbView');"> <i class="fa fa-eye"></i> <i ng-if="!searchSlug" ng-show="sort=='nbView DESC'" class="pe-7s-angle-down pull-right"></i> <i ng-if="!searchSlug" ng-show="sort=='nbView ASC'" class="pe-7s-angle-up pull-right" /></th>
+		  		</tr>
+		  	</thead>
+		  	<tbody>
+
+		  	
+		  		<tr class="tableRow" ng-repeat="project in projectsList">
+
+		  			<td>
+		  				<p class="post__date">
+		  					
+		  					<span class="dddd">{{project.date | amDateFormat:'dddd'}}</span>
+		  					<span class="DD">{{project.date | amDateFormat:'DD'}}</span>
+		  					<span class="MM ">{{project.date | amDateFormat:'MMM'}}</span>
+		  				</p>
+		  			</td>
+		  			<td>
+		  				<div class="media">
+
+								<figure class="pull-left post__img" ng-if="project.images.length > 0 && (!project.videoUrl || !project.videoHost)">
+									<img class="media-object" ng-src="image/adminThumbs/{{project.images[0].filename}}">
+								</figure>
+								<figure  class="pull-left post__img post_video" ng-if="project.videoUrl && project.videoHost">
+									<div ng-if="project.videoHost =='youtube'"> <i class="socicon-youtube" aria-hidden="true"></i></div>
+									<div ng-if="project.videoHost =='dailymotion'"> <i class="socicon-dailymotion" aria-hidden="true"></i></div> 
+									<div ng-if="project.videoHost =='vimeo'"> <i class="socicon-vimeo" aria-hidden="true"></i></div>
+								</figure>
+								<div class="media-body post_desc">
+									<h3>{{project.title}}</h3>
+									<!-- <p>A classic approach...</p> -->
+									<div class="btnstable">
+										
+										<button class="btn blue btn-sm"  ui-sref="projects.edit({id: project.id})" >Edit</button>
+										<div class="btn-group block">
+										  <a ng-click="project.status='actif';update(project.id, 'status','actif')" type="button" class="fakeColorGreen btn active"  ng-class="{'green':project.status=='actif','orange':project.status=='draft','red':project.status=='inactif'}" style="border-right:0px">Actif</a>
+										  <a ng-click="project.status='draft';update(project.id, 'status','draft')" type="button" class="fakeColorOrange btn active" ng-class="{'green':project.status=='actif','orange':project.status=='draft','red':project.status=='inactif'}" >Brouillon</a>
+										  <a ng-click="project.status='inactif';update(project.id, 'status','inactif')" type="button" class="fakeColorRed btn active" ng-class="{'green':project.status=='actif','orange':project.status=='draft','red':project.status=='inactif'}"  style="border-left:0px">Inactif</a>
+										</div>
+										<div class="lockicon" ng-if="project.privateContent"><i class="fa fa-lock"></i></div>
+									</div>
+								</div>
+							</div>
+		  			</td>
+		  			<td class="not-padding">
+		  				<p class="post__info"  ng-bind-html="project.content" parent-id="project.id" content-html="project.content" html-ellipsis>
+		  				</p>
+		  				<div class="infosinfos">
+		  					<div class="tablecat" ng-repeat="cat in project.categories" style="color:{{cat.textColor}};background-color : {{cat.color}};border-color : {{cat.color}}">
+		  						<span>{{cat.name}}</span>
+		  					</div>
+		  					<div class="tabletag" ng-repeat="tag in project.tags">
+		  						<span>{{tag.text}}</span>
+		  					</div>
+		  				</div>
+		  			</td>
+		  			<td>
+		  				<!-- <a href="#" onclick="return false;" class="post__del"><i class="pe-7f-close"></i></a> -->
+		  				<!-- <i class="fa fa-eyes"></i> -->
+		  				<!-- <span class="numberTable">{{project.authors[0].firstname}} {{project.authors[0].name}}</span> -->
+		  				<div ng-repeat="author in project.authors | limitTo:2" class="author">
+		  					<img  ng-if="author.images[0]" height="50" width="50" ng-src="image/profile/{{author.images[0].filename}}" alt="">
+		  					<ng-letter-avatar  ng-if="!author.images[0]" charCount="1" data="{{author.firstname}} {{author.name}}" fontsize="25" height="50" width="50" shape="round"></ng-letter-avatar>
+		  					
+		  				</div>
+		  			</td> 
+		  			<td>
+		  				<!-- <a href="#" onclick="return false;" class="post__del"><i class="pe-7f-close"></i></a> -->
+		  				<span class="numberTable">{{project.nbView}}</span>
+		  			</td>
+		  		</tr>
+
+
+		  	</tbody>
+			</table>
+			<div class="endInfinite">
+				
+				<span us-spinner="spinneropts"  spinner-key="projectSpinner"></span>
+				<span ng-if="fin">Fin</span>
+			</div>
+			
+
+			
+		</div> <!-- /widget__content -->
+
+	</project>
+</div>
+</div>

@@ -8,7 +8,8 @@ angular.module('momi-user', ['ui.router'])
         params:{
                 sort:'createdAt DESC',
                 page:1,
-                nbPerPage : 10
+                nbPerPage : 10,
+                pseudostate: null
         },
         views:{
             'page1': {

@@ -7,7 +7,7 @@
 		<a class="btn-circle btn-sm" title="Save Dashboard"><i class="pe-7f-paperclip"></i></a>
 	</div> -->
 	<article class="widget">
-
+			
 		<header class="widget__header">
 				<div class="widget__icon"><i  class="pe-7s-note"></i></div>
 				<div class="widget__title">
@@ -28,13 +28,19 @@
 				</div>
 				<div  class="keepThisEvent btn-header" ng-click="saveDash()" title="Save Dashboard"><i class="pe-7s-diskette"></i></div>
 				<div  class="keepThisEvent btn-header" ng-click="restoreDefault()" title="Restaurer le dashboard par default"><i class="pe-7s-refresh"></i></div> -->
-				<div class=" btn-header" ui-sref="blog.edit({id: lastArticle.id})" ><i class="pe-7s-right-arrow"></i></div>
+				<div class=" btn-header" ui-sref="blog" ><md-tooltip md-direction="bottom"> Tout les articles</md-tooltip><i class="pe-7s-albums"></i></div>
+				<div class=" btn-header" ui-sref="blog.add()" ><md-tooltip md-direction="bottom"> Ajouter un article</md-tooltip><i class="pe-7s-plus"></i></div>
+				<div class=" btn-header" ui-sref="blog.edit({id: lastArticle.id})" ><md-tooltip md-direction="bottom"> Modifier cet article</md-tooltip><i class="pe-7s-right-arrow"></i></div>
 		</header>
  
 		<div class="widget__content filled">
-			<md-card class="RESIZEHEIGHT"> 
-		        <md-card-title>
-		          <md-card-title-text>
+			<div id="noLastAticleElment" ng-show="!lastArticle">
+				<span>Aucun Article</span>
+			</div>
+			<md-card class="RESIZEHEIGHT" >
+
+		        <md-card-title >
+		          <md-card-title-text ng-nicescroll nice-option="optionScroll">
 		            <span class="md-headline">{{lastArticle.title}}</span>
 		            <span class="md-subhead"  ng-bind-html="lastArticle.content" parent-id="lastArticle.id" content-html="lastArticle.content" html-ellipsis></span>
 
@@ -45,18 +51,18 @@
 							<img class="media-object" ng-src="image/adminThumbs/{{lastArticle.images[0].filename}}">
 						</figure>
 						<figure  class=" post_video" ng-if="lastArticle.videoUrl && lastArticle.videoHost">
-							<div ng-if="lastArticle.videoHost =='youtube'"> <i class="socicon-youtube" aria-hidden="true"></i></div>
-							<div ng-if="lastArticle.videoHost =='dailymotion'"> <i class="socicon-dailymotion" aria-hidden="true"></i></div> 
-							<div ng-if="lastArticle.videoHost =='vimeo'"> <i class="socicon-vimeo" aria-hidden="true"></i></div>
+							<div class="videoIcon" ng-if="lastArticle.videoHost =='youtube'"> <i class="socicon-youtube" aria-hidden="true"></i></div>
+							<div class="videoIcon" ng-if="lastArticle.videoHost =='dailymotion'"> <i class="socicon-dailymotion" aria-hidden="true"></i></div> 
+							<div class="videoIcon" ng-if="lastArticle.videoHost =='vimeo'"> <i class="socicon-vimeo" aria-hidden="true"></i></div>
 						</figure>
 		            </div>
 		          </md-card-title-media>
 		        </md-card-title>
 		        <md-card-actions layout="row" layout-align="end center">
 		          	
-  					<div class="tabletag" ng-repeat="tag in lastArticle.tags">
+  					<!-- <div class="tabletag" ng-repeat="tag in lastArticle.tags">
   						<span>{{tag.text}}</span>
-  					</div>
+  					</div> -->
   					<div class="tablecat" ng-repeat="cat in lastArticle.categories" style="color:{{cat.textColor}};background-color : {{cat.color}};border-color : {{cat.color}}">
   						<span>{{cat.name}}</span>
   					</div>

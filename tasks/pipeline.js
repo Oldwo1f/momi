@@ -79,12 +79,15 @@ var jsFilesToInject = [
   'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
   'bower_components/ngletteravatar/dist/ngletteravatar.min.js',
   'bower_components/angular-notification-icons/dist/angular-notification-icons.min.js',
+  'bower_components/angular-nicescroll/angular-nicescroll.js',
+  'bower_components/genie/dist/genie.min.js',
+  'bower_components/ux-genie/uxGenie.min.js',
   // 'bower_components/angularjs-color-picker/dist/angularjs-color-picker.min.js',
 
   // 'bower_components/textAngular/dist/textAngular-rangy.min.js',
   // 'bower_components/textAngular/dist/textAngular-sanitize.min.js',
   // 'bower_components/textAngular/dist/textAngular.min.js',
-  'bower_components/ngSlimscroll/src/js/min/ngSlimscroll.js',
+  // 'bower_components/ngSlimscroll/src/js/min/ngSlimscroll.js',
 
 
   // All of the rest of your client-side js files

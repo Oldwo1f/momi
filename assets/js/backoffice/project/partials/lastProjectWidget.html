@@ -1,0 +1,106 @@
+<div class="maincontent">
+	<!-- <div class="toggleEditmode" style="z-index:1000;" ng-click="toogleEditMode()" >
+		<input type="checkbox" ng-model="editionMode" id="switch-editmode" class="sw" checked />
+		<label class="switch2 green" for="switch-editmode" title="Entrer/sortir du mode edition"></label> 
+	</div>
+	<div class="savedash"  ng-click="saveDash()">
+		<a class="btn-circle btn-sm" title="Save Dashboard"><i class="pe-7f-paperclip"></i></a>
+	</div> -->
+	<project class="widget">
+			
+		<header class="widget__header">
+				<div class="widget__icon"><i  class="pe-7s-display2"></i></div>
+				<div class="widget__title">
+					<span>Dernier project </span> 
+					
+					<span class="dateInTitle">
+						<span class="nbViewsTitle"><i class="fa fa-eye"></i>{{lastProject.nbView}}</span>
+						<span>-</span> 
+						<span am-time-ago="lastProject.date"></span>
+						<!-- <span class="dddd">{{lastProject.date | amDateFormat:'dddd'}}</span>
+						<span class="DD">{{lastProject.date | amDateFormat:'DD'}}</span>
+						<span class="MM ">{{lastProject.date | amDateFormat:'MMM'}}</span> -->
+					</span>
+				</div>
+				<!-- <div class="switcherConfigMode keepThisEvent btn-header" ng-click="toogleEditMode()">
+					<input type="checkbox" ng-model="editionMode" id="switch-editmode" class="sw" checked />
+					<label class="switch2 green" for="switch-editmode" title="Entrer/sortir du mode edition"></label> 
+				</div>
+				<div  class="keepThisEvent btn-header" ng-click="saveDash()" title="Save Dashboard"><i class="pe-7s-diskette"></i></div>
+				<div  class="keepThisEvent btn-header" ng-click="restoreDefault()" title="Restaurer le dashboard par default"><i class="pe-7s-refresh"></i></div> -->
+				<div class=" btn-header" ui-sref="projects" ><md-tooltip md-direction="bottom"> Tout les projets</md-tooltip><i class="pe-7s-albums"></i></div>
+				<div class=" btn-header" ui-sref="projects.add()" ><md-tooltip md-direction="bottom"> Ajouter un projet</md-tooltip><i class="pe-7s-plus"></i></div>
+				<div class=" btn-header" ui-sref="projects.edit({id: lastProject.id})" ><md-tooltip md-direction="bottom"> Modifier ce projet</md-tooltip><i class="pe-7s-right-arrow"></i></div>
+		</header>
+ 
+		<div class="widget__content filled">
+			<div id="noLastAticleElment" ng-show="!lastProject">
+				<span>Aucun Project</span>
+			</div>
+			<md-card class="RESIZEHEIGHT" >
+
+		        <md-card-title >
+		          <md-card-title-text ng-nicescroll nice-option="optionScroll">
+		            <span class="md-headline">{{lastProject.title}}</span>
+		            <span class="md-subhead"  ng-bind-html="lastProject.content" parent-id="lastProject.id" content-html="lastProject.content" html-ellipsis></span>
+
+		          </md-card-title-text>
+		          <md-card-title-media>
+		            <div class="card-media">
+		            	<figure class="" ng-if="lastProject.images.length > 0 && (!lastProject.videoUrl || !lastProject.videoHost)">
+							<img class="media-object" ng-src="image/adminThumbs/{{lastProject.images[0].filename}}">
+						</figure>
+						<figure  class=" post_video" ng-if="lastProject.videoUrl && lastProject.videoHost">
+							<div class="videoIcon" ng-if="lastProject.videoHost =='youtube'"> <i class="socicon-youtube" aria-hidden="true"></i></div>
+							<div class="videoIcon" ng-if="lastProject.videoHost =='dailymotion'"> <i class="socicon-dailymotion" aria-hidden="true"></i></div> 
+							<div class="videoIcon" ng-if="lastProject.videoHost =='vimeo'"> <i class="socicon-vimeo" aria-hidden="true"></i></div>
+						</figure>
+		            </div>
+		          </md-card-title-media>
+		        </md-card-title>
+		        <md-card-actions layout="row" layout-align="end center">
+		          	
+  					<!-- <div class="tabletag" ng-repeat="tag in lastProject.tags">
+  						<span>{{tag.text}}</span>
+  					</div> -->
+  					<div class="tablecat" ng-repeat="cat in lastProject.categories" style="color:{{cat.textColor}};background-color : {{cat.color}};border-color : {{cat.color}}">
+  						<span>{{cat.name}}</span>
+  					</div>
+		        </md-card-actions>
+		    </md-card>
+			<!-- <div>
+				<h4>{{lastProject.title}}</h4>
+				<figure class="pull-right post__img" ng-if="lastProject.images.length > 0 && (!lastProject.videoUrl || !lastProject.videoHost)">
+					<img class="media-object" ng-src="image/adminThumbs/{{lastProject.images[0].filename}}">
+				</figure>
+				<figure  class="pull-right post__img post_video" ng-if="lastProject.videoUrl && lastProject.videoHost">
+					<div ng-if="lastProject.videoHost =='youtube'"> <i class="socicon-youtube" aria-hidden="true"></i></div>
+					<div ng-if="lastProject.videoHost =='dailymotion'"> <i class="socicon-dailymotion" aria-hidden="true"></i></div> 
+					<div ng-if="lastProject.videoHost =='vimeo'"> <i class="socicon-vimeo" aria-hidden="true"></i></div>
+				</figure>
+				<p class="post__info"  ng-bind-html="lastProject.content" parent-id="lastProject.id" content-html="lastProject.content" html-ellipsis>
+
+
+  				<div class="infosinfos">
+  					<div class="tablecat" ng-repeat="cat in lastProject.categories" style="color:{{cat.textColor}};background-color : {{cat.color}};border-color : {{cat.color}}">
+  						<span>{{cat.name}}</span>
+  					</div>
+  					<div class="tabletag" ng-repeat="tag in lastProject.tags">
+  						<span>{{tag.text}}</span>
+  					</div>
+  				</div>
+
+			</div> -->
+			<!-- <div ng-repeat="(key, item) in widgetList" class="listConfigItem" ng-if="!item.required">
+				<div class="keepThisEvent" >
+					<input type="checkbox" ng-model="item.enabled" id="switch-{{key}}" class="sw" checked />
+					<label class="switch green" for="switch-{{key}}" title="Activer/Désactiver ce widget"></label> 
+				</div>
+				<h4 class="">{{item.widgetName}}</h4>
+			</div> -->
+			
+			<!-- <p class="graph-number"><span>6,184</span> Visits</p> -->
+
+		</div>
+	</project>
+</div>

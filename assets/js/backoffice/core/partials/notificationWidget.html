@@ -1,0 +1,56 @@
+<div class="maincontent">
+	<!-- <div class="toggleEditmode" style="z-index:1000;" ng-click="toogleEditMode()" >
+		<input type="checkbox" ng-model="editionMode" id="switch-editmode" class="sw" checked />
+		<label class="switch2 green" for="switch-editmode" title="Entrer/sortir du mode edition"></label> 
+	</div>
+	<div class="savedash"  ng-click="saveDash()">
+		<a class="btn-circle btn-sm" title="Save Dashboard"><i class="pe-7f-paperclip"></i></a>
+	</div> -->
+	<article class="widget ">
+
+		<header class="widget__header">
+				<div class="widget__icon"><i class="pe-7f-bell"></i></div>
+				<div class="widget__title">
+					<span>Notifications</span>
+					
+				</div>
+				<div class="widget__icon__right"><notification-icon count="nbNotifs"><span class="fakeSpan"></span></notification-icon></div>
+				<!-- <div class="switcherConfigMode keepThisEvent btn-header" ng-click="toogleEditMode()">
+					<input type="checkbox" ng-model="editionMode" id="switch-editmode" class="sw" checked />
+					<label class="switch2 green" for="switch-editmode" title="Entrer/sortir du mode edition"></label> 
+				</div>
+				<div  class="keepThisEvent btn-header" ng-click="saveDash()" title="Save Dashboard"><i class="pe-7s-diskette"></i></div>
+				<div  class="keepThisEvent btn-header" ng-click="restoreDefault()" title="Restaurer le dashboard par default"><i class="pe-7s-refresh"></i></div> -->
+		</header>
+ 
+		<div class="widget__content filled">
+			<div id="noNotifElment" ng-show="!notifs.length">
+				<span>Aucune Notification</span>
+			</div>
+			<div class="RESIZEHEIGHT" ng-nicescroll nice-option="optionScroll"> 
+		        <ul class="AllNofit">
+		        	<li class="notif" ng-repeat="notif in notifs" ng-class="{'newnotif':notif.status=='new','oknotif':notif.status=='actif'}" ng-click="goTo(notif.type, notif.itemid2)">
+		        		<div ng-if="notif.type=='commentArticle'">
+		        			
+			        		<div class="title">Commentaire Ajouté
+			        			<div class="date"><span am-time-ago="notif.createdAt"></span></div>
+			        		</div>
+			        		<div class="info1" ng-bind-html="notif.info1"></div>
+			        		<div class="info2" ng-bind-html="notif.info2"></div>
+		        		</div>
+		        		<div ng-if="notif.type=='commentProject'" >
+		        			
+			        		<div class="title">Commentaire Ajouté
+			        			<div class="date"><span am-time-ago="notif.createdAt"></span></div>
+			        		</div>
+			        		<div class="info1" ng-bind-html="notif.info1"></div>
+			        		<div class="info2" ng-bind-html="notif.info2"></div>
+		        		</div>
+		        	</li>
+		        </ul>
+		    </div>
+			
+
+		</div>
+	</article>
+</div>

@@ -39,6 +39,21 @@ module.exports = {
             console.log(data);
          });
   },
+  peter: function (req, res) {
+    console.log('toto');
+
+    for(i=0 ; i<200000; i++){
+          mail.sendEmail({
+               from: '"Fred Foo 👥" <foo@blurdybloop.com>', // sender address 
+               to: 'pierre.momcilovic@supagro.fr', // list of receivers 
+               subject: 'La connerie à ses limite #testmoipourvoir', // Subject line 
+               text: 'ta de la chance je met pas de photos', // plaintext body 
+          }).then(function(data){
+              console.log('THEN IN TOTO');
+              console.log(data);
+          });
+    }
+  },
   saveDash: function (req, res) {
 
     console.log('SAVE DASH');

@@ -27,29 +27,63 @@ module.exports = {
 	    
 	},	
 	resizeImage:function  (req,res,next) {
-
-
-
+		console.log('resizeImage resizeImage resizeImage resizeImage resizeImage resizeImage resizeImage');
+		// var info;
+		console.log(req.body);
 		easyimg.info('uploads/images/originalSize/'+req.body.filename).then(function(file) {
+				info = file;
+				console.log(info);
+				var quality = 100;
 
+				if(info.size > 300000){ quality = 90;}
+				if(info.size > 500000){ quality = 80;}
+				if(info.size > 700000){ quality = 70;}
+				if(info.size > 1000000){ quality = 50;}
+				if(info.size > 2000000){ quality = 20;}
+
+
+console.log('quality =' +quality);
 		    	easyimg.rescrop({
 		    		 gravity:'NorthWest',
 				     src:'uploads/images/originalSize/'+req.body.filename, dst:'uploads/images/resized/'+req.body.filename,
 				     width:file.width, height:file.height,
 				     cropwidth:req.body.scaledWidth, cropheight:req.body.scaledHeight,
-				     x:req.body.scaledLeft, y:req.body.scaledTop
+				     x:req.body.scaledLeft, y:req.body.scaledTop, quality:quality
 				}).then(function(image) {
-					if(req.body.imageId)
-					{
-						console.log('ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
-						console.log(req.body.imageId);
-						Image.publishUpdate(req.body.imageId,{'filename' : req.body.filename})
-					}
-					res.ok('resized')
+
+					console.log(req.body.normalWidth + '---' + req.body.normalHeight);
+					easyimg.rescrop({
+			    		 gravity:'NorthWest',
+					     src:'uploads/images/resized/'+req.body.filename, dst:'uploads/images/resized2/'+req.body.filename,
+					     width:req.body.normalWidth, height:req.body.normalHeight,
+					     // cropwidth:req.body.normalWidth, cropheight:req.body.normalHeight,
+					     // x:req.body.scaledLeft, y:req.body.scaledTop, quality:quality
+					}).then(function(image) {
+						
+
+						if(req.body.imgid)
+						{
+							console.log('ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ');
+							console.log(image);
+							var paysage = true;
+							if(image.width < image.height)
+								paysage = false;
+
+							Image.update(req.body.imgid,{width:image.width,height:image.height,size:image.size,paysage:paysage}).then(function(){
+								
+								Image.publishUpdate(req.body.imgid,{width:image.width,height:image.height,size:image.size,filename:req.body.filename})
+								res.ok('resized')
+							})
+
+						}
+						
+					},function (err) {
+					    console.log(err);
+					});
+					
 				},function (err) {
 				    console.log(err);
-				}
-				);
+				});
 
 
 

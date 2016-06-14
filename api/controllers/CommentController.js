@@ -1,7 +1,7 @@
 /**
- * CategoryArticleController
+ * CommentController
  *
- * @description :: Server-side logic for managing categoryarticles
+ * @description :: Server-side logic for managing comments
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 

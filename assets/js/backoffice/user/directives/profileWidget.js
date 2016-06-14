@@ -165,11 +165,21 @@ angular.module('core')
             $scope.user = data;
             
         })
+
+
+
+        console.log('gregerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrregqrgeuhrgqehluirgqhluirgqehuigrurgqehuirgqhuirgqergehurgqhluirgqehluigrhurgqrgqhuigrhurgqehu');
+        console.log($rootScope.nbNotifs);
+        $rootScope.$watch('nbNotifs',function(d){
+            console.log('hehehe');
+            console.log(d);
+             $scope.countNotif = d;
+        })
             // $scope.editArticleState=function(id){
                 
             //     $state.go('dashboard/blog/edit',{id:id})
             // }
-            $scope.countNotif = 155;
+            $scope.countNotif = 0;
             $scope.countMessage = 4;
       },
       link:function(scope,element,attrs){

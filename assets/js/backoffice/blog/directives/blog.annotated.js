@@ -72,19 +72,16 @@ angular.module('momi-blog')
 
 
 			$scope.fetchArticles=function(){
-				console.log('fetchArticles');
 				articleService.fetch($scope.sort,$scope.page,$scope.nbPerPage).then(function(data){
 					$scope.articlesList = data;
 				})
 			}
 			$scope.pagin=1;
 			$scope.myPagingFunction=function(){
-				if(!$scope.searchSlug){
+				if(!$scope.searchSlug && !$scope.fin){
 					$scope.startSpin();
 					$scope.pagin++;
-					console.log('myPagingFunction');
 					articleService.fetch($scope.sort,$scope.pagin,10).then(function(data){
-						console.log(data);
 						if(data.length==0)
 						{
 							$scope.fin = true
@@ -97,23 +94,16 @@ angular.module('momi-blog')
 			}
 				$scope.blurSearch= 0;
 			$scope.searchArticle=function(){
-				console.log('SEARCHARTICLE');
 				if($scope.searchSlug){
 					if($scope.blurSearch== 0){
-						console.log('$scope.searchSlug');
-						console.log($scope.searchSlug);
 						articleService.search($scope.searchSlug,$scope.sort).then(function(data){
-							console.log(data);
 							$scope.articlesList = data;
 						}).catch(function(e){
 							console.log('err');
 							console.log(e);
 						})
 					}else if($scope.blurSearch== 1){
-						console.log('$scope.searchSlug');
-						console.log($scope.searchSlug);
 						articleService.search($scope.searchSlug,$scope.sort).then(function(data){
-							console.log(data);
 							$scope.articlesList = data;
 							$scope.blurSearch = 2;
 						}).catch(function(e){

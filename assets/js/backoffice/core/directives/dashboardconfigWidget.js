@@ -25,7 +25,11 @@ angular.module('core')
     	}else{
 
     	}
-
+      setTimeout(function(){
+        $('#resheight').height(item.getElementSizeY()-64)
+        $('#resheight').getNiceScroll().resize();
+      },1)
+      // $('.notificationWidget #resheight').getNiceScroll().resize();
 
     	item.$element.removeClass('style0 style1 style2 style3 style4 style5 style6 style7 style8 style9 style10 style11 style12 style13 style14 style15 smallFont extralargeFont mediumFont  largeFont')
     	.addClass(classToSet+ ' ' + classFont)
@@ -41,8 +45,28 @@ angular.module('core')
                   $scope.currentTheme = theme;
                   // $rootScope.startSpin()
                  $rootScope.$broadcast('changeTheme',$scope.currentTheme);
-                 
+            }
 
+            $scope.$on('geniechangeTheme',function(e,data){ch
+                console.log('geniechangeTheme');
+               $scope.changeTheme(data)
+                   // console.log('EnterEditModeEND');e
+                   // $scope.toogleEditMode()
+            });
+            $scope.$on('EnterEditMode',function(data){
+                  $scope.toogleEditMode()
+            });
+            $scope.$on('saveDashBoard',function(data){
+                   // console.log('EnterEditModeEND');e
+                   $scope.saveDash()
+            });
+             // }
+            $scope.optionScroll = {
+              cursorcolor:'#FFFFFF',
+              cursoropacitymin: 0, // change opacity when cursor is inactive (scrollabar "hidden" state), range from 1 to 0
+              cursoropacitymax: 0.3,
+              cursorborder:'none',
+              railoffset: {left:-5}
             }
       },
       link:function(scope,element,attrs){
@@ -76,6 +100,7 @@ angular.module('core')
           		widgetService.changeDash(scope.currentTheme);
         		
         	}
+          scope.editionMode = false;
         }
 
       	scope.toogleEditMode = function(){
@@ -99,15 +124,18 @@ angular.module('core')
           	
 
         }
-
+        var originalHeight;
       	scope.expandWidget = function(){
 
           scope.expanded = !scope.expanded;
           var $parent = element.parent();
-          var $widget__header = $('.widget__header');
+          var $widget__header = $('.dashboardconfigWidget .widget__header');
+          console.log(originalHeight);
           if(scope.expanded)
           {
-          	$widget__header.css({'height': $widget__header.height()})
+            originalHeight = $widget__header.height()
+
+          	$widget__header.css({'height': '64px'})
           	$parent.addClass('expanded');
           	if($parent.hasClass('largeFont')){
           		$parent.addClass('saveLargeFont');
@@ -118,7 +146,8 @@ angular.module('core')
           	scope.$parent.gridsterItem.sizeY = scope.$parent.gridsterItem.sizeY - 4;
           	//Wait the end of transition to not blink wrong size element
           	setTimeout(function(){
-          		$widget__header.css({'height': '100%'})
+              console.log(originalHeight);
+          		$widget__header.css({'height': originalHeight + 'px'})
           	},300);
           		
           }

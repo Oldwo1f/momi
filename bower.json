@@ -38,7 +38,10 @@
     "satellizer": "~0.14.0",
     "ngletteravatar": "~4.0.2",
     "angular-trustpass": "~0.2.0",
-    "angular-notification-icons": "~0.4.3"
+    "angular-notification-icons": "~0.4.3",
+    "angular-nicescroll": "~0.0.9",
+    "genie": "~0.4.0",
+    "ux-genie": "~0.3.3"
   },
   "resolutions": {
     "font-awesome": "4.5.0",

@@ -188,6 +188,12 @@ angular.module('momi-blog')
 									$scope.formData.authors.splice(index,1)
 								}
 							}
+							// if(data.attribute == 'comments'){
+							// 	var index = _.findIndex($scope.formData.comments, function(o) { return o.id == data.removedId; });
+							// 	if( index !== -1) {
+							// 		$scope.formData.comments.splice(index,1)
+							// 	}
+							// }
 
 						}
 			        }else{
@@ -239,6 +245,90 @@ angular.module('momi-blog')
 			        }
 			       
 			})
+			$sailsSocket.subscribe('comment',function(data){
+			        console.log('ON comment');
+			        console.log(data);
+			        
+			        if(data.verb =='addedTo' && data.attribute=="responses"){
+
+			        	console.log('updated');
+			        	console.log(data.id);
+			        	// console.log($scope.articlesList);
+	        			var index = _.findIndex($scope.formData.comments, function(o) { return o.id == data.id; });
+						if( index !== -1) {
+							articleService.fetchOneComment(data.addedId).then(function(data){
+								console.log(data);
+								$scope.formData.comments[index].responses.push(data)
+								
+							})
+							// console.log(data.data);
+						}
+			        }
+			        if(data.verb =='updated'){
+
+			        	console.log('updated');
+			        	console.log(data.id);
+			        	// console.log($scope.articlesList);
+	        			var index = _.findIndex($scope.formData.comments, function(o) { return o.id == data.id; });
+						if( index !== -1) {
+							console.log(data.data);
+							// $scope.articlesList[i].categories.splice(index,1,data.data)
+							_.merge($scope.formData.comments[index], data.data)
+						}else{
+							var returnedCom ; 
+							_.map($scope.formData.comments,function(com){
+								var index2 = _.findIndex(com.responses, function(o) { return o.id == data.id; });
+								if( index2 !== -1){
+									console.log(data);
+									_.merge(com.responses[index2], data.data)
+									returnedCom = com;
+									return true
+									
+								}else{
+									return false
+								}
+
+							})
+							console.log(returnedCom);
+
+							var index3 = _.findIndex($scope.formData.comments, function(o) { return o.id == returnedCom.id; });
+							$scope.formData.comments[index3] = returnedCom
+						}
+			        }
+			        if(data.verb =='destroyed'){
+
+			        	console.log('destroyed');
+
+			        	console.log(data.id);
+			        	// console.log($scope.articlesList);
+	        			var index = _.findIndex($scope.formData.comments, function(o) { return o.id == data.id; });
+						if( index !== -1) {
+							console.log(data.data);
+							// $scope.articlesList[i].categories.splice(index,1,data.data)
+							$scope.formData.comments.splice(index, 1)
+						}else{
+							var returnedCom ; 
+							_.map($scope.formData.comments,function(com){
+								var index2 = _.findIndex(com.responses, function(o) { return o.id == data.id; });
+								if( index2 !== -1){
+									console.log(data);
+									com.responses.splice(index2, 1)
+									returnedCom = com;
+									return true
+									
+								}else{
+									return false
+								}
+
+							})
+							console.log(returnedCom);
+
+							var index3 = _.findIndex($scope.formData.comments, function(o) { return o.id == returnedCom.id; });
+							$scope.formData.comments[index3] = returnedCom
+						}
+			        }
+			       
+			})
 
 			$scope.closeDatePicker=function(t,tt){
 				$('.open').removeClass('open')
@@ -260,6 +350,96 @@ angular.module('momi-blog')
 					console.log('EROOR');
 				})
 			}
+			$scope.updateComment=function(id,attribute,value){
+				console.log(id);
+				$rootScope.startSpin();
+				var attrToUpdate = {};
+				attrToUpdate[attribute] = value;
+				articleService.updateComment(id,attrToUpdate).then(function(data){
+					console.log('----------------------------------------------------------');
+					console.log(data);
+					// console.log($scope.$parent);
+					// $rootScope.$broadcast('userSelfChange',data);
+
+        			$rootScope.stopSpin();
+				},function(d){
+					console.log('EROOR');
+				})
+			}
+			$scope.AddReponse=function(id,tmpRep){
+
+				console.log(id);
+				$rootScope.startSpin();
+				var attrToUpdate = {};
+				attrToUpdate.content = tmpRep;
+				console.log(tmpRep);
+				attrToUpdate.authorName = userService.me.firstname+ ' ' + userService.me.name;
+				attrToUpdate.email = userService.me.email;
+				attrToUpdate.admin = true;
+				attrToUpdate.status = 'actif';
+				// console.log(userService.me.images[0].filename);
+				if(userService.me.images.length){
+					attrToUpdate.imgpath = userService.me.images[0].filename;
+				}
+				articleService.addReponse(id,attrToUpdate).then(function(data){
+					console.log('----------------------------------------------------------');
+					console.log(data);
+
+					var index = _.findIndex($scope.formData.comments, function(o) { return o.id == data.parent.id; });
+					if( index !== -1) {
+						// var index2 = _.findIndex($scope.formData.comments[index], function(o) { return o.id == data.parent.id; });
+							$scope.formData.comments[index].responses.push(data.child)
+							$scope.formData.comments[index].tmpRep = '';
+
+					}
+					// console.log($scope.$parent);
+					// $rootScope.$broadcast('userSelfChange',data);
+
+        			$rootScope.stopSpin();
+				},function(d){
+					console.log('EROOR');
+				})
+			}
+			$scope.deleteComment=function(id){
+				console.log(id);
+				$rootScope.startSpin();
+				var attrToUpdate = {};
+				articleService.deleteComment(id).then(function(data){
+					console.log('----------------------------------------------------------');
+					console.log(data);
+					var index = _.findIndex($scope.formData.comments, function(o) { return o.id == id; });
+					if( index !== -1) {
+						$scope.formData.comments.splice(index, 1);
+					}else{
+							var returnedCom ; 
+							_.map($scope.formData.comments,function(com){
+								var index2 = _.findIndex(com.responses, function(o) { return o.id == data.id; });
+								if( index2 !== -1){
+									console.log(data);
+									com.responses.splice(index2, 1)
+									returnedCom = com;
+									return true
+									
+								}else{
+									return false
+								}
+
+							})
+							console.log(returnedCom);
+
+							var index3 = _.findIndex($scope.formData.comments, function(o) { return o.id == returnedCom.id; });
+							$scope.formData.comments[index3] = returnedCom
+					}
+					// $rootScope.$broadcast('articleSelfChangeDoc',data);
+					//  else {
+					// 	$scope.formData.tags.push(tag_with_id);
+					// }
+
+        			$rootScope.stopSpin();
+				},function(d){
+					console.log('EROOR');
+				})
+			}	
 			$scope.removeThis=function(id){
 				$rootScope.startSpin();
 				// var attrToUpdate = {};
@@ -631,6 +811,14 @@ angular.module('momi-blog')
 		        $scope.dataToSend.containerWidth = $scope.imgcrop.containerWidth;
 		        $scope.dataToSend.containerHeight = $scope.imgcrop.containerHeight;
 		        $scope.dataToSend.filename= $scope.imgcrop.filename;
+
+		        $scope.dataToSend.normalWidth= 800;
+            	$scope.dataToSend.normalHeight= 450;
+            	if(!$scope.imgcrop.landscape){
+            		$scope.dataToSend.normalWidth= 300;
+            		$scope.dataToSend.normalHeight= 400;
+            	}
+                    	
 				$('#imageCropSource').hide();
 
 		        $scope.imgcrop.imgEditId = 0;
@@ -709,6 +897,12 @@ angular.module('momi-blog')
                     	$rootScope.$broadcast('articleSelfChangeImg',data.data.parent);
                     	// $scope.formData.images.push(data.data.child)
                     	$scope.dataToSend.imgid= data.data.child.id;
+                    	$scope.dataToSend.normalWidth= 800;
+                    	$scope.dataToSend.normalHeight= 450;
+                    	if(!$scope.imgcrop.landscape){
+                    		$scope.dataToSend.normalWidth= 300;
+                    		$scope.dataToSend.normalHeight= 400;
+                    	}
                     	$scope.dataToSend.filename= data.data.child.filename;
                     	$rootScope.startSpin();
       					$sailsSocket.post('/api/image/resize/',$scope.dataToSend).success(function (data,status) {

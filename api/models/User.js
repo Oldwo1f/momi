@@ -11,7 +11,7 @@ module.exports = {
 		role: {type:'string'},
 	    civ: {type:'string'},
 	    name: {type:'string'},
-	    first: {type:'string'},
+	    firstname: {type:'string'},
 	    email: {type:'string',required:true,unique:true,email:true},
 	    phone: {type:'string'},
 	    company: {type:'string'},
@@ -86,6 +86,58 @@ module.exports = {
 	                });
 	            }
 	        }
+	        if(options.parentType == 'project')
+	        {
+	            if(options.verb == 'add'){
+
+	                User.findOne(this.id).then(function(data){
+	                console.log(data);
+	                console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<);");
+	                    data.nbProjects= Number(data.nbProjects)+1;
+	                    data.total= Number(data.total)+1;
+	                    console.log(data);
+	                    return User.update(data.id ,
+	                    {
+	                        nbProjects : data.nbProjects,
+	                        total : data.total
+	                    }).then(function(result){
+	                        console.log(result[0]);
+	                        cb(null,result[0]); 
+	                        User.publishUpdate( data.id , {
+	                                nbProjects : data.nbProjects,
+	                                total : data.total
+	                        } )
+	                    })
+	                   
+	                }).catch(function (err) {
+	                    cb(err,null);
+	                });
+	            }
+	  
+	            if(options.verb == 'remove'){
+
+	              User.findOne(this.id).then(function(data){
+	                    data.nbProjects= Number(data.nbProjects) -1;
+	                    data.total= Number(data.total) -1;
+	                    
+	                        return User.update(data.id ,
+	                        {
+	                            nbProjects : data.nbProjects,
+	                            total : data.total
+	                        }).then(function(result){
+	                            User.publishUpdate( data.id , {
+	                                nbProjects : data.nbProjects,
+	                                total : data.total
+	                            } )
+	                            cb(null,result[0]);
+	                        })
+
+	                   
+	                }).catch(function (err) {
+	                    cb(err,null);
+	                });
+	            }
+	        }
 	    }
 		
 	},
@@ -136,7 +188,7 @@ module.exports = {
 	  	sid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
 		sid.seed(20);
 		var myuniquevalue = sid.generate()
-	  	var link = "http://localhost:3000/#/firstconnexion/"+myuniquevalue+"/"+value.email;
+	  	var link = "http://localhost:3000/admin#/firstconnexion/"+myuniquevalue+"/"+value.email;
 	  	value.newuserhash = myuniquevalue;
 	  	var encrypted = crypto.encrypt(myuniquevalue);
 	  	value.password= encrypted;

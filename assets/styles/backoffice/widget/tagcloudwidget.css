@@ -14,7 +14,7 @@
 .tagcloudWidget.style0{background:rgba(255,0,0,0.4);}
 .tagcloudWidget.style0 .maincontent{display:none;}
 #cloudCat .CatInCloud{ padding: 2px 5px;border-radius:3px;}
-#noCatElment{text-align: center;display:flex;justify-content:center;align-items:center;}
+#noTagElment{text-align: center;display:flex;justify-content:center;align-items:center;}
 
 .tagcloudWidget.style1 .widget__header{display:none;}
 .tagcloudWidget.style1 .maincontent{border: solid 1px rgba(255, 255, 255, 0.03)}

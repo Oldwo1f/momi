@@ -331,10 +331,59 @@ angular.module('core')
         })
         return deferred.promise;      
     }
+    service.fetchOneComment=function(id){
+
+        // article = {date : new Date(),status:'draft'};
+        var deferred = $q.defer();
+        $sailsSocket.get('/api/comment/'+id).success(function (data,status) {
+            deferred.resolve(data);
+        }).error(function (data,status) {
+            if(status == '401')
+                $state.go('login')
+            deferred.reject(data);
+        })
+        return deferred.promise;      
+    }
     service.update=function(id, values){
 
         var deferred = $q.defer();
         $sailsSocket.put('/api/article/'+id,values).success(function (data,status) {
+            deferred.resolve(data);
+        }).error(function (data,status) {
+            // if(status == '401')
+            //     $state.go('login')
+            deferred.reject(data);
+        })
+        return deferred.promise;      
+    }
+    service.updateComment=function(id, values){
+
+        var deferred = $q.defer();
+        $sailsSocket.put('/api/comment/'+id,values).success(function (data,status) {
+            deferred.resolve(data);
+        }).error(function (data,status) {
+            // if(status == '401')
+            //     $state.go('login')
+            deferred.reject(data);
+        })
+        return deferred.promise;      
+    }
+    service.addReponse=function(id, values){
+
+        var deferred = $q.defer();
+        $sailsSocket.post('/api/comment/'+id+'/responses',values).success(function (data,status) {
+            deferred.resolve(data);
+        }).error(function (data,status) {
+            // if(status == '401')
+            //     $state.go('login')
+            deferred.reject(data);
+        })
+        return deferred.promise;      
+    }
+    service.deleteComment=function(id, values){
+
+        var deferred = $q.defer();
+        $sailsSocket.delete('/api/comment/'+id).success(function (data,status) {
             deferred.resolve(data);
         }).error(function (data,status) {
             // if(status == '401')

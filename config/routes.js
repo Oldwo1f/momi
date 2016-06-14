@@ -48,17 +48,27 @@ module.exports.routes = {
   'POST /api/article/:id/images':'articleController.uploadImage',
   'POST /api/category/:id/images':'categoryController.uploadImage',
   'GET /image/:size/:name':'ImageController.serveImage',
+  'GET /document/:name':'DocumentController.serveDocument',
   'POST /api/image/resize':'ImageController.resizeImage',
   'POST /api/image/resizeprofile':'ImageController.resizeImageProfile',
   'get /api/article/search/:sort/:slug':'articleController.search',
   'get /api/article/:sort/:limit/:page':'articleController.fetch',
   'get /api/articleActif/:sort/:limit/:page':'articleController.fetchActive',
   'get /api/article/:id':'articleController.fetchOne',
+  // 'POST /api/mycomment/:id':'commentController.update'
 
+
+  'POST /api/project/:id/documents':'projectController.uploadDocument',
+  'POST /api/project/:id/images':'projectController.uploadImage',
+  'get /api/project/search/:sort/:slug':'projectController.search',
+  'get /api/project/:sort/:limit/:page':'projectController.fetch',
+  'get /api/projectActif/:sort/:limit/:page':'projectController.fetchActive',
+  'get /api/project/:id':'projectController.fetchOne',
   //USER
   // 'POST /user':'UserController.create',
   'GET /api/user/verifyUniqueEmail/:email':'UserController.verifyUniqueEmail',
   'POST /user/firstConnexion':'UserController.firstConnexion',
+  'get /addFirstAdmin':'UserController.addFirstAdmin',
   'POST /auth/login':'UserController.login',
   'POST /api/user/:id/images':'userController.uploadImage',
   'get /api/user/search/:sort/:slug':'userController.search',
@@ -69,6 +79,7 @@ module.exports.routes = {
   // LOGIN
 
   'get /toto' :'testController.toto',
+  'get /peter' :'testController.peter',
  
 
   // 'POST /article/:id/tags/:pk':'ArticleController.addTag',
@@ -90,21 +101,28 @@ module.exports.routes = {
 
 
   // 'GET /grimpes': 'frontController.portfolio',
-  // 'GET /avendre': 'frontController.avendre',
   // 'GET /projet/:id/*':'frontController.projet',
+  'GET /testnotif': 'frontController.testnotif',
   'GET /blog': 'frontController.blog',
-  // 'GET /blog/:page': 'frontController.blog',
   'GET /blog/category/:thiscat': 'frontController.categoryArticle',
-  // 'GET /blog/category/:thiscat/:page': 'frontController.category',
+  'GET /blog/tags/:thiscat/:tagname': 'frontController.tagArticle',
+  'GET /blog/article/:id':'frontController.article',
   'GET /blog/article/:id/*':'frontController.article',
+  'POST /article/:itemid/addComment':'frontController.addCommentArticle',
+  'POST /article/addReponse/:itemid/:projid':'frontController.addReponseArticle',
+  'GET /grimpes': 'frontController.portfolio',
+  'GET /grimpes/category/:thiscat': 'frontController.categoryProject',
+  'GET /grimpes/tags/:thiscat/:tagname': 'frontController.tagProject',
+  'GET /grimpes/project/:id':'frontController.project',
+  'GET /grimpes/project/:id/*':'frontController.project',
+  'POST /project/:itemid/addComment':'frontController.addCommentProject',
+  'POST /project/addReponse/:itemid/:projid':'frontController.addReponseProject',
   'GET /contact':'frontController.contact',
   'GET /presta':'frontController.presta',
   
   // 'POST /contactEmail':'frontController.contactEmail',
   // 'POST /project/:itemid/addComment':'frontController.addCommentProj',
   // 'POST /project/addReponse/:itemid/:projid':'frontController.addReponseProj',  
-  // 'POST /article/:itemid/addComment':'frontController.addCommentArticle',
-  // 'POST /article/addReponse/:itemid/:projid':'frontController.addReponseArticle',
 
   // 'get /createNotif':'NotificationController.createNotif',
   // 'get /createComment':'NotificationController.createComment',

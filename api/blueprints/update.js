@@ -100,7 +100,7 @@ module.exports = function updateOneRecord (req, res) {
         console.log(req.options.model);
         console.log(populatedRecord);
         es.update(req.options.model,populatedRecord).then(function(){
-          console.log('created ES');
+          console.log('updated ES');
                 // return callback()
           // res.created(newInstance);
           res.ok(populatedRecord);

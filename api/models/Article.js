@@ -17,13 +17,17 @@ module.exports = {
         privateContent:{type:'boolean',defaultsTo:false},
         videoUrl:{type:'text',defaultsTo:null},
         videoHost:{type:'text',defaultsTo:null},
+        categories:{collection:'category', via: 'articles',dominant:true},
 
         // categorie: {collection: 'categoryArticle',defaultsTo:[]},
-        tags:{collection:'tag',defaultsTo:[]},
-        categories:{collection:'category',defaultsTo:[]},
+        tags:{collection:'tag', via: 'articles',dominant:true},
         documents:{collection:'document',defaultsTo:[]},
         images:{collection:'image',defaultsTo:[]},
   		authors:{collection:'user',defaultsTo:[]},
+        comments: {
+          collection: 'comment',
+          via:'article'
+        },
     //     author: {
     // 			model: 'user'
     // 		},

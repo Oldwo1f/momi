@@ -313,6 +313,7 @@ angular.module('momi-categories')
         			$scope.uploadingImages=[];
 
 			      	$scope.imgcrop = {};
+					$scope.imgcrop.landscape = true;
 				    $scope.imgcrop.imgEditId = 0;
 					$scope.imgcrop.displayHeight = 0;
 					$scope.imgcrop.displayWidth = 0;
@@ -401,6 +402,12 @@ angular.module('momi-categories')
 				        $scope.uploadingImages[$scope.indexImage].status = 'start';
 				        $scope.uploadingImages[$scope.indexImage].text='0%';
 				        $scope.uploadingImages[$scope.indexImage].file=$scope.imgcrop.file;
+				        $scope.dataToSend.normalWidth= 800;
+		            	$scope.dataToSend.normalHeight= 200;
+		            	if(!$scope.imgcrop.landscape){
+		            		$scope.dataToSend.normalWidth= 300;
+		            		$scope.dataToSend.normalHeight= 400;
+		            	}
 
 		                $scope.uploadingImages[$scope.indexImage].status='progress';
 		                (function(indexImage){
@@ -433,7 +440,7 @@ angular.module('momi-categories')
 		      					$sailsSocket.post('/api/image/resize/',$scope.dataToSend).success(function (data,status) {
 						            console.log('SUCCESS RESIZE ! !');
 
-						           
+						           	
 
 						            $rootScope.stopSpin();
 						          
@@ -442,14 +449,15 @@ angular.module('momi-categories')
 						            console.log('errOR');
 						        })
 
+						        $scope.uploadingImages[indexImage].text='Envoi terminé';
+			                        (function(indexImage){
 
-		                        $scope.uploadingImages[indexImage].text='Envoi terminé';
-		                        (function(indexImage){
+			                            $timeout(function () {
+			                                $scope.uploadingImages[indexImage].status = 'success';
+			                            },2000)
+			                    })(indexImage)
 
-		                            $timeout(function () {
-		                                $scope.uploadingImages[indexImage].status = 'success';
-		                            },2000)
-		                        })(indexImage)
+		                       
 		                        
 		                        // $mdDialog.hide()
 
@@ -478,6 +486,13 @@ angular.module('momi-categories')
 				        $scope.dataToSend.containerWidth = $scope.imgcrop.containerWidth;
 				        $scope.dataToSend.containerHeight = $scope.imgcrop.containerHeight;
 
+				        $scope.dataToSend.normalWidth= 800;
+		            	$scope.dataToSend.normalHeight= 200;
+		            	if(!$scope.imgcrop.landscape){
+		            		$scope.dataToSend.normalWidth= 300;
+		            		$scope.dataToSend.normalHeight= 400;
+		            	}
+
 
 				        console.log('-<->-<-<-<-<-<-<-<-<-<6-<-<-<-<-<-<-<--<');
 				        console.log($scope.imgcrop.filename);
@@ -503,7 +518,7 @@ angular.module('momi-categories')
 						$scope.imgcrop.scaledLeft = 0;
 						$scope.imgcrop.containerWidth = 0;
 						$scope.imgcrop.containerHeight = 0;
-						$scope.imgcrop.aspectRatio = '16/9';
+						$scope.imgcrop.aspectRatio = '4/1';
 						$scope.imgcrop.imgSrc = "";
 
 				        $sailsSocket.post('/api/image/resize/',$scope.dataToSend).success(function (data,status) {
@@ -660,7 +675,7 @@ angular.module('momi-categories')
 			        if(data.verb =='updated'){
 
 			        	console.log('updated');
-			        	console.log(data.id);
+			        	console.log(data);
 			        	// console.log($scope.articlesList);
 
 			        	

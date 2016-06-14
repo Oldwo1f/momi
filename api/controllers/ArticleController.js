@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing articles
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
- var Promise = require('bluebird');
+var Promise = require('bluebird');
 var fs = require('fs'), Writable = require('stream').Writable;
 var sid = require('shortid');
 var easyimg = require('easyimage');
@@ -49,7 +49,7 @@ module.exports = {
 		fetchActive:function(req,res,next){
 			
 			var articlesPromise = Article.find({status:'actif'}).sort(req.params.sort)
-		    .skip(req.params.page).limit(req.params.limit).populateAll();
+		    .skip((req.params.page-1)*req.params.limit).limit(req.params.limit).populateAll();
 
 			articlesPromise
 		    .then(function(articles) {   
@@ -85,11 +85,12 @@ module.exports = {
 			
 			console.log('FETCH');
 			console.log(req.params);
-
+			var result ;
+			var idsCom ;
 			Article.findOne(req.params.id).populateAll().then(function(article){
 				console.log('HERE');
-				console.log(article);
-				console.log(typeof(article.authors));
+				// console.log(article);
+				// console.log(typeof(article.authors));
 				var art=_.cloneDeep(article);
 				return new Promise(function(resolve,reject){
 					
@@ -104,9 +105,9 @@ module.exports = {
 								
 							}).then(function(t){
 								console.log('AFTERMAP');
-								console.log(t);
+								// console.log(t);
 								art.authors = t;
-								console.log(art);
+								// console.log(art);
 								resolve(art)
 							})
 							// 
@@ -115,10 +116,28 @@ module.exports = {
 							console.log('HERE3');
 							resolve(article)
 						}
-				}).then(function(hey){
-				// console.log(hey);
-				 Article.subscribe(req, hey);
-				res.send(hey)
+				}).then(function(){
+					
+					idsCom = _.map(art.comments,function(o){return o.id})
+					return Comment.find(idsCom).populate('responses')
+					
+					
+				})
+				.then(function(CommentsFullFilled){
+					
+					art.comments = CommentsFullFilled;
+					console.log(idsCom);
+					var idsToAdd = _.map(CommentsFullFilled,function(com){
+						return _.map(com.responses,function(o){
+							idsCom.push(o.id)
+						return o.id
+						})
+					})
+					console.log(idsCom);
+					// var idsCom = _.map(art.comments,function(o){return o.id})
+					Comment.subscribe(req,idsCom);
+				 	Article.subscribe(req, art.id);
+					res.send(art)
 				})
 			})
 		},
@@ -302,7 +321,7 @@ var cropOptions = req.body
 						     // x:0, y:0
 						  }).then(function(image){
 						  	
-						  	console.log('image RISIZED');
+						  	console.log('image ReSIZED');
 						  		console.log(image);
 
 						  		Image.create(file).exec(function(err,img) {
