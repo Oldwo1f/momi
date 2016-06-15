@@ -3,5 +3,14 @@
 	"A brand new app.": "Une toute nouvelle application.",
 	"SEO_CONTACT_title": "SEO_CONTACT_title",
 	"SEO_CONTACT_keyword": "SEO_CONTACT_keyword",
-	"SEO_CONTACT_description": "SEO_CONTACT_description"
+	"SEO_CONTACT_description": "SEO_CONTACT_description",
+	"SEO_PROJECTS_title": "SEO_PROJECTS_title",
+	"SEO_PROJECTS_keyword": "SEO_PROJECTS_keyword",
+	"SEO_PROJECTS_description": "SEO_PROJECTS_description",
+	"SEO_BLOG_title": "SEO_BLOG_title",
+	"SEO_BLOG_keyword": "SEO_BLOG_keyword",
+	"SEO_BLOG_description": "SEO_BLOG_description",
+	"SEO_HOME_title": "SEO_HOME_title",
+	"SEO_HOME_keyword": "SEO_HOME_keyword",
+	"SEO_HOME_description": "SEO_HOME_description"
 }
