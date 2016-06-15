@@ -14,7 +14,7 @@ module.exports = {
 
 
 		es.client().search({
-		  index: 'momi',
+		  index: sails.config.esName,
 		  type: 'category',
 		  // id: value.id,
 		  body: {

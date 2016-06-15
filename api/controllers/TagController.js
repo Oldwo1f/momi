@@ -10,7 +10,7 @@ module.exports = {
 
 
 		es.client().search({
-		  index: 'momi',
+		  index: sails.config.esName,
 		  type: 'tag',
 		  // id: value.id,
 		  body: {

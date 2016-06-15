@@ -120,7 +120,7 @@ module.exports = {
 	},
 	firstConnexion:function(req,res,next) {
 		console.log('FIRSTCONEION');
-		console.log(sails.config.secret);
+		
 		
 
 
@@ -334,7 +334,7 @@ module.exports = {
 
 
 		es.client().search({
-		  index: 'momi',
+		  index: sails.config.esName,
 		  type: 'user',
 		  // id: value.id,
 		  body: {
