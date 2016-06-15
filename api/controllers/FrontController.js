@@ -878,7 +878,7 @@ module.exports = {
 		req.locale = req.locale || 'en'
 		moment.locale(req.locale);
 		console.log(res.i18n());
-		
+
 		res.status(200).view('front/contact',{
 						title: req.__('SEO_CONTACT_title'),
 						keyword: req.__('SEO_CONTACT_keyword'),
@@ -900,18 +900,32 @@ module.exports = {
 				keyword:req.__('SEO_PRESTA_KEYWORD'),
 				description:req.__('SEO_PRESTA_DESCRIPTION')
 			});
-	},	
-	testnotif:function(req,res) {
-		var notif={};
-		notif.status = 'new';
-		notif.type='commentArticle'
-		notif.itemid='5746d3315dfc142e23271b57'
-		notif.info1='Article commenté'
-		notif.info2='par Alexis Momcilovic'
+	},
+	contactEmail:function(req,res,next) {
 
-		Notification.create(notif).then(function(data){
-			res.send(data)
-		})
+		console.log('contactEmailcontactEmailcontactEmailcontactEmailcontactEmailcontactEmail');
+		console.log(req.body.message);
+		console.log(req.body.name);
+		console.log(req.body.email);
+		if(req.body.message && req.body.name && req.body.email)
+		{
+			
+			mail.sendEmail({
+	             from: req.body.name+' <'+req.body.email+'>', // sender address
+			    to: sails.config.mainEmailClient, // list of receivers
+			    subject: 'Site - '+ sails.config.company +' - contact : '+ req.body.name +' - '+req.body.subject, // Subject line
+			    text: 'Cet email a été envoyé par : ' + req.body.name + ' - ' + req.body.email+ ' \n\n ' + req.body.message // html body
+	         }).then(function(data){
+	            console.log('THEN IN TOTO');
+	            res.status(200).send('mail sended');
+	         }).catch(function(data){
+	         	res.status(400).send('mail error');
+	         });
+
+	    }else{
+			res.status(400).send('field error');
+		}
+
 	},
 };
 
