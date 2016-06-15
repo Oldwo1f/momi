@@ -18,7 +18,7 @@
  * For more information on configuration, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.connections.html
  */
-
+var config = require('./config');
 module.exports.connections = {
 
   /***************************************************************************
@@ -60,9 +60,9 @@ module.exports.connections = {
     adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
-    // user: 'username',
-    // password: 'password',
-    database: 'momi'
+    user: config.dbuser,
+    password: config.dbpassword,
+    database: config.dbname
   },
 
   // elasticsearch: {
