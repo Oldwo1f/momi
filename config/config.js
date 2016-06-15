@@ -4,5 +4,5 @@ module.exports = {
   port: 1337,
   mainEmail : 'alexismomcilovic@gmail.com',
   mainEmailPassword : 'Alexis09',
-
+  esName : 'momi',
 };

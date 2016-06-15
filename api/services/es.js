@@ -28,7 +28,7 @@ module.exports ={
    	search:function(slug,type, parent){
    		
    		return client.search({
-   			index: 'momi',
+   			index: sails.config.esName,
 		  	type: type,
 		  	body: {
 			    "query": {
@@ -89,7 +89,7 @@ module.exports ={
    	create:function(type, body, parent){
    		
    		return client.create({
-		  index: 'momi',
+		  index: sails.config.esName,
 		  type: type,
 		  // parent : parent,
 		  id: body.id,
@@ -106,7 +106,7 @@ module.exports ={
    		console.log('DELETE ES');
    		console.log(body);
    		return client.delete({
-		  index: 'momi',
+		  index: sails.config.esName,
 		  type: type,
 		  id: body.id
 		}).then(function (response) {
@@ -121,7 +121,7 @@ module.exports ={
    		console.log(type);
    		console.log(body);
    		return client.update({
-		  index: 'momi',
+		  index: sails.config.esName,
 		  type: type,
 		  // parent : parent,
 		  id: body.id,

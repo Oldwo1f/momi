@@ -877,6 +877,8 @@ module.exports = {
 	contact:function(req,res,next){
 		req.locale = req.locale || 'en'
 		moment.locale(req.locale);
+		console.log(res.i18n());
+		
 		res.status(200).view('front/contact',{
 						title: req.__('SEO_CONTACT_title'),
 						keyword: req.__('SEO_CONTACT_keyword'),

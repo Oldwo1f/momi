@@ -39,7 +39,7 @@
 # 
 ################################################
 
-config/local.js
+config/config.js
 uploads
 
 
