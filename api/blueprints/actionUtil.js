@@ -3,12 +3,12 @@
  */
 
 var util = require('util');
-var isString = require('../../node_modules/sails/node_modules/lodash.isstring');
-var isArray = require('../../node_modules/sails/node_modules/lodash.isarray');
-var isObject = require('../../node_modules/sails/node_modules/lodash.isobject');
-var isUndefined = require('../../node_modules/sails/node_modules/lodash.isundefined');
+var isString = require('../../node_modules/lodash.isstring');
+var isArray = require('../../node_modules/lodash.isarray');
+var isObject = require('../../node_modules/lodash.isobject');
+var isUndefined = require('../../node_modules/lodash.isundefined');
 var _ = require('lodash'); // TODO: replace lodash with individual per-method packages
-var mergeDefaults = require('../../node_modules/sails/node_modules/merge-defaults');
+var mergeDefaults = require('../../node_modules/merge-defaults');
 
 
 // Parameter used for jsonp callback is constant, as far as
