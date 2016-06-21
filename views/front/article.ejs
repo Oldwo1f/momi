@@ -48,19 +48,19 @@
                         <div class="imagesblog">
                             <% if(typeof(article.images)!='undefined' &&  article.images.length >0 && 
                                 ( !article.videoUrl || !article.videoHost ) ){ %>
-                           
-                                    <span class="image">
-                                
-                                        <!-- <a href="blog/article/<%= article.id %>/<%= article.rewriteurl %>" id="desc" data-icon="fa-link"> -->
-                                            <%
+                                     <%
                                             var firstimgIndex = _.findIndex(article.images,function(o){
                                                 return o.rank == 0;
                                             }) 
                                             console.log(firstimgIndex);
                                             %>
+                                    <a class="image" href="image/originalSize/<%= article.images[firstimgIndex].filename %>"  data-lightbox="image-1">
+                                
+                                        <!-- <a href="blog/article/<%= article.id %>/<%= article.rewriteurl %>" id="desc" data-icon="fa-link"> -->
+                                           
                                             <img src="image/resized2/<%= article.images[firstimgIndex].filename %>" alt="<%=  article.images[0].filename %>" />
                                         <!-- </a> -->
-                                    </span><!-- .image -->
+                                    </a><!-- .image -->
 
                             <% }else if(article.videoUrl && article.videoHost){%>
                                     <div class="myvideoContainer">
@@ -172,12 +172,16 @@
                                      var classToGo = 'miniPaysage';
                                         if(!article.images[i].paysage){
                                             classToGo = 'miniPortrait'
-                                        }   
+                                        } 
+
+                                        if(i != firstimgIndex){
                                     %>
-                                    <a class="mosaicItem <%- classToGo %>"  href="image/resized2/<%- article.images[i].filename %>" data-lightbox="image-1">
+                                    <a class="mosaicItem <%- classToGo %>"  href="image/originalSize/<%- article.images[i].filename %>" data-lightbox="image-1">
                                         <img src="image/resized2/<%- article.images[i].filename %>" alt="<%- article.images[i].name %>">
                                         
                                     </a>
+
+                                <% } %>
                                 <% } %>
 
                     <% } %>
@@ -324,19 +328,30 @@
     </section><!-- .content-section -->
  <script>
     
-   
+
+
     var article = <%- JSON.stringify(article) %>
     console.log(article);
     var tags = <%- JSON.stringify(tags) %>
    
     console.log(tags);
 
-   $('.mosaic').masonry({
+   var msnr = $('.mosaic').masonry({
       // options
       itemSelector: '.mosaicItem',
       // gutter: 10,
+      // columnWidth:100,
       percentPosition: true
     });
+
+   $(function(){ // document ready
+    $('.mosaic img').bind('load', function(){ // image ready
+        // do stuff here
+        console.log('loaded IMAGESSSS');
+        $('.mosaic').masonry('reloadItems')
+    });
+    });
+
     
 
 </script>
