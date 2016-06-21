@@ -48,19 +48,17 @@
                         <div class="imagesblog">
                             <% if(typeof(project.images)!='undefined' &&  project.images.length >0 && 
                                 ( !project.videoUrl || !project.videoHost ) ){ %>
-                           
-                                    <span class="image">
-                                
-                                        <a href="grimpes/project/<%= project.id %>/<%= project.rewriteurl %>" id="desc" data-icon="fa-link">
                                             <%
                                             var firstimgIndex = _.findIndex(project.images,function(o){
                                                 return o.rank == 0;
                                             }) 
                                             console.log(firstimgIndex);
                                             %>
+                                    <a class="image" href="image/originalSize/<%= article.images[firstimgIndex].filename %>"  data-lightbox="image-1">
+                                
+                                            
                                             <img src="image/resized/<%= project.images[firstimgIndex].filename %>" alt="<%=  project.images[0].filename %>" />
                                         </a>
-                                    </span><!-- .image -->
 
                             <% }else if(project.videoUrl && project.videoHost){%>
                                     <div class="myvideoContainer">
@@ -173,12 +171,15 @@
                                      var classToGo = 'miniPaysage';
                                         if(!project.images[i].paysage){
                                             classToGo = 'miniPortrait'
-                                        }   
+                                        } 
+
+                                          if(i != firstimgIndex){  
                                     %>
-                                    <a class="mosaicItem <%- classToGo %>"  href="image/resized2/<%- project.images[i].filename %>" data-lightbox="image-1">
+                                    <a class="mosaicItem <%- classToGo %>"  href="image/originalSize/<%- project.images[i].filename %>" data-lightbox="image-1">
                                         <img src="image/resized2/<%- project.images[i].filename %>" alt="<%- project.images[i].name %>">
                                         
                                     </a>
+                                <% } %>
                                 <% } %>
 
                     <% } %>
@@ -339,6 +340,13 @@
       // gutter: 10,
       percentPosition: true
     });
-    
+      $(function(){ // document ready
+    $('.mosaic img').bind('load', function(){ // image ready
+        // do stuff here
+        console.log('loaded IMAGESSSS');
+        $('.mosaic').masonry('reloadItems')
+    });
+    });
+
 
 </script>
