@@ -1,5 +1,12 @@
+var winwidth = $(window).width()
+var col=24;
+if(winwidth <=1024){
+    console.log('winwidth <=1024');
+    col=16
+}
+
 angular.module('core').run(['gridsterConfig', function(gridsterConfig) {
-    gridsterConfig.columns = 24; // the width of the grid, in columns
+    gridsterConfig.columns = col; // the width of the grid, in columns
     gridsterConfig.pushing = true; // whether to push other items out of the way on move or resize
     gridsterConfig.floating = true; // whether to automatically float items up so they stack (you can temporarily disable if you are adding unsorted items with ng-repeat)
     gridsterConfig.swapping = false; // whether or not to have items of the same size switch places instead of pushing down if they are the same size
@@ -28,6 +35,7 @@ angular.module('core').run(['gridsterConfig', function(gridsterConfig) {
     gridsterConfig.draggable = {
         enabled: false,
     };
+
 }]);
 
 
@@ -53,7 +61,6 @@ angular.module('core')
         console.log('DASHBOARD');
 
         $scope.widgetList = $scope.widgetlist;
-        console.log($scope.widgetList);
         // this.test ="yopaaa";
         $scope.columnwidth = 0;
         $scope.columnheight = 0;
@@ -467,18 +474,44 @@ genie.context('global')
 
       },
       link:function(scope,element,attrs){
+
+        setTimeout(function(){
+          console.log('timeout');
+
+          console.log(scope);
+
+        },7000)
+
+        console.log(scope.$parent.$parent.$parent);
           
           scope.$on('restoreDefault',function(e,theme){
             scope.widgetList = widgetService.defaultList;
           })
-
+            
 
           scope.$on('gridster-resizable-changed', function(e,gridster) {
             scope.columnwidth = gridster.curColWidth -20;
             scope.columnheight = gridster.curRowHeight -20;
+
+            // console.log(scope);
+            // var col = 24
+            // if(winwidth <=1024){
+            //     console.log('winwidth <=1024');
+            //     col=16
+            // }
+            // // scope.gridster.draggable.enabled = true;
+            // gridster.columns = col;
+
+
+            console.log('GRIDSTER RESIZE CHANGE-----');
             
           })
+          
           scope.$on('gridster-resize', function(gridster) {
+
+            console.log('GRIDSTER RESIZE LINK DASHBOARD');
+
+
           })
 
 

@@ -77,13 +77,25 @@ angular.module('core')
         scope.widgetList = widgetService.list;
       	thisresize(scope.$parent.gridsterItem,scope.expanded)
 
-
-
+        // scope.$parent.gridster.columns= 6;
+        // console.log(scope.$parent.gridster.columns);
 
         // scope.$watch('currentTheme',function(){
         // 	scope.$emit('changeTheme',scope.currentTheme);
         // })
+      // $(window).resize(function() {
 
+      //   var winwidth = $(window).width()
+      //   var col=24;
+      //   if(winwidth <=1024){
+      //       col=16
+      //   }
+      //   if(winwidth <=800){
+      //       col=10
+      //   }
+      //   console.log('coolcool');
+      //   scope.$parent.gridster.columns= col;
+      // })
 
       	scope.$parent.$on('gridster-item-resized', function(e,item) {
       		thisresize(item,scope.expanded);

@@ -703,14 +703,14 @@ angular.module('momi-projects')
 				},
       			plugins: 'link image code',
       			statusbar:false,
+      			toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist indent outdent | link image '
+
       			
 
 			}
 
 			$scope.tinymceModel = 'Initial content';
-      		$rootScope.textAngularOpts={};
-        	$rootScope.textAngularOpts.toolbar = ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo','justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent','html', 'insertImage','insertLink', 'insertVideo'];
-      	
+      		
 
 
         	$scope.indexDocument=0;

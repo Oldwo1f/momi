@@ -24,16 +24,6 @@ var listWidgetDirectivesApp = function listWidgetDirectivesApp() {
   }, []);
 };
 
-
-
-
-
-
-
-
-
-
-
  
 
 
@@ -139,7 +129,11 @@ angular.module('core').controller('appController',["$scope", "$rootScope", "$aut
             }
 
    });
-   
+   // $(window).resize(function() {
+   //  var mywidth = $(window).width()
+   //  console.log('RESIZE INSIDE APPCTRL');
+   //  }).resize()
+
 }])
 
 

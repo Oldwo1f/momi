@@ -111,7 +111,8 @@ angular.module('momi-user')
 				},
       			plugins: 'link image code',
       			statusbar:false,
-      			
+      			toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist indent outdent | link image '
+
 
 			}
 

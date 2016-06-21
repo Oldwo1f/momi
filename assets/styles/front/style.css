@@ -4193,7 +4193,15 @@ text-align: left;
 .articlePortrait.blog {}
 .articlePortrait.blog .image{height:400px;width:auto;display: inline-block;float:left;margin-right: 20px;}
 .articlePortrait.blog .image img{height:400px;width:auto;}
+.articlePortrait.blog .imagesblog{height:400px;width:auto;display: inline-block;float:left;margin-right: 20px;}
+.articlePortrait.blog .imagesblog img{height:400px;width:auto;}
 .articlePortrait.blog a#desc span.desc{height:400px;width:300px;float:right;}
 .articlePortrait.blog .title-desc{max-width:calc(100% - 320px);display: inline-block;margin-top: 100px;}
 .articlePortrait.blog  ul.meta li{height:40px;}
 .articlePortrait.blog  h3{line-height: 76px}
+
+.mosaic{clear:both;}
+.mosaicItem{width: 50%;}
+.mosaicItem .lightbox{width: 100%;height: 100%;display: inline-block;}
+.mosaicItem.miniPortrait{width: 25%;}
+.mosaicItem img{width:100%;}

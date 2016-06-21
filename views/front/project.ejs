@@ -1,4 +1,4 @@
-
+<script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
 <div class="container-wrapper navigation">
         <nav class="navbar navbar-default" role="navigation">
         
@@ -20,7 +20,7 @@
                             <li class=""><a href="/">Home</a></li>
                             <li class=""><a href="/presta">Prestations</a></li>
                             <li class="active"><a href="/grimpes">Grimpes</a></li>
-                            <li class=""><a href="/grimpes">Blog</a></li>
+                            <li class=""><a href="/blog">Blog</a></li>
                             <li class=""><a href="/contact">Contact</a> </li>
                         </ul>
                     </div>
@@ -37,7 +37,14 @@
             <div class="row">
             
                 <div class="col-lg-9 single">
-                    <div class="blog">
+                    <%
+                        var classToGo = 'articlePaysage';
+                        if(typeof(project.images)!='undefined' &&  project.images.length >0 && ( !project.videoUrl || !project.videoHost ) ){
+                            if(!project.images[0].paysage){
+                                classToGo = 'articlePortrait'
+                            }   
+                        } %>
+                    <div class="blog  <%- classToGo %>">
                         <div class="imagesblog">
                             <% if(typeof(project.images)!='undefined' &&  project.images.length >0 && 
                                 ( !project.videoUrl || !project.videoHost ) ){ %>
@@ -96,7 +103,7 @@
                             <%} %>   
                         </div>  
          
-                        <div class="date anim fadeIn">
+                        <div class="date anim fadeIn" title="<%= moment(project.date).format('DD/MM/YYYY') %>">
                             <a href="#" class="day">
                                 <%= moment(project.date).format('D') %>
                             </a>
@@ -159,6 +166,24 @@
                         <% } %>
                     <div class="clearfix"></div>
                     
+                    <div class="mosaic">
+                    <% if(typeof(project.images)!='undefined' &&  project.images.length >0 ){ %>
+
+                                <% for(var i in project.images){
+                                     var classToGo = 'miniPaysage';
+                                        if(!project.images[i].paysage){
+                                            classToGo = 'miniPortrait'
+                                        }   
+                                    %>
+                                    <a class="mosaicItem <%- classToGo %>"  href="image/resized2/<%- project.images[i].filename %>" data-lightbox="image-1">
+                                        <img src="image/resized2/<%- project.images[i].filename %>" alt="<%- project.images[i].name %>">
+                                        
+                                    </a>
+                                <% } %>
+
+                    <% } %>
+                    </div>
+
                     
                     <h4 class="anim fadeIn">
                         Comments (<%= project.comments.length %>)
@@ -308,7 +333,12 @@
    
     console.log(tags);
 
-   
+      $('.mosaic').masonry({
+      // options
+      itemSelector: '.mosaicItem',
+      // gutter: 10,
+      percentPosition: true
+    });
     
 
 </script>

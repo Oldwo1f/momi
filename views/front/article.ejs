@@ -1,4 +1,4 @@
-
+<script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
 <div class="container-wrapper navigation">
         <nav class="navbar navbar-default" role="navigation">
         
@@ -37,22 +37,29 @@
             <div class="row">
             
                 <div class="col-lg-9 single">
-                    <div class="blog">
+                        <%
+                        var classToGo = 'articlePaysage';
+                        if(typeof(article.images)!='undefined' &&  article.images.length >0 && ( !article.videoUrl || !article.videoHost ) ){
+                            if(!article.images[0].paysage){
+                                classToGo = 'articlePortrait'
+                            }   
+                        } %>
+                    <div class="blog  <%- classToGo %>">
                         <div class="imagesblog">
                             <% if(typeof(article.images)!='undefined' &&  article.images.length >0 && 
                                 ( !article.videoUrl || !article.videoHost ) ){ %>
                            
                                     <span class="image">
                                 
-                                        <a href="blog/article/<%= article.id %>/<%= article.rewriteurl %>" id="desc" data-icon="fa-link">
+                                        <!-- <a href="blog/article/<%= article.id %>/<%= article.rewriteurl %>" id="desc" data-icon="fa-link"> -->
                                             <%
                                             var firstimgIndex = _.findIndex(article.images,function(o){
                                                 return o.rank == 0;
                                             }) 
                                             console.log(firstimgIndex);
                                             %>
-                                            <img src="image/resized/<%= article.images[firstimgIndex].filename %>" alt="<%=  article.images[0].filename %>" />
-                                        </a>
+                                            <img src="image/resized2/<%= article.images[firstimgIndex].filename %>" alt="<%=  article.images[0].filename %>" />
+                                        <!-- </a> -->
                                     </span><!-- .image -->
 
                             <% }else if(article.videoUrl && article.videoHost){%>
@@ -96,7 +103,7 @@
                             <%} %>   
                         </div>  
          
-                        <div class="date anim fadeIn">
+                        <div class="date anim fadeIn" title="<%= moment(article.date).format('DD/MM/YYYY') %>">
                             <a href="#" class="day">
                                 <%= moment(article.date).format('D') %>
                             </a>
@@ -145,7 +152,6 @@
                         </p>
                     </div><!-- .blog -->
                     
-
                     <div class="clearfix"></div>
                      <% if(typeof(article.documents)!= 'undefined' && article.documents.length > 0) {%> 
                             <div class="pj">
@@ -158,7 +164,24 @@
                             </div>
                         <% } %>
                     <div class="clearfix"></div>
-                    
+                    <div class="mosaic">
+                        
+                    <% if(typeof(article.images)!='undefined' &&  article.images.length >0 ){ %>
+
+                                <% for(var i in article.images){
+                                     var classToGo = 'miniPaysage';
+                                        if(!article.images[i].paysage){
+                                            classToGo = 'miniPortrait'
+                                        }   
+                                    %>
+                                    <a class="mosaicItem <%- classToGo %>"  href="image/resized2/<%- article.images[i].filename %>" data-lightbox="image-1">
+                                        <img src="image/resized2/<%- article.images[i].filename %>" alt="<%- article.images[i].name %>">
+                                        
+                                    </a>
+                                <% } %>
+
+                    <% } %>
+                    </div>
                     
                     <h4 class="anim fadeIn">
                         Comments (<%= article.comments.length %>)
@@ -308,7 +331,12 @@
    
     console.log(tags);
 
-   
+   $('.mosaic').masonry({
+      // options
+      itemSelector: '.mosaicItem',
+      // gutter: 10,
+      percentPosition: true
+    });
     
 
 </script>
