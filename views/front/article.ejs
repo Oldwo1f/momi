@@ -177,7 +177,7 @@
                                         if(i != firstimgIndex){
                                     %>
                                     <a class="mosaicItem <%- classToGo %>"  href="image/originalSize/<%- article.images[i].filename %>" data-lightbox="image-1">
-                                        <img src="image/resized2/<%- article.images[i].filename %>" alt="<%- article.images[i].name %>">
+                                        <img src="image/adminThumbs/<%- article.images[i].filename %>" alt="<%- article.images[i].name %>">
                                         
                                     </a>
 
@@ -336,21 +336,21 @@
    
     console.log(tags);
 
-   var msnr = $('.mosaic').masonry({
-      // options
-      itemSelector: '.mosaicItem',
-      // gutter: 10,
-      // columnWidth:100,
-      percentPosition: true
-    });
+   // var msnr = $('.mosaic').masonry({
+   //    // options
+   //    itemSelector: '.mosaicItem',
+   //    // gutter: 10,
+   //    // columnWidth:100,
+   //    percentPosition: true
+   //  });
 
-   $(function(){ // document ready
-    $('.mosaic img').bind('load', function(){ // image ready
-        // do stuff here
-        console.log('loaded IMAGESSSS');
-        $('.mosaic').masonry('reloadItems')
-    });
-    });
+   // $(function(){ // document ready
+   //  $('.mosaic img').bind('load', function(){ // image ready
+   //      // do stuff here
+   //      console.log('loaded IMAGESSSS');
+   //      $('.mosaic').masonry('reloadItems')
+   //  });
+   //  });
 
     
 
